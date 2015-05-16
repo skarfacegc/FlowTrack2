@@ -1,0 +1,14 @@
+{
+  "name": "FlowTrack2",
+  "version": "0.0.1",
+  "description": "NetFlow grappher and logger",
+  "url": "https://github.com/skarfacegc/FlowTrack2",
+  "repository": "https://github.com/skarfacegc/FlowTrack2",
+  "author": "https://github.com/skarfacegc/",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.8.1",
+    "elasticsearch": "^4.0.2",
+    "node-netflowv9": "^0.2.5"
+  }
+}
