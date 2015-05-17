@@ -15,15 +15,18 @@ Progress
 --------
 - Main collection loop works
     - Flows are captured and written to elasticsearch db
-
-Next up
+- Setup a grunt scaffold
+    + seems to be the right way to go
+- Created flow storage lib
+    + I think it's created cleanly, I'm sure I'll notice stuff as I learn more.
+    
+Next up (in no particular order)
 -------
+- Figure out unit testing with node
+    + And add unit tests
 - Performance testing
     + I want to see how fast this will actually go
     + Using a single node for ES
-- Cleanup
-    + First node project, I'm not thrilled with the overall structure
-    + Break stuff into objects/libs
 - Config file
     + Create a config file to pull constants
     + possible commandline override
