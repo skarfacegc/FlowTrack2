@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /*jslint node: true */
 'use strict';
 var cluster = require('cluster');
