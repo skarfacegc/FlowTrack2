@@ -13,6 +13,9 @@ Think I want to package my libs as local npm modules and I think grunt is the ma
 2015.May.17
 -----------
 
+Setup a scaffold using grunt.  Seems to be the right way to structure projects
+
+First pass at moving stuff into a module/creating an object.  used the bind keyword in a callback to get access to the client property of the object.  Just kinda typed until things seemed to work, need to grok it at some pt.
 
 
 
