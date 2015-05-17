@@ -13,6 +13,8 @@ Why?
 
 Progress
 --------
+Take a look at the [DevLog](https://github.com/skarfacegc/FlowTrack2/blob/master/DEVLOG.md) to see more detail
+
 - Main collection loop works
     - Flows are captured and written to elasticsearch db
 - Setup a grunt scaffold

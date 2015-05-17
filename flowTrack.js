@@ -28,14 +28,12 @@ function main() {
             host: 'localhost:9200'
         });
 
-
         netflow(function(flow) {
 
             console.log('%s\t flows', flow.flows.length);
             for (var i = 0; i < flow.flows.length; i++) {
                 nfStore.storeFlow(flow.flows[i], client);
             }
-
         }).listen(2055);
     }
 }
