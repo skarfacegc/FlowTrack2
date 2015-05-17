@@ -1,14 +1,22 @@
 {
-  "name": "FlowTrack2",
-  "version": "0.0.1",
-  "description": "NetFlow grappher and logger",
-  "url": "https://github.com/skarfacegc/FlowTrack2",
-  "repository": "https://github.com/skarfacegc/FlowTrack2",
-  "author": "https://github.com/skarfacegc/",
-  "license": "MIT",
-  "dependencies": {
-    "commander": "^2.8.1",
-    "elasticsearch": "^4.0.2",
-    "node-netflowv9": "^0.2.5"
-  }
+    "name": "FlowTrack2",
+    "version": "0.0.1",
+    "description": "NetFlow grappher and logger",
+    "url": "https://github.com/skarfacegc/FlowTrack2",
+    "repository": "https://github.com/skarfacegc/FlowTrack2",
+    "author": "https://github.com/skarfacegc/",
+    "license": "MIT",
+    "main": "flowTrack.js",
+    "scripts": {
+        "test": "grunt nodeunit"
+    },
+    "dependencies": {
+        "commander": "^2.8.1",
+        "elasticsearch": "^4.0.2",
+        "node-netflowv9": "^0.2.5",
+        "grunt-contrib-jshint": "~0.6.4",
+        "grunt-contrib-nodeunit": "~0.2.0",
+        "grunt-contrib-watch": "~0.5.3",
+        "grunt": "~0.4.5"
+    }
 }
