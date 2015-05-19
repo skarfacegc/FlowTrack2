@@ -4,9 +4,24 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
-        nodeunit: {
-            files: ['test/**/*_test.js'],
+        mochaTest: {
+            options: {
+                reporter: 'spec'
+            },
+            src: ['test/*.test.js']
         },
+
+
+        // Istanbul code coverage
+        mocha_istanbul: {
+            coverage: {
+                src: ['test/*.test.js'],
+                options: {
+                    coverageFolder: 'test/coverage'
+                }
+            }
+        },
+
         jshint: {
             options: {
                 jshintrc: '.jshintrc'
@@ -18,7 +33,7 @@ module.exports = function(grunt) {
                 src: ['lib/**/*.js']
             },
             test: {
-                src: ['test/**/*.js']
+                src: ['test/**/*.test.js']
             },
             main: {
                 src: ['flowTrack.js']
@@ -31,11 +46,11 @@ module.exports = function(grunt) {
             },
             lib: {
                 files: '<%= jshint.lib.src %>',
-                tasks: ['jshint:lib', 'nodeunit']
+                tasks: ['jshint:lib']
             },
             test: {
                 files: '<%= jshint.test.src %>',
-                tasks: ['jshint:test', 'nodeunit']
+                tasks: ['jshint:test']
             },
             main: {
                 files: '<%= jshint.main.src %>',
@@ -45,11 +60,16 @@ module.exports = function(grunt) {
     });
 
     // These plugins provide necessary tasks.
-    grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadNpmTasks('grunt-mocha-istanbul');
+    grunt.loadNpmTasks('grunt-env');
 
     // Default task.
-    grunt.registerTask('default', ['jshint', 'nodeunit']);
+    grunt.registerTask('default', ['jshint']);
+    grunt.registerTask('coverage', ['mocha_istanbul:coverage']);
+
+
 
 };

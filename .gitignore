@@ -3,3 +3,5 @@ node_modules
 pcaps/*
 sandbox/*
 *sublime*
+test/coverage/*
+
