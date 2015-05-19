@@ -42,3 +42,12 @@ Datastructure from node-netflowv9
     },
     Then some raw packet storage?  not sure
 ```
+
+
+
+
+Reading List
+-------------
+- http://www.clock.co.uk/blog/tools-for-unit-testing-and-quality-assurance-in-node-js
+- http://gruntjs.com/
+- https://github.com/maenu/grunt-template-jasmine-istanbul-example
