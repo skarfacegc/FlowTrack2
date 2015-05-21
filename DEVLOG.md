@@ -17,6 +17,14 @@ Setup a scaffold using grunt.  Seems to be the right way to structure projects
 
 First pass at moving stuff into a module/creating an object.  used the bind keyword in a callback to get access to the client property of the object.  Just kinda typed until things seemed to work, need to grok it at some pt.
 
+2015.May.19
+-----------
+I got unit testing setup and started along with code coverage.  Kinda stumbled into getting it working, not sure if I've chosen the right stack (mocha/chai/sinon/istanbul).
+
+2015.May.21
+-----------
+Fought with adding unit tests and mocks/spies to ```NetFlowStorage```.  Couldn't quite figure it out.  Posted to stackoverflow.  
+
 
 
 
