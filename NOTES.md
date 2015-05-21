@@ -51,3 +51,4 @@ Reading List
 - http://www.clock.co.uk/blog/tools-for-unit-testing-and-quality-assurance-in-node-js
 - http://gruntjs.com/
 - https://github.com/maenu/grunt-template-jasmine-istanbul-example
+- https://github.com/jhnns/rewire/
