@@ -42,19 +42,19 @@ module.exports = function(grunt) {
         watch: {
             gruntfile: {
                 files: '<%= jshint.gruntfile.src %>',
-                tasks: ['jshint:gruntfile']
+                tasks: ['jshint:gruntfile', 'mochaTest']
             },
             lib: {
                 files: '<%= jshint.lib.src %>',
-                tasks: ['jshint:lib']
+                tasks: ['jshint:lib', 'mochaTest']
             },
             test: {
                 files: '<%= jshint.test.src %>',
-                tasks: ['jshint:test']
+                tasks: ['jshint:test', 'mochaTest', 'coverage']
             },
             main: {
                 files: '<%= jshint.main.src %>',
-                tasks: ['jshint:main']
+                tasks: ['jshint:main', 'mochaTest']
             },
         },
     });
