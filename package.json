@@ -8,12 +8,15 @@
     "license": "MIT",
     "main": "flowTrack.js",
     "scripts": {
-        "test": "grunt nodeunit"
+        "test": "grunt mochaTest"
     },
     "dependencies": {
-        "chai": "^2.3.0",
         "commander": "^2.8.1",
         "elasticsearch": "^4.0.2",
+        "node-netflowv9": "^0.2.5"
+    },
+    "devDependencies": {
+        "chai": "^2.3.0",
         "grunt": "~0.4.5",
         "grunt-contrib-jshint": "~0.6.4",
         "grunt-contrib-watch": "~0.5.3",
@@ -22,7 +25,6 @@
         "grunt-mocha-test": "^0.12.7",
         "istanbul": "^0.3.14",
         "mocha": "^2.2.5",
-        "node-netflowv9": "^0.2.5",
         "sinon": "^1.14.1",
         "sinon-chai": "^2.7.0"
     }
