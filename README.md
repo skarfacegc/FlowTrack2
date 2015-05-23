@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/skarfacegc/FlowTrack2.svg)](https://travis-ci.org/skarfacegc/FlowTrack2)
+
 FlowTrack2
 ==========
 
