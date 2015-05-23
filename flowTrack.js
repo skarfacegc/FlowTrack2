@@ -5,6 +5,7 @@
 var cluster = require('cluster');
 var netflow = require('node-netflowv9');
 var numCPUs = require('os').cpus().length;
+var es = require('elasticsearch');
 var NetFlowStorage = require('./lib/NetFlowStorage.js');
 
 
@@ -13,7 +14,7 @@ main();
 
 function main() {
 
-    var nfStore = new NetFlowStorage();
+    var nfStore = new NetFlowStorage(es);
 
 
     if (cluster.isMaster) {
