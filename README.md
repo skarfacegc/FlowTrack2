@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/skarfacegc/FlowTrack2.svg)](https://travis-ci.org/skarfacegc/FlowTrack2)
+[![Code Climate](https://codeclimate.com/github/skarfacegc/FlowTrack2/badges/gpa.svg)](https://codeclimate.com/github/skarfacegc/FlowTrack2) [![Build Status](https://travis-ci.org/skarfacegc/FlowTrack2.svg)](https://travis-ci.org/skarfacegc/FlowTrack2) [![Test Coverage](https://codeclimate.com/github/skarfacegc/FlowTrack2/badges/coverage.svg)](https://codeclimate.com/github/skarfacegc/FlowTrack2/coverage)
 
 FlowTrack2
 ==========
