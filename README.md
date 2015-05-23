@@ -21,11 +21,11 @@ Take a look at the [DevLog](https://github.com/skarfacegc/FlowTrack2/blob/master
     + seems to be the right way to go
 - Created flow storage lib
     + I think it's created cleanly, I'm sure I'll notice stuff as I learn more.
+- Unit testing & Code Coverage setup added
+    + Not super happy with it, want to look at something other than istanbul
     
 Next up (in no particular order)
 -------
-- Figure out unit testing with node
-    + And add unit tests
 - Performance testing
     + I want to see how fast this will actually go
     + Using a single node for ES

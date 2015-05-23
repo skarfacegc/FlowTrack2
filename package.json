@@ -22,6 +22,8 @@
         "grunt-mocha-test": "^0.12.7",
         "istanbul": "^0.3.14",
         "mocha": "^2.2.5",
-        "node-netflowv9": "^0.2.5"
+        "node-netflowv9": "^0.2.5",
+        "sinon": "^1.14.1",
+        "sinon-chai": "^2.7.0"
     }
 }

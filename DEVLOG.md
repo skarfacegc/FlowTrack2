@@ -25,6 +25,10 @@ I got unit testing setup and started along with code coverage.  Kinda stumbled i
 -----------
 Fought with adding unit tests and mocks/spies to ```NetFlowStorage```.  Couldn't quite figure it out.  Posted to stackoverflow.  
 
+2015.May.23
+-----------
+Got unit testing better.  Needed a little refactoring, and a bit more smarts in the stubs/spies.  Seems to be working now.
+
 
 
 
