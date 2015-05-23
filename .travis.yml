@@ -1,5 +1,8 @@
-"before_script": npm install
+"before_install":
+  - npm install -g grunt-cli
+
 "language": node_js
+
 "script": "grunt coverage"
 
 "adddons":
