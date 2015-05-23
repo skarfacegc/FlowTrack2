@@ -12,6 +12,18 @@ chai.use(sinonChai);
 
 
 describe('NetFlowStorage', function() {
+
+    var sandbox;
+
+    beforeEach(function() {
+        sandbox = sinon.sandbox.create();
+    });
+
+    afterEach(function() {
+        sandbox.restore();
+    });
+
+
     describe('constructor', function() {
 
         it('should be an instance of NetFlowStorage', function() {
@@ -61,23 +73,12 @@ describe('NetFlowStorage', function() {
     });
 
     describe('createIndex', function() {
-
-        var sandbox;
-
-        beforeEach(function() {
-            sandbox = sinon.sandbox.create();
-        });
-
-        afterEach(function() {
-            sandbox.restore();
-        });
-
         it('creates an index if one does not exist', function() {
 
             var es = require('elasticsearch');
             var nfStore = new NetFlowStorage(es);
 
-            var myCreateSpy = sinon.spy();
+            var myCreateSpy = sandbox.spy();
             var stub = sandbox.stub(es, 'Client', function() {
                 var tmpObj = {
                     indices: {
@@ -100,7 +101,7 @@ describe('NetFlowStorage', function() {
             var es = require('elasticsearch');
             var nfStore = new NetFlowStorage(es);
 
-            var myCreateSpy = sinon.spy();
+            var myCreateSpy = sandbox.spy();
             var stub = sandbox.stub(es, 'Client', function() {
                 var tmpObj = {
                     indices: {
@@ -117,6 +118,67 @@ describe('NetFlowStorage', function() {
 
             expect(myCreateSpy).to.not.be.called;
         });
+    });
+
+    describe('storeFlow', function() {
+        it('should correctly store the flow', function() {
+
+            var es = require('elasticsearch');
+            var nfStore = new NetFlowStorage(es);
+
+
+            // Set the date to a fixed value so we can check it in the save.
+            var clock = sinon.useFakeTimers(Date.now() - 10000000);
+            var test_time = Date.now();
+            var index;
+
+
+            var sample_flow = {
+                ipv4_src_addr: '192.168.1.10',
+                ipv4_dst_addr: '43.229.52.134',
+                ipv4_next_hop: '0.0.0.0',
+                input_snmp: 1,
+                output_snmp: 0,
+                in_pkts: 29,
+                in_bytes: 4381,
+                first_switched: 598956992,
+                last_switched: 598958053,
+                ipv4_src_port: 22,
+                ipv4_dst_port: 37402,
+                tcp_flags: 27,
+                protocol: 6,
+                src_tos: 0,
+                in_as: 0,
+                out_as: 0,
+                src_mask: 0,
+                dst_mask: 0
+            };
+
+
+
+
+            // Setup our mock
+            var stub = sandbox.stub(es, 'Client', function() {});
+            nfStore.client = new es.Client();
+            nfStore.client.index = function() {};
+            var myIndexSpy = sandbox.spy(nfStore.client, 'index');
+
+
+            nfStore.storeFlow(sample_flow);
+
+            var store_compare = {
+                index: 'flow_track2',
+                type: 'raw_flow',
+                body: sample_flow
+            };
+
+            // Set our timestamp
+            store_compare.body.timestamp = test_time;
+
+            expect(myIndexSpy).to.be.calledWith(store_compare);
+
+        });
+
     });
 
 });
