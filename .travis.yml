@@ -6,13 +6,6 @@
 
 "script": "grunt coverage"
 
-#
-# I'm ok with this.  Even if wrong, damage is VERY limited.  ;)
-#http://docs.codeclimate.com/article/276-should-i-keep-my-test-coverage-token-secret
-#
-"adddons":
-  "code_climate":
-    "repo_token": "c0286523250fa5c1ebd682a52a0b458744f4846ca179d5f8d4337db3a1a7c8a5"
 
 "after_script":
   - codeclimate < test/coverage/lcov.info
