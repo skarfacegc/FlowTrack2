@@ -1,5 +1,6 @@
 "before_install":
   - npm install -g grunt-cli
+  - npm install -g codeclimate-test-reporter
 
 "language": node_js
 
