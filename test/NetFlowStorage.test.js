@@ -1,4 +1,4 @@
-/* jshint unused: false, -W079: false, expr: true */
+/* jshint unused: false, mocha: true, expr: true*/
 /* Don't complain about unused or W079 squash the redef warnings on should */
 'use strict';
 
