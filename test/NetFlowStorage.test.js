@@ -1,12 +1,15 @@
-/* jshint unused: false, mocha: true, expr: true*/
-/* Don't complain about unused or W079 squash the redef warnings on should */
+/* jshint unused: false, expr: true*/
 'use strict';
 
 var NetFlowStorage = require('../lib/NetFlowStorage');
+var getLogger = require('../lib/getLogger');
+var logger = new getLogger(process.env.NODE_ENV);
+
 var chai = require('chai');
+var expect = chai.expect;
+
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
-var expect = chai.expect;
 chai.use(sinonChai);
 
 
@@ -28,28 +31,28 @@ describe('NetFlowStorage', function() {
 
         it('should be an instance of NetFlowStorage', function() {
             var es = require('elasticsearch');
-            var nfStore = new NetFlowStorage(es);
+            var nfStore = new NetFlowStorage(es, logger);
 
             expect(nfStore).to.be.instanceof(NetFlowStorage);
         });
 
         it('should have a host', function() {
             var es = require('elasticsearch');
-            var nfStore = new NetFlowStorage(es);
+            var nfStore = new NetFlowStorage(es, logger);
 
             expect(nfStore).to.have.property('host');
         });
 
         it('should have shards', function() {
             var es = require('elasticsearch');
-            var nfStore = new NetFlowStorage(es);
+            var nfStore = new NetFlowStorage(es, logger);
 
             expect(nfStore).to.have.property('shards');
         });
 
         it('should have a replica', function() {
             var es = require('elasticsearch');
-            var nfStore = new NetFlowStorage(es);
+            var nfStore = new NetFlowStorage(es, logger);
 
             expect(nfStore).to.have.property('replicas');
 
@@ -57,14 +60,14 @@ describe('NetFlowStorage', function() {
 
         it('should have an index name', function() {
             var es = require('elasticsearch');
-            var nfStore = new NetFlowStorage(es);
+            var nfStore = new NetFlowStorage(es, logger);
 
             expect(nfStore).to.have.property('index_name');
         });
 
         it('should have a valid elastic search object', function() {
             var es = require('elasticsearch');
-            var nfStore = new NetFlowStorage(es);
+            var nfStore = new NetFlowStorage(es, logger);
 
             expect(nfStore).to.have.property('es').that.deep.equals(es);
 
@@ -76,7 +79,7 @@ describe('NetFlowStorage', function() {
         it('creates an index if one does not exist', function() {
 
             var es = require('elasticsearch');
-            var nfStore = new NetFlowStorage(es);
+            var nfStore = new NetFlowStorage(es, logger);
 
             var myCreateSpy = sandbox.spy();
             var stub = sandbox.stub(es, 'Client', function() {
@@ -99,7 +102,7 @@ describe('NetFlowStorage', function() {
         it('does not create an index if one exists', function() {
 
             var es = require('elasticsearch');
-            var nfStore = new NetFlowStorage(es);
+            var nfStore = new NetFlowStorage(es, logger);
 
             var myCreateSpy = sandbox.spy();
             var stub = sandbox.stub(es, 'Client', function() {
@@ -124,7 +127,7 @@ describe('NetFlowStorage', function() {
         it('should correctly store the flow', function() {
 
             var es = require('elasticsearch');
-            var nfStore = new NetFlowStorage(es);
+            var nfStore = new NetFlowStorage(es, logger);
 
 
             // Set the date to a fixed value so we can check it in the save.

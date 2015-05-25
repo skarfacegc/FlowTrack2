@@ -4,6 +4,11 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
+        env: {
+            test: {
+                NODE_ENV: 'test'
+            }
+        },
         mochaTest: {
             options: {
                 reporter: 'spec'
@@ -42,11 +47,11 @@ module.exports = function(grunt) {
         watch: {
             gruntfile: {
                 files: '<%= jshint.gruntfile.src %>',
-                tasks: ['jshint:gruntfile', 'mochaTest']
+                tasks: ['jshint:gruntfile', 'test']
             },
             lib: {
                 files: '<%= jshint.lib.src %>',
-                tasks: ['jshint:lib', 'mochaTest']
+                tasks: ['jshint:lib', 'test']
             },
             test: {
                 files: '<%= jshint.test.src %>',
@@ -54,7 +59,7 @@ module.exports = function(grunt) {
             },
             main: {
                 files: '<%= jshint.main.src %>',
-                tasks: ['jshint:main', 'mochaTest']
+                tasks: ['jshint:main', 'test']
             },
         },
     });
@@ -67,8 +72,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-env');
 
     // Default task.
-    grunt.registerTask('default', ['jshint']);
-    grunt.registerTask('coverage', ['mocha_istanbul:coverage']);
+    grunt.registerTask('default', ['env:test', 'jshint']);
+    grunt.registerTask('coverage', ['env:test', 'jshint', 'mocha_istanbul:coverage']);
+    grunt.registerTask('test', ['env:test', 'mochaTest']);
 
 
 
