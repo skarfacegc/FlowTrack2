@@ -6,7 +6,7 @@
     "repository": "https://github.com/skarfacegc/FlowTrack2",
     "author": "https://github.com/skarfacegc/",
     "license": "MIT",
-    "main": "flowTrack.js",
+    "main": "bin/flowTrack.js",
     "scripts": {
         "test": "grunt mochaTest"
     },

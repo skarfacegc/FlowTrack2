@@ -6,9 +6,9 @@ var cluster = require('cluster');
 var netflow = require('node-netflowv9');
 var numCPUs = require('os').cpus().length;
 var es = require('elasticsearch');
-var NetFlowStorage = require('./lib/NetFlowStorage');
+var NetFlowStorage = require('../lib/NetFlowStorage');
 
-var getLogger = require('./lib/getLogger');
+var getLogger = require('../lib/getLogger');
 var logger = getLogger(process.env.NODE_ENV);
 
 main();

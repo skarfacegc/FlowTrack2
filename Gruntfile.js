@@ -40,8 +40,8 @@ module.exports = function(grunt) {
             test: {
                 src: ['test/**/*.test.js']
             },
-            main: {
-                src: ['flowTrack.js']
+            bin: {
+                src: ['bin/*.js', 'bin/flowTrack']
             },
         },
         watch: {
@@ -57,9 +57,9 @@ module.exports = function(grunt) {
                 files: '<%= jshint.test.src %>',
                 tasks: ['jshint:test', 'coverage']
             },
-            main: {
-                files: '<%= jshint.main.src %>',
-                tasks: ['jshint:main', 'test']
+            bin: {
+                files: '<%= jshint.bin.src %>',
+                tasks: ['jshint:bin', 'test']
             },
         },
     });
@@ -75,7 +75,5 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['env:test', 'jshint']);
     grunt.registerTask('coverage', ['env:test', 'jshint', 'mocha_istanbul:coverage']);
     grunt.registerTask('test', ['env:test', 'mochaTest']);
-
-
 
 };
