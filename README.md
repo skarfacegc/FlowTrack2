@@ -5,6 +5,8 @@ FlowTrack2
 
 This is my rewrite of [FlowTrack](https://github.com/skarfacegc/FlowTrack) in node and elastic search.
 
+Tracking user stories / issues with [waffle.io](https://waffle.io/skarfacegc/FlowTrack2)
+
 Why?
 ---
 
