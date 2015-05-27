@@ -26,11 +26,11 @@ describe('getLogger', function() {
         expect(logger).to.have.property('_level').that.equals(60);
     });
 
-    it('should be configured to only log info under dev', function() {
+    it('should be configured to only log debug under dev', function() {
         var getLogger = require('../lib/getLogger');
         var logger = getLogger('dev');
 
-        expect(logger).to.have.property('_level').that.equals(30);
+        expect(logger).to.have.property('_level').that.equals(20);
     });
 
     it('should be configured to only log info by default', function() {
