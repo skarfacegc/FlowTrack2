@@ -44,6 +44,7 @@ module.exports = function(grunt) {
                 src: ['bin/*.js', 'bin/flowTrack']
             },
         },
+
         watch: {
             gruntfile: {
                 files: '<%= jshint.gruntfile.src %>',
@@ -62,6 +63,12 @@ module.exports = function(grunt) {
                 tasks: ['jshint:bin', 'test']
             },
         },
+
+        nodemon: {
+            dev: {
+                script: 'bin/flowTrack'
+            }
+        }
     });
 
     // These plugins provide necessary tasks.
@@ -69,6 +76,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-mocha-istanbul');
+    grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-env');
 
     // Default task.
