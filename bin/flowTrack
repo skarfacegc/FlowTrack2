@@ -4,28 +4,35 @@
 'use strict';
 var cluster = require('cluster');
 var netflow = require('node-netflowv9');
-var numCPUs = require('os').cpus().length;
 var es = require('elasticsearch');
+var express = require('express');
 var NetFlowStorage = require('../lib/NetFlowStorage');
-
 var getLogger = require('../lib/getLogger');
+var WebService = require('../lib/WebService');
+
+var numCPUs = require('os').cpus().length;
 var logger = getLogger(process.env.NODE_ENV);
 
 main();
 
 function main() {
 
-    var nfStore = new NetFlowStorage(es, logger);
+    var nfStore = new NetFlowStorage(es, logger),
+        web = new WebService(express, logger);
 
 
     if (cluster.isMaster) {
 
-        // Setup, then fork the workers
+        // Setup, then fork the flow collection workers
         nfStore.createIndex();
 
         for (var i = 0; i < numCPUs; i++) {
             cluster.fork();
         }
+
+
+         // Now start the webservice
+         web.start();
 
 
     } else {
