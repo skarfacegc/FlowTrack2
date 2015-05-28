@@ -1,5 +1,9 @@
 Ongoing devlog. Will cover research stuff, notes, and progress
 
+2015.May.27
+-----------
+Bunch of stuff over the last few days.  Got the basic expressjs scaffold into place.  Webserver is started, unit tests for same added.
+
 2015.May.24
 -----------
 Added bunyan for logging.  Not super thrilled with the way I've integrated it, but it seems to work, and I can spruce it up later
