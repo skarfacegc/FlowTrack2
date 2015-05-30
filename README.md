@@ -25,6 +25,8 @@ Take a look at the [DevLog](https://github.com/skarfacegc/FlowTrack2/blob/master
     + I think it's created cleanly, I'm sure I'll notice stuff as I learn more.
 - Unit testing & Code Coverage setup added
     + Not super happy with it, want to look at something other than istanbul
+- Unit tests are a little cleaner now. 
+- Start web UI
     
 Next up (in no particular order)
 -------
@@ -34,7 +36,7 @@ Next up (in no particular order)
 - Config file
     + Create a config file to pull constants
     + possible commandline override
-- Start web UI
+
 
 
 Install
