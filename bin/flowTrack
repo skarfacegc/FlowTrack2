@@ -12,17 +12,17 @@ var NetFlowStorage = require('../lib/NetFlowStorage');
 var GetLogger = require('../lib/GetLogger');
 var FlowTrack2App = require('../lib/FlowTrack2App');
 
-var numCPUs = require('os').cpus().length;
-var logger = new GetLogger(process.env.NODE_ENV);
-var app = new FlowTrack2App(logger);
+
 
 var port = 3000;
 
 main();
 function main() {
-
+        
+    var numCPUs = require('os').cpus().length;
+    var logger = new GetLogger(process.env.NODE_ENV);
     var nfStore = new NetFlowStorage(es, logger);
-
+    var app = new FlowTrack2App(logger);    
 
     if (cluster.isMaster) {
 
@@ -54,7 +54,7 @@ function main() {
 
 function startWebServer(port, app)
 {
-
+    var logger = new GetLogger(process.env.NODE_ENV);
     http.createServer(app).listen(port);
     logger.info('Listening on: ' + port);
 }
