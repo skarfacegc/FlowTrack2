@@ -1,11 +1,9 @@
-[![Build Status](https://travis-ci.org/skarfacegc/FlowTrack2.svg)](https://travis-ci.org/skarfacegc/FlowTrack2) [![Test Coverage](https://codeclimate.com/github/skarfacegc/FlowTrack2/badges/coverage.svg)](https://codeclimate.com/github/skarfacegc/FlowTrack2/coverage) [![Code Climate](https://codeclimate.com/github/skarfacegc/FlowTrack2/badges/gpa.svg)](https://codeclimate.com/github/skarfacegc/FlowTrack2) 
+[![Build Status](https://travis-ci.org/skarfacegc/FlowTrack2.svg)](https://travis-ci.org/skarfacegc/FlowTrack2) [![Test Coverage](https://codeclimate.com/github/skarfacegc/FlowTrack2/badges/coverage.svg)](https://codeclimate.com/github/skarfacegc/FlowTrack2/coverage) [![Code Climate](https://codeclimate.com/github/skarfacegc/FlowTrack2/badges/gpa.svg)](https://codeclimate.com/github/skarfacegc/FlowTrack2) [![waffle.io](https://img.shields.io/badge/waffle.io-roadmap%2Fissues-lightgrey.svg)](https://waffle.io/skarfacegc/flowtrack2)
 
 FlowTrack2
 ==========
 
 This is my rewrite of [FlowTrack](https://github.com/skarfacegc/FlowTrack) in node and elastic search.
-
-Tracking user stories / issues with [waffle.io](https://waffle.io/skarfacegc/FlowTrack2)
 
 Why?
 ---
