@@ -22,7 +22,7 @@ module.exports = function(grunt) {
             coverage: {
                 src: ['test/**/*.test.js'],
                 options: {
-                    coverageFolder: 'test/coverage'
+                    coverageFolder: 'coverage'
                 }
             }
         },
