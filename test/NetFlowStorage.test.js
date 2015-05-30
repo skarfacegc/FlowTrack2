@@ -5,6 +5,7 @@ var NetFlowStorage = require('../lib/NetFlowStorage');
 var getLogger = require('../lib/getLogger');
 var logger = new getLogger(process.env.NODE_ENV);
 
+var es = require('elasticsearch');
 var chai = require('chai');
 var expect = chai.expect;
 
@@ -30,28 +31,28 @@ describe('NetFlowStorage', function() {
     describe('constructor', function() {
 
         it('should be an instance of NetFlowStorage', function() {
-            var es = require('elasticsearch');
+
             var nfStore = new NetFlowStorage(es, logger);
 
             expect(nfStore).to.be.instanceof(NetFlowStorage);
         });
 
         it('should have a host', function() {
-            var es = require('elasticsearch');
+
             var nfStore = new NetFlowStorage(es, logger);
 
             expect(nfStore).to.have.property('host');
         });
 
         it('should have shards', function() {
-            var es = require('elasticsearch');
+
             var nfStore = new NetFlowStorage(es, logger);
 
             expect(nfStore).to.have.property('shards');
         });
 
         it('should have a replica', function() {
-            var es = require('elasticsearch');
+
             var nfStore = new NetFlowStorage(es, logger);
 
             expect(nfStore).to.have.property('replicas');
@@ -59,14 +60,14 @@ describe('NetFlowStorage', function() {
         });
 
         it('should have an index name', function() {
-            var es = require('elasticsearch');
+
             var nfStore = new NetFlowStorage(es, logger);
 
             expect(nfStore).to.have.property('index_name');
         });
 
         it('should have a valid elastic search object', function() {
-            var es = require('elasticsearch');
+
             var nfStore = new NetFlowStorage(es, logger);
 
             expect(nfStore).to.have.property('es').that.deep.equals(es);
@@ -78,7 +79,7 @@ describe('NetFlowStorage', function() {
     describe('createIndex', function() {
         it('creates an index if one does not exist', function() {
 
-            var es = require('elasticsearch');
+
             var nfStore = new NetFlowStorage(es, logger);
 
             var myCreateSpy = sandbox.spy();
@@ -101,7 +102,7 @@ describe('NetFlowStorage', function() {
 
         it('does not create an index if one exists', function() {
 
-            var es = require('elasticsearch');
+
             var nfStore = new NetFlowStorage(es, logger);
 
             var myCreateSpy = sandbox.spy();
@@ -126,7 +127,7 @@ describe('NetFlowStorage', function() {
     describe('storeFlow', function() {
         it('should correctly store the flow', function() {
 
-            var es = require('elasticsearch');
+
             var nfStore = new NetFlowStorage(es, logger);
 
 
