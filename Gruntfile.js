@@ -13,14 +13,14 @@ module.exports = function(grunt) {
             options: {
                 reporter: 'spec'
             },
-            src: ['test/*.test.js']
+            src: ['test/**/*.test.js']
         },
 
 
         // Istanbul code coverage
         mocha_istanbul: {
             coverage: {
-                src: ['test/*.test.js'],
+                src: ['test/**/*.test.js'],
                 options: {
                     coverageFolder: 'test/coverage'
                 }
