@@ -2,23 +2,26 @@
 
 /*jslint node: true */
 'use strict';
+
 var cluster = require('cluster');
 var netflow = require('node-netflowv9');
 var es = require('elasticsearch');
-var express = require('express');
+var http = require('http');
+
 var NetFlowStorage = require('../lib/NetFlowStorage');
 var getLogger = require('../lib/getLogger');
-var WebService = require('../lib/WebService');
+var FlowTrack2App = require('../lib/FlowTrack2App');
 
 var numCPUs = require('os').cpus().length;
 var logger = getLogger(process.env.NODE_ENV);
+var app = new FlowTrack2App(logger);
+
+var port = 3000;
 
 main();
-
 function main() {
 
-    var nfStore = new NetFlowStorage(es, logger),
-        web = new WebService(express, logger);
+    var nfStore = new NetFlowStorage(es, logger);
 
 
     if (cluster.isMaster) {
@@ -32,7 +35,7 @@ function main() {
 
 
          // Now start the webservice
-         web.start();
+         startWebServer(port,app);
 
 
     } else {
@@ -45,4 +48,13 @@ function main() {
             }
         }).listen(2055);
     }
+}
+
+
+
+function startWebServer(port, app)
+{
+
+    http.createServer(app).listen(port);
+    logger.info('Listening on: ' + port);
 }
