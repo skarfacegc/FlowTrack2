@@ -66,7 +66,9 @@ module.exports = function(grunt) {
 
         nodemon: {
             dev: {
-                script: 'bin/flowTrack'
+                script: 'bin/flowTrack',
+                ignore: ['node_modules/**', 'test/coverage/**'],
+                delay: 4000
             }
         }
     });
