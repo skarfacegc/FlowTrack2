@@ -1,5 +1,9 @@
 Ongoing devlog. Will cover research stuff, notes, and progress
 
+2015.May.30
+-----------
+Restructured webservice startup to follow the pattern outlined by express-generator.  Basically isolating my app in it's own module, then starting it with createserver in the main bin.  Makes UT a bit easier.
+
 2015.May.27
 -----------
 Bunch of stuff over the last few days.  Got the basic expressjs scaffold into place.  Webserver is started, unit tests for same added.
