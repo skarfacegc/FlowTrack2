@@ -9,11 +9,11 @@ var es = require('elasticsearch');
 var http = require('http');
 
 var NetFlowStorage = require('../lib/NetFlowStorage');
-var getLogger = require('../lib/getLogger');
+var GetLogger = require('../lib/GetLogger');
 var FlowTrack2App = require('../lib/FlowTrack2App');
 
 var numCPUs = require('os').cpus().length;
-var logger = getLogger(process.env.NODE_ENV);
+var logger = new GetLogger(process.env.NODE_ENV);
 var app = new FlowTrack2App(logger);
 
 var port = 3000;

@@ -2,8 +2,8 @@
 'use strict';
 
 var NetFlowStorage = require('../lib/NetFlowStorage');
-var getLogger = require('../lib/getLogger');
-var logger = new getLogger(process.env.NODE_ENV);
+var GetLogge1r = require('../lib/GetLogger');
+var logger = new GetLogge1r(process.env.NODE_ENV);
 
 var es = require('elasticsearch');
 var chai = require('chai');
