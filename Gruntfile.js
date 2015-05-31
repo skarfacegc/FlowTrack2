@@ -48,11 +48,11 @@ module.exports = function(grunt) {
         watch: {
             gruntfile: {
                 files: '<%= jshint.gruntfile.src %>',
-                tasks: ['jshint:gruntfile', 'test']
+                tasks: ['jshint:gruntfile', 'coverage']
             },
             lib: {
                 files: '<%= jshint.lib.src %>',
-                tasks: ['jshint:lib', 'test']
+                tasks: ['jshint:lib', 'coverage']
             },
             test: {
                 files: '<%= jshint.test.src %>',
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
             },
             bin: {
                 files: '<%= jshint.bin.src %>',
-                tasks: ['jshint:bin', 'test']
+                tasks: ['jshint:bin', 'coverage']
             },
         },
 
