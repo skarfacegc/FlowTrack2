@@ -7,21 +7,19 @@ var cluster = require('cluster');
 var netflow = require('node-netflowv9');
 var es = require('elasticsearch');
 var http = require('http');
+var config = require('config');
 
 var NetFlowStorage = require('../lib/NetFlowStorage');
 var GetLogger = require('../lib/GetLogger');
 var FlowTrack2App = require('../lib/FlowTrack2App');
 
 
-
-var port = 3000;
-
 main();
 function main() {
         
     var numCPUs = require('os').cpus().length;
     var logger = new GetLogger(process.env.NODE_ENV);
-    var nfStore = new NetFlowStorage(es, logger);
+    var nfStore = new NetFlowStorage(es, logger, config);
     var app = new FlowTrack2App(logger);    
 
     if (cluster.isMaster) {
@@ -35,7 +33,7 @@ function main() {
 
 
          // Now start the webservice
-         startWebServer(port,app);
+         startWebServer(config.get('Application.web_port'),app);
 
 
     } else {
@@ -46,7 +44,7 @@ function main() {
             for (var i = 0; i < flow.flows.length; i++) {
                 nfStore.storeFlow(flow.flows[i]);
             }
-        }).listen(2055);
+        }).listen(config.get('Application.netflow_port'));
     }
 }
 

@@ -4,6 +4,7 @@
 var NetFlowStorage = require('../lib/NetFlowStorage');
 var GetLogge1r = require('../lib/GetLogger');
 var logger = new GetLogge1r(process.env.NODE_ENV);
+var config = require('config');
 
 var es = require('elasticsearch');
 var chai = require('chai');
@@ -32,28 +33,28 @@ describe('NetFlowStorage', function() {
 
         it('should be an instance of NetFlowStorage', function() {
 
-            var nfStore = new NetFlowStorage(es, logger);
+            var nfStore = new NetFlowStorage(es, logger, config);
 
             expect(nfStore).to.be.instanceof(NetFlowStorage);
         });
 
         it('should have a host', function() {
 
-            var nfStore = new NetFlowStorage(es, logger);
+            var nfStore = new NetFlowStorage(es, logger, config);
 
             expect(nfStore).to.have.property('host');
         });
 
         it('should have shards', function() {
 
-            var nfStore = new NetFlowStorage(es, logger);
+            var nfStore = new NetFlowStorage(es, logger, config);
 
             expect(nfStore).to.have.property('shards');
         });
 
         it('should have a replica', function() {
 
-            var nfStore = new NetFlowStorage(es, logger);
+            var nfStore = new NetFlowStorage(es, logger, config);
 
             expect(nfStore).to.have.property('replicas');
 
@@ -61,14 +62,14 @@ describe('NetFlowStorage', function() {
 
         it('should have an index name', function() {
 
-            var nfStore = new NetFlowStorage(es, logger);
+            var nfStore = new NetFlowStorage(es, logger, config);
 
             expect(nfStore).to.have.property('index_name');
         });
 
         it('should have a valid elastic search object', function() {
 
-            var nfStore = new NetFlowStorage(es, logger);
+            var nfStore = new NetFlowStorage(es, logger, config);
 
             expect(nfStore).to.have.property('es').that.deep.equals(es);
 
@@ -80,7 +81,7 @@ describe('NetFlowStorage', function() {
         it('creates an index if one does not exist', function() {
 
 
-            var nfStore = new NetFlowStorage(es, logger);
+            var nfStore = new NetFlowStorage(es, logger, config);
 
             var myCreateSpy = sandbox.spy();
             var stub = sandbox.stub(es, 'Client', function() {
@@ -103,7 +104,7 @@ describe('NetFlowStorage', function() {
         it('does not create an index if one exists', function() {
 
 
-            var nfStore = new NetFlowStorage(es, logger);
+            var nfStore = new NetFlowStorage(es, logger, config);
 
             var myCreateSpy = sandbox.spy();
             var stub = sandbox.stub(es, 'Client', function() {
@@ -128,7 +129,7 @@ describe('NetFlowStorage', function() {
         it('should correctly store the flow', function() {
 
 
-            var nfStore = new NetFlowStorage(es, logger);
+            var nfStore = new NetFlowStorage(es, logger, config);
 
 
             // Set the date to a fixed value so we can check it in the save.

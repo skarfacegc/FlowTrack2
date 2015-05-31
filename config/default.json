@@ -1,0 +1,11 @@
+{
+    "NetFlowStorage": {
+        "elasticsearch_host": "localhost:9200",
+        "elasticsearch_shards": "4",
+        "elasticsearch_replicas": "0"
+    },
+    "Application": {
+        "web_port": 3000,
+        "netflow_port": 2055
+    }
+}
