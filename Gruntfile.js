@@ -52,8 +52,8 @@ module.exports = function(grunt) {
 
             },
             all: {
-                src: '<%= files.all %>'
-            }
+                src: '<%= files.src %>'
+            },
             jshintrc: {
                 src: '.jshintrc'
             },
