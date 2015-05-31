@@ -2,68 +2,70 @@
 
 module.exports = function(grunt) {
 
+
     // Project configuration.
     grunt.initConfig({
+
+        files: {
+            lib: ['lib/**/*.js'],
+            bin: ['bin/*'],
+            config: ['config/**/*'],
+            tests: ['test/**/*.js'],
+            gruntfile: ['Gruntfile.js'],
+
+            // Composites of above
+            src: ['lib/**/*.js', 'bin/*', 'test/**/*.js'],
+            all: ['lib/**/*.js', 'bin/*', 'config/**/*', 'test/**/*.js', 'Gruntfile.js']
+        },
+
+        // Set Environment
         env: {
             test: {
                 NODE_ENV: 'test'
             }
         },
+
+        // Maybe remove this, istanbul covers it nicely
         mochaTest: {
             options: {
                 reporter: 'spec'
             },
-            src: ['test/**/*.test.js']
+            src: '<%= files.tests %>'
         },
 
 
         // Istanbul code coverage
         mocha_istanbul: {
             coverage: {
-                src: ['test/**/*.test.js'],
+                src: '<%= files.tests %>',
                 options: {
                     coverageFolder: 'coverage'
                 }
             }
         },
 
+        // Run jshint
         jshint: {
             options: {
-                jshintrc: '.jshintrc'
+                reporter: require('jshint-stylish'),
+                jshintrc: '.jshintrc',
+
             },
-            gruntfile: {
-                src: 'Gruntfile.js'
-            },
-            lib: {
-                src: ['lib/**/*.js']
-            },
-            test: {
-                src: ['test/**/*.test.js']
-            },
-            bin: {
-                src: ['bin/*.js', 'bin/flowTrack']
-            },
+            all: {
+                src: '<%= files.all %>'
+            }
         },
 
+
+        // run jshint/tests/coverage when anything changes
         watch: {
-            gruntfile: {
-                files: '<%= jshint.gruntfile.src %>',
-                tasks: ['jshint:gruntfile', 'coverage']
-            },
-            lib: {
-                files: '<%= jshint.lib.src %>',
-                tasks: ['jshint:lib', 'coverage']
-            },
-            test: {
-                files: '<%= jshint.test.src %>',
-                tasks: ['jshint:test', 'coverage']
-            },
-            bin: {
-                files: '<%= jshint.bin.src %>',
-                tasks: ['jshint:bin', 'coverage']
-            },
+            all: {
+                files: '<%= files.all %>',
+                tasks: ['coverage']
+            }
         },
 
+        // restart the server when anything changes
         nodemon: {
             dev: {
                 script: 'bin/flowTrack',
