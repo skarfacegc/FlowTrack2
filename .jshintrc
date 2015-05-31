@@ -1,22 +1,14 @@
 {
+  "node": true,
+  "mocha": true,
+  "browser": true,
+  "esnext": true,
+  "bitwise": true,
   "curly": true,
   "eqeqeq": true,
   "immed": true,
-  "latedef": "nofunc",
   "newcap": true,
   "noarg": true,
-  "sub": true,
   "undef": true,
-  "unused": true,
-  "boss": true,
-  "eqnull": true,
-  "node": true,
-  "globals" : {
-      "describe"   : false,
-      "it"         : false,
-      "before"     : false,
-      "beforeEach" : false,
-      "after"      : false,
-      "afterEach"  : false
-  }
+  "strict": true
 }

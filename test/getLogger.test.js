@@ -1,4 +1,4 @@
-/* jshint unused: false, expr: true*/
+/* jshint expr: true*/
 'use strict';
 
 
