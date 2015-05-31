@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 
             // Composites of above
             src: ['lib/**/*.js', 'bin/*', 'test/**/*.js'],
-            all: ['lib/**/*.js', 'bin/*', 'config/**/*', 'test/**/*.js', 'Gruntfile.js']
+            all: ['lib/**/*.js', 'bin/*', 'config/**/*', 'test/**/*.js', 'Gruntfile.js', 'package.json']
         },
 
         // Set Environment
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
         nodemon: {
             dev: {
                 script: 'bin/flowTrack',
-                ignore: ['node_modules/**', 'test/coverage/**'],
+                ignore: ['node_modules/**', 'coverage/**'],
                 delay: 4000
             }
         }
