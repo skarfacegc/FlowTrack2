@@ -52,7 +52,7 @@ module.exports = function(grunt) {
                 jshintrc: '.jshintrc',
 
             },
-            all: {
+            src: {
                 src: '<%= files.src %>'
             },
             jshintrc: {
@@ -92,8 +92,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-env');
 
     // Default task.
-    grunt.registerTask('default', ['env:test', 'jshint:all']);
-    grunt.registerTask('coverage', ['env:test', 'jshint:all', 'mocha_istanbul:coverage']);
+    grunt.registerTask('default', ['env:test', 'jshint:src']);
+    grunt.registerTask('coverage', ['env:test', 'jshint:src', 'mocha_istanbul:coverage']);
     grunt.registerTask('test', ['env:test', 'mochaTest']);
 
 };
