@@ -39,7 +39,8 @@ module.exports = function(grunt) {
             coverage: {
                 src: '<%= files.tests %>',
                 options: {
-                    coverageFolder: 'coverage'
+                    coverageFolder: 'coverage',
+                    print: 'detail'
                 }
             }
         },
