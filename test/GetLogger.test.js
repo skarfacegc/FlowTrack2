@@ -36,5 +36,18 @@ describe('GetLogger', function() {
         expect(logger).to.have.property('_level').that.equals(30);
     });
 
+    it('should set a default name', function() {
+        var logger = new GetLogger();
+
+        expect(logger).to.have.property('fields').to.have.property('name').that.equals('FlowTrack2');
+
+    });
+
+    it('should allow passing a name', function() {
+        var logger = new GetLogger('test', 'TestName');
+
+        expect(logger).to.have.property('fields').to.have.property('name').that.equals('TestName');
+
+    });
 
 });

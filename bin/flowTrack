@@ -18,9 +18,13 @@ main();
 function main() {
         
     var numCPUs = require('os').cpus().length;
-    var logger = new GetLogger(process.env.NODE_ENV);
+
+    // Setup our logger instances
+    var logger = new GetLogger(process.env.NODE_ENV,'FlowTrack2'); 
+    var expressLogger = new GetLogger(process.env.NODE_ENV, 'FlowTrack2App'); 
+
     var nfStore = new NetFlowStorage(es, logger, config);
-    var app = new FlowTrack2App(logger);    
+    var app = new FlowTrack2App(expressLogger, config);    
 
     if (cluster.isMaster) {
 
