@@ -27,15 +27,14 @@ Take a look at the [DevLog](https://github.com/skarfacegc/FlowTrack2/blob/master
     + Not super happy with it, want to look at something other than istanbul
 - Unit tests are a little cleaner now. 
 - Start web UI
+- Added config file system
     
 Next up (in no particular order)
 -------
 - Performance testing
     + I want to see how fast this will actually go
     + Using a single node for ES
-- Config file
-    + Create a config file to pull constants
-    + possible commandline override
+- Add table view of flows to web UI
 
 
 
