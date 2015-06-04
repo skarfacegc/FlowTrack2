@@ -45,11 +45,13 @@ Install
 - Have a running elastic search instance
     - Currently assumes localhost:9200
 - have a working node + npm
+- sends bunyan logs to stdout, no way to turn off currently.
+- Webserver is running on port 3000, it doesn't do anything yet (currently shows a hello world page)
 ```
 git clone https://github.com/skarfacegc/FlowTrack2.git
 cd FlowTrack2.git
 npm install
-node flowTrack.js
+bin/flowTrack
 ```
 
 
