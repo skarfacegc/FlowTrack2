@@ -82,7 +82,6 @@ module.exports = function(grunt) {
                 options: {
                     ignore: ['node_modules/**', 'coverage/**'],
                     delay: 4000,
-                    verbose: true
                 }
             }
         },
@@ -131,5 +130,4 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['env:test', 'jshint:src']);
     grunt.registerTask('coverage', ['env:test', 'jshint:src', 'mocha_istanbul:coverage']);
     grunt.registerTask('test', ['env:test', 'mochaTest']);
-
 };
