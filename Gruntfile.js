@@ -15,7 +15,9 @@ module.exports = function(grunt) {
 
             // Composites of above
             src: ['lib/**/*.js', 'bin/*', 'test/**/*.js'],
-            all: ['lib/**/*.js', 'bin/*', 'config/**/*', 'test/**/*.js', 'Gruntfile.js', 'package.json']
+            all: ['lib/**/*.js', 'bin/*', 'config/**/*', 'test/**/*.js', 'Gruntfile.js', 'package.json'],
+
+            html: ['html/*.html']
         },
 
         // Set Environment
@@ -89,14 +91,26 @@ module.exports = function(grunt) {
         bowercopy: {
             options: {
                 clean: true,
+                srcPrefix: 'bower_components',
             },
             task: {
-                src: 'bower_components',
-                dest: 'www/bower_components'
-
+                options: {
+                    destPrefix: 'www/bower_components'
+                },
+                files: {
+                    'angular': 'angular'
+                }
+                
             }
         },
 
+        // Wire bower dependencies
+        wiredep: {
+            options: {
+                directory: 'www/bower_components',
+            },
+            task: {
+                src: ['www/html/*.html'],
             }
         },
 
@@ -104,6 +118,7 @@ module.exports = function(grunt) {
     });
 
     // These plugins provide necessary tasks.
+    grunt.loadNpmTasks('grunt-wiredep');
     grunt.loadNpmTasks('grunt-bowercopy');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
