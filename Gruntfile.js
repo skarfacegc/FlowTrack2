@@ -85,14 +85,18 @@ module.exports = function(grunt) {
             }
         },
 
-        // Install the web components
-        bower: {
-            install: {
-                options: {
-                    targetDir: 'www/bower_components',
-                    cleanBowerDir: true,  // Clean up ./bower_components after copying to targetDir
-                    verbose: true
-                }
+        //Install and copy bower libs
+        bowercopy: {
+            options: {
+                clean: true,
+            },
+            task: {
+                src: 'bower_components',
+                dest: 'www/bower_components'
+
+            }
+        },
+
             }
         },
 
@@ -100,7 +104,7 @@ module.exports = function(grunt) {
     });
 
     // These plugins provide necessary tasks.
-    grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-bowercopy');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-mocha-test');
