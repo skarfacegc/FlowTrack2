@@ -10,7 +10,7 @@ module.exports = function(grunt) {
             lib: ['lib/**/*.js'],
             bin: ['bin/*'],
             config: ['config/**/*'],
-            tests: ['test/**/*.js'],
+            unit_tests: ['test/Unit/**/*.js'],
             gruntfile: ['Gruntfile.js'],
 
             // Composites of above
@@ -30,16 +30,16 @@ module.exports = function(grunt) {
             options: {
                 reporter: 'spec'
             },
-            src: '<%= files.tests %>'
+            src: '<%= files.unit_lstests %>'
         },
 
 
         // Istanbul code coverage
         mocha_istanbul: {
             coverage: {
-                src: '<%= files.tests %>',
+                src: '<%= files.unit_tests %>',
                 options: {
-                    coverageFolder: 'coverage',
+                    coverageFolder: 'coverage/unit_tests',
                     print: 'detail'
                 }
             }
