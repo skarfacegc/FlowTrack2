@@ -32,7 +32,7 @@ module.exports = function(grunt) {
             options: {
                 reporter: 'spec'
             },
-            src: '<%= files.unit_lstests %>'
+            src: '<%= files.unit_tests %>'
         },
 
 
