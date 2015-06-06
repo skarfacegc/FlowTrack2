@@ -83,10 +83,24 @@ module.exports = function(grunt) {
                     verbose: true
                 }
             }
-        }
+        },
+
+        // Install the web components
+        bower: {
+            install: {
+                options: {
+                    targetDir: 'www/bower_components',
+                    cleanBowerDir: true,  // Clean up ./bower_components after copying to targetDir
+                    verbose: true
+                }
+            }
+        },
+
+
     });
 
     // These plugins provide necessary tasks.
+    grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-mocha-test');
