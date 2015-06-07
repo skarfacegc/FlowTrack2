@@ -8,7 +8,8 @@
   "license": "MIT",
   "main": "bin/flowTrack.js",
   "scripts": {
-    "test": "grunt mochaTest"
+    "test": "grunt mochaTest",
+    "postinstall": "grunt bowercopy && grunt wiredep"
   },
   "dependencies": {
     "bunyan": "^1.3.5",
@@ -23,6 +24,7 @@
     "chai": "^2.3.0",
     "grunt": "^0.4.5",
     "grunt-bowercopy": "^1.2.0",
+    "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-env": "^0.4.4",

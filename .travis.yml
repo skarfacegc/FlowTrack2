@@ -4,7 +4,7 @@
 
 "language": node_js
 
-"script": "grunt bowercopy && grunt coverage"
+"script": "grunt coverage"
 
 
 "after_script":

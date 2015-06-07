@@ -17,7 +17,9 @@ module.exports = function(grunt) {
             src: ['lib/**/*.js', 'bin/*', 'test/**/*.js'],
             all: ['lib/**/*.js', 'bin/*', 'config/**/*', 'test/**/*.js', 'Gruntfile.js', 'package.json'],
 
-            html: ['html/*.html']
+            // Files for the webservice
+            bower_dir: 'www/bower_components',
+            html: ['www/html/*.html'],
         },
 
         // Set Environment
@@ -80,7 +82,7 @@ module.exports = function(grunt) {
             dev: {
                 script: 'bin/flowTrack',
                 options: {
-                    ignore: ['node_modules/**', 'coverage/**'],
+                    ignore: ['node_modules/**', 'coverage/**', '<%= files.bower_dir %>'],
                     delay: 4000,
                 }
             }
@@ -90,14 +92,13 @@ module.exports = function(grunt) {
         bowercopy: {
             options: {
                 clean: true,
-                srcPrefix: 'bower_components',
             },
             task: {
                 options: {
-                    destPrefix: 'www/bower_components'
+                    destPrefix: '<%= files.bower_dir %>'
                 },
                 files: {
-                    'angular': 'angular'
+                    'angular': 'bower_components/angular'
                 }
                 
             }
@@ -106,12 +107,14 @@ module.exports = function(grunt) {
         // Wire bower dependencies
         wiredep: {
             options: {
-                directory: 'www/bower_components',
+                directory: '<%= files.bower_dir %>',
             },
             task: {
-                src: ['www/html/*.html'],
+                src: '<%= files.html %>',
             }
         },
+
+        clean:['node_modules','bower_components','www/bower_components']
 
 
     });
@@ -119,6 +122,7 @@ module.exports = function(grunt) {
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-wiredep');
     grunt.loadNpmTasks('grunt-bowercopy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-mocha-test');
