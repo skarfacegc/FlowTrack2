@@ -1,3 +1,4 @@
+/* global browser */
 'use strict';
 
 var chai = require('chai');
