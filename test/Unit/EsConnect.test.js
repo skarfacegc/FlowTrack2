@@ -9,7 +9,6 @@ var config = require('config');
 var EsConnect = require('../../lib/EsConnect');
 var logger = new GetLogger(process.env.NODE_ENV);
 
-var bunyan = require('bunyan');
 var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
