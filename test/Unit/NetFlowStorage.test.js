@@ -2,8 +2,8 @@
 'use strict';
 
 var NetFlowStorage = require('../../lib/NetFlowStorage');
-var GetLogge1r = require('../../lib/GetLogger');
-var logger = new GetLogge1r(process.env.NODE_ENV);
+var GetLogger = require('../../lib/GetLogger');
+var logger = new GetLogger(process.env.NODE_ENV);
 var config = require('config');
 
 var es = require('elasticsearch');
@@ -67,13 +67,7 @@ describe('NetFlowStorage', function() {
             expect(nfStore).to.have.property('index_name');
         });
 
-        it('should have a valid elastic search object', function() {
-
-            var nfStore = new NetFlowStorage(es, logger, config);
-
-            expect(nfStore).to.have.property('es').that.deep.equals(es);
-
-        });
+        // TOOD: Add UT to test that we correctly call connect
 
     });
 
@@ -84,17 +78,15 @@ describe('NetFlowStorage', function() {
             var nfStore = new NetFlowStorage(es, logger, config);
 
             var myCreateSpy = sandbox.spy();
-            var stub = sandbox.stub(es, 'Client', function() {
-                var tmpObj = {
-                    indices: {
-                        exists: function(index_name, cb) {
-                            cb(null, false);
-                        },
-                        create: myCreateSpy
-                    }
-                };
-                return tmpObj;
-            });
+
+            nfStore.client = {
+                indices: {
+                    exists: function(index_name, cb) {
+                        cb(null, false);
+                    },
+                    create: myCreateSpy
+                }
+            };
 
             nfStore.createIndex();
 
@@ -105,19 +97,16 @@ describe('NetFlowStorage', function() {
 
 
             var nfStore = new NetFlowStorage(es, logger, config);
-
             var myCreateSpy = sandbox.spy();
-            var stub = sandbox.stub(es, 'Client', function() {
-                var tmpObj = {
-                    indices: {
-                        exists: function(index_name, cb) {
-                            cb(null, true);
-                        },
-                        create: myCreateSpy
-                    }
-                };
-                return tmpObj;
-            });
+
+            nfStore.client = {
+                indices: {
+                    exists: function(index_name, cb) {
+                        cb(null, true);
+                    },
+                    create: myCreateSpy
+                }
+            };
 
             nfStore.createIndex();
 
