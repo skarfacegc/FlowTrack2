@@ -16,6 +16,7 @@
     "config": "^1.13.0",
     "elasticsearch": "^4.1.0",
     "express": "^4.12.4",
+    "inet": "0.0.3",
     "node-netflowv9": "^0.2.5",
     "on-finished": "^2.3.0"
   },

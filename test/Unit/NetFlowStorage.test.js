@@ -128,9 +128,9 @@ describe('NetFlowStorage', function() {
 
 
             var sample_flow = {
-                ipv4_src_addr: '192.168.1.10',
-                ipv4_dst_addr: '43.229.52.134',
-                ipv4_next_hop: '0.0.0.0',
+                ipv4_src_addr: '1.1.1.1', // 16843009
+                ipv4_dst_addr: '2.2.2.2', // 33686018
+                ipv4_next_hop: '3.3.3.3', // 50529027
                 input_snmp: 1,
                 output_snmp: 0,
                 in_pkts: 29,
@@ -166,8 +166,11 @@ describe('NetFlowStorage', function() {
                 body: sample_flow
             };
 
-            // Set our timestamp
+            // Set our timestamp and converted ip addresses
             store_compare.body.timestamp = test_time;
+            store_compare.body.ipv4_src_addr = 16843009;
+            store_compare.body.ipv4_dst_addr = 33686018;
+            store_compare.body.ipv4_next_hop = 50529027;
 
             expect(myIndexSpy).to.be.calledWith(store_compare);
 
