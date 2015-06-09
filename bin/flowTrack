@@ -24,7 +24,7 @@ function main() {
     var expressLogger = new GetLogger(process.env.NODE_ENV, 'FlowTrack2App'); 
 
     var nfStore = new NetFlowStorage(es, logger, config);
-    var app = new FlowTrack2App(expressLogger, config);    
+    var app = new FlowTrack2App(expressLogger, config, es);    
 
     if (cluster.isMaster) {
 
