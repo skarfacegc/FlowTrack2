@@ -18,6 +18,18 @@ var expect = chai.expect;
 chai.use(sinonChai);
 
 describe('FlowRetrieval', function() {
+
+    var sandbox;
+
+    beforeEach(function() {
+        sandbox = sinon.sandbox.create();
+    });
+
+    afterEach(function() {
+        sandbox.restore();
+    });
+
+
     describe('Constructor', function() {
         it('should have a defined client property', function() {
 
@@ -30,10 +42,31 @@ describe('FlowRetrieval', function() {
 
     describe('getRawFlows', function() {
 
-        it('should return something', function() {
-            var nfRetrieval = new NetFlowRetrieval(es, logger, config);
+        it('should be called with correct args', function() {
 
-            console.log(JSON.stringify(nfRetrieval.getRawFlows(0, Date.now())));
+            var nfRetrieval = new NetFlowRetrieval(es, logger, config);
+            var searchSpy = sandbox.spy();
+
+            nfRetrieval.client = {
+                search: searchSpy
+            };
+
+            nfRetrieval.getRawFlows(0, 1);
+
+            expect(searchSpy).to.be.calledWith({
+                "index": "flow_track2",
+                "type": "raw_flow",
+                "body": {
+                    "query": {
+                        "range": {
+                            "timestamp": {
+                                "gte": 0,
+                                "lte": 1
+                            }
+                        }
+                    }
+                }
+            });
         });
     });
 });
