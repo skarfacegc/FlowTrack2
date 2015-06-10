@@ -100,7 +100,6 @@ module.exports = function(grunt) {
                 files: {
                     'angular': 'bower_components/angular'
                 }
-                
             }
         },
 
@@ -114,7 +113,7 @@ module.exports = function(grunt) {
             }
         },
 
-        clean:['node_modules','bower_components','www/bower_components']
+        clean: ['node_modules', 'bower_components', 'www/bower_components']
 
 
     });
