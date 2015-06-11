@@ -68,5 +68,16 @@ describe('FlowRetrieval', function() {
                 }
             });
         });
+
+        it('should correctly handle the callback', function() {
+            var nfRetrieval = new NetFlowRetrieval(es, logger, config);
+
+            var searchStub = sandbox.stub(nfRetrieval.client, 'search').yields('err', 'response', 'status');
+            var callbackSpy = sandbox.spy();
+
+            nfRetrieval.getRawFlows(0, 1, callbackSpy);
+
+            expect(callbackSpy).to.be.calledWith('err', 'response', 'status');
+        });
     });
 });
