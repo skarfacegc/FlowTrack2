@@ -98,7 +98,8 @@ module.exports = function(grunt) {
                     destPrefix: '<%= files.bower_dir %>'
                 },
                 files: {
-                    'angular': 'bower_components/angular'
+                    'angular': 'bower_components/angular',
+                    'angular-ui-grid': 'bower_components/angular-ui-grid'
                 }
             }
         },
