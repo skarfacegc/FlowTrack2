@@ -1,4 +1,4 @@
-<html ng-app>
+<html>
 <head>
 <title>FlowTrack</title>
 
@@ -10,9 +10,18 @@
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-ui-grid/ui-grid.js"></script>
     <!-- endbower -->
+
+    <!-- Local Dependencies -->
+    <script src="/js/flowListController.js"></script>
+
 </head>
-<body>
-    <h1>Hello World</h1>
-    {{ 1 + 2 }}
+<body ng-app='flowList'>
+<div ng-controller='flowListCtrl'>
+    <ul ng-repeat='flow in flows'>
+    <li>{{flow}}</li>
+    </ul>
+</div>
+
+
 </body>
 </html>

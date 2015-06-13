@@ -10,5 +10,8 @@
   "newcap": true,
   "noarg": true,
   "undef": true,
-  "strict": true
+  "strict": true,
+  "globals": {
+    "angular": false
+  }
 }
