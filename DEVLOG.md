@@ -1,5 +1,10 @@
 Ongoing devlog. Will cover research stuff, notes, and progress
 
+2015.Jun.10
+-----------
+Added the first query.  GetFlowsForLast and hooked it up to the webservice. I'm still figuring out the best way to unit test this stuff
+but I think I'm getting a handle on it.
+
 2015.May.30
 -----------
 Restructured webservice startup to follow the pattern outlined by express-generator.  Basically isolating my app in it's own module, then starting it with createserver in the main bin.  Makes UT a bit easier.
