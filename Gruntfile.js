@@ -10,7 +10,7 @@ module.exports = function(grunt) {
             lib: ['lib/**/*.js'],
             bin: ['bin/*'],
             config: ['config/**/*'],
-            unit_tests: ['test/Unit/**/*.js'],
+            unit_tests: ['test/unit/**/*.js'],
             gruntfile: ['Gruntfile.js'],
 
             // Composites of above
