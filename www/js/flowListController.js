@@ -14,7 +14,7 @@ app.controller('flowListCtrl', function($scope, $http) {
                     Dst_Address: ftUtils.inet_ntoa(element._source.ipv4_dst_addr),
                     Packets: element._source.in_pkts,
                     Bytes: element._source.in_bytes,
-                    Time: moment(element._source.timestamp).format('YYYY-MM-D HH:mm:SS')
+                    Time: moment(element._source.timestamp).format('YYYY-MM-DD HH:mm:ss')
                 };
                 retList.push(flowRecord);
             });
