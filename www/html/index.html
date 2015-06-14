@@ -1,6 +1,10 @@
+<!doctype html>
 <html>
 <head>
-<title>FlowTrack</title>
+    <title>FlowTrack</title>
+
+<script src="/js/ftUtils.js" async></script>
+
 
     <!-- bower:css -->
     <link rel="stylesheet" href="../bower_components/angular-ui-grid/ui-grid.css" />
@@ -9,18 +13,22 @@
     <!-- bower:js -->
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-ui-grid/ui-grid.js"></script>
+    <script src="../bower_components/moment/moment.js"></script>
     <!-- endbower -->
 
-    <!-- Local Dependencies -->
+
+    <link rel="stylesheet" href="/css/mainGrid.css" />
+
+    
     <script src="/js/flowListController.js"></script>
+    
 
 </head>
 <body ng-app='flowList'>
-<div ng-controller='flowListCtrl'>
-    <ul ng-repeat='flow in flows'>
-    <li>{{flow}}</li>
-    </ul>
-</div>
+
+    <div ng-controller='flowListCtrl'>
+        <div ui-grid='{data:flows}' class='dataGrid'></div>
+    </div>
 
 
 </body>

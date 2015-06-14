@@ -99,7 +99,8 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'angular': 'bower_components/angular',
-                    'angular-ui-grid': 'bower_components/angular-ui-grid'
+                    'angular-ui-grid': 'bower_components/angular-ui-grid',
+                    'moment': 'bower_components/moment'
                 }
             }
         },
