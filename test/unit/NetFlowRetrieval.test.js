@@ -57,6 +57,8 @@ describe('FlowRetrieval', function() {
                 "index": "flow_track2",
                 "type": "raw_flow",
                 "body": {
+                    "from": 0,
+                    "size": 50,
                     "query": {
                         "range": {
                             "timestamp": {
