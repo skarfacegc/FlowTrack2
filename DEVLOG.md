@@ -1,5 +1,10 @@
 Ongoing devlog. Will cover research stuff, notes, and progress
 
+2015.Jun.13
+-----------
+Got unit tests fixed up a bit. Got a full cycle of flow -> db -> web UI done.
+The web view is crap right now, but working.  :)
+
 2015.Jun.10
 -----------
 Added the first query.  GetFlowsForLast and hooked it up to the webservice. I'm still figuring out the best way to unit test this stuff
