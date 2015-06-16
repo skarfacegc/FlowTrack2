@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/skarfacegc/FlowTrack2.svg)](https://travis-ci.org/skarfacegc/FlowTrack2) [![Test Coverage](https://codeclimate.com/github/skarfacegc/FlowTrack2/badges/coverage.svg)](https://codeclimate.com/github/skarfacegc/FlowTrack2/coverage) [![Code Climate](https://codeclimate.com/github/skarfacegc/FlowTrack2/badges/gpa.svg)](https://codeclimate.com/github/skarfacegc/FlowTrack2) [![Dependency Status](https://david-dm.org/skarfacegc/FlowTrack2.svg)](https://david-dm.org/skarfacegc/FlowTrack2) [![waffle.io](https://img.shields.io/badge/waffle.io-roadmap%2Fissues-lightgrey.svg)](https://waffle.io/skarfacegc/flowtrack2)
 
+
+Dev work is mostly occuring in [feature/flowtable](https://github.com/skarfacegc/FlowTrack2/tree/feature/flow_table) branch.
 FlowTrack2
 ==========
 
