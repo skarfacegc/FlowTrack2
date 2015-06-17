@@ -10,12 +10,16 @@ module.exports = function(grunt) {
             lib: ['lib/**/*.js'],
             bin: ['bin/*'],
             config: ['config/**/*'],
-            tests: ['test/**/*.js'],
+            unit_tests: ['test/unit/**/*.js'],
             gruntfile: ['Gruntfile.js'],
 
             // Composites of above
             src: ['lib/**/*.js', 'bin/*', 'test/**/*.js'],
-            all: ['lib/**/*.js', 'bin/*', 'config/**/*', 'test/**/*.js', 'Gruntfile.js', 'package.json']
+            all: ['lib/**/*.js', 'bin/*', 'config/**/*', 'test/**/*.js', 'Gruntfile.js', 'package.json'],
+
+            // Files for the webservice
+            bower_dir: 'www/bower_components',
+            html: ['www/html/*.html'],
         },
 
         // Set Environment
@@ -30,16 +34,16 @@ module.exports = function(grunt) {
             options: {
                 reporter: 'spec'
             },
-            src: '<%= files.tests %>'
+            src: '<%= files.unit_tests %>'
         },
 
 
         // Istanbul code coverage
         mocha_istanbul: {
             coverage: {
-                src: '<%= files.tests %>',
+                src: '<%= files.unit_tests %>',
                 options: {
-                    coverageFolder: 'coverage',
+                    coverageFolder: 'coverage/unit_tests',
                     print: 'detail'
                 }
             }
@@ -78,15 +82,49 @@ module.exports = function(grunt) {
             dev: {
                 script: 'bin/flowTrack',
                 options: {
-                    ignore: ['node_modules/**', 'coverage/**'],
+                    ignore: ['node_modules/**', 'coverage/**', '<%= files.bower_dir %>'],
                     delay: 4000,
-                    verbose: true
                 }
             }
-        }
+        },
+
+        //Install and copy bower libs
+        bowercopy: {
+            options: {
+                clean: true,
+            },
+            task: {
+                options: {
+                    destPrefix: '<%= files.bower_dir %>'
+                },
+                files: {
+                    'angular': 'bower_components/angular',
+                    'angular-ui-grid': 'bower_components/angular-ui-grid',
+                    'moment': 'bower_components/moment',
+                    'angular-animate': 'bower_components/angular-animate'
+                }
+            }
+        },
+
+        // Wire bower dependencies
+        wiredep: {
+            options: {
+                directory: '<%= files.bower_dir %>',
+            },
+            task: {
+                src: '<%= files.html %>',
+            }
+        },
+
+        clean: ['node_modules', 'bower_components', 'www/bower_components']
+
+
     });
 
     // These plugins provide necessary tasks.
+    grunt.loadNpmTasks('grunt-wiredep');
+    grunt.loadNpmTasks('grunt-bowercopy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-mocha-test');
@@ -98,5 +136,4 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['env:test', 'jshint:src']);
     grunt.registerTask('coverage', ['env:test', 'jshint:src', 'mocha_istanbul:coverage']);
     grunt.registerTask('test', ['env:test', 'mochaTest']);
-
 };

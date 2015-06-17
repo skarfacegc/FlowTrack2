@@ -1,7 +1,33 @@
+<!doctype html>
 <html>
 <head>
+    <title>FlowTrack</title>
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/angular-ui-grid/ui-grid.css" />
+    <!-- endbower -->
+
+    <!-- bower:js -->
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-ui-grid/ui-grid.js"></script>
+    <script src="../bower_components/moment/moment.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <!-- endbower -->
+
+
+    <link rel="stylesheet" href="/css/mainGrid.css" />
+
+    <script src="/js/ftUtils.js" async></script>
+    <script src="/js/flowListController.js"></script>
+    
+
 </head>
-<body>
-<h1>Hello World</h1>
+<body ng-app='flowList'>
+
+    <div ng-controller='flowListCtrl'>
+        <div ui-grid='{data:flows}' class='dataGrid'></div>
+    </div>
+
+
 </body>
 </html>

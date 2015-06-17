@@ -8,5 +8,5 @@
 
 
 "after_script":
-  - codeclimate < coverage/lcov.info
+  - codeclimate < coverage/unit_tests/lcov.info
 
