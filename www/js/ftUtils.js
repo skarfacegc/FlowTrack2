@@ -13,7 +13,7 @@ ftUtils.inet_ntoa = function(ipInt) {
     for (var i = 0; i < uint8View.length; i++) {
         ipSegments.push(uint8View[i]);
     }
-
+    ipSegments.reverse();
     return ipSegments.join(".");
 
 };
