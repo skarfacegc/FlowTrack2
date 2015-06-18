@@ -5,8 +5,11 @@ var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
 var gutil = require('gulp-util');
 var watch = require('gulp-watch');
-var plumber = require('gulp-plumber')
-    // Turn on testing
+var plumber = require('gulp-plumber');
+var bower = require('gulp-bower');
+var del = require('del');
+
+// Turn on testing
 process.env.NODE_ENV = 'test';
 
 var SOURCE_FILES = ['lib/**/*.js', 'bin/*', 'test/**/*.js'];
@@ -40,4 +43,13 @@ gulp.task('coverage', function(cb) {
 
 gulp.task('watch', function() {
     gulp.watch(SOURCE_FILES, ['coverage']);
+});
+
+
+gulp.task('bower', function() {
+    return bower()
+        .pipe(gulp.dest('www/bower_components'))
+        .on('end', function() {
+            del('bower_components');
+        });
 });
