@@ -1,10 +1,10 @@
 "before_install":
-  - npm install -g grunt-cli
+  - npm install -g gulp
   - npm install -g codeclimate-test-reporter
 
 "language": node_js
 
-"script": "grunt coverage"
+"script": "gulp coverage"
 
 
 "after_script":
