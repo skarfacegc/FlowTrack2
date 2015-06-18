@@ -4,7 +4,7 @@
 
 "language": node_js
 
-"script": "bulp coverage"
+"script": "gulp coverage"
 
 
 "after_script":
