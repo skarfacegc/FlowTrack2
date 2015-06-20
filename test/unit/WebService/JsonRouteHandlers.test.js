@@ -75,7 +75,7 @@ describe('JsonRouteHandlers', function() {
             jsonHandler.getFlowsForLast(1, 'days');
 
             expect(getRawFlowsStub).to.be.calledWith(time_to_test, Date.now());
-
+            clock.restore();
         });
 
         it('should handle the hours duration correctly', function() {
@@ -91,7 +91,7 @@ describe('JsonRouteHandlers', function() {
             jsonHandler.getFlowsForLast(1, 'hours');
 
             expect(getRawFlowsStub).to.be.calledWith(time_to_test, Date.now());
-
+            clock.restore();
         });
 
         it('should handle the minutes duration correctly', function() {
@@ -107,7 +107,7 @@ describe('JsonRouteHandlers', function() {
             jsonHandler.getFlowsForLast(1, 'minutes');
 
             expect(getRawFlowsStub).to.be.calledWith(time_to_test, Date.now());
-
+            clock.restore();
         });
 
         it('should handle the seconds duration correctly', function() {
@@ -123,6 +123,7 @@ describe('JsonRouteHandlers', function() {
             jsonHandler.getFlowsForLast(1, 'seconds');
 
             expect(getRawFlowsStub).to.be.calledWith(time_to_test, Date.now());
+            clock.restore();
         });
 
 

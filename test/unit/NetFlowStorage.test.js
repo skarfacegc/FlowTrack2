@@ -172,8 +172,9 @@ describe('NetFlowStorage', function() {
             store_compare.body.ipv4_dst_addr = 33686018;
             store_compare.body.ipv4_next_hop = 50529027;
 
-            expect(myIndexSpy).to.be.calledWith(store_compare);
 
+            expect(myIndexSpy).to.be.calledWith(store_compare);
+            clock.restore();
         });
 
     });
