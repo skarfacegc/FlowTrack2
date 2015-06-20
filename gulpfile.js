@@ -6,6 +6,7 @@ var mocha = require('gulp-mocha');
 var gutil = require('gulp-util');
 var watch = require('gulp-watch');
 var plumber = require('gulp-plumber');
+var protractor = require('gulp-protractor').protractor;
 var bower = require('gulp-bower');
 var jshint = require('gulp-jshint');
 var del = require('del');
@@ -56,8 +57,12 @@ gulp.task('coverage', ['jshint'], function(cb) {
 
 });
 
-
-
+gulp.task('e2e', ['jshint'], function() {
+    gulp.src(['test/e2e/*.e2e.js'])
+        .pipe(protractor({
+            configFile: "test/e2e/e2e.conf.js"
+        }));
+});
 
 // Install bower components
 // installs to www/bower_components and 
