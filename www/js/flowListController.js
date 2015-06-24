@@ -1,9 +1,10 @@
 /* global ftUtils, moment */
-'use strict';
+
 
 var app = angular.module('flowList', ['ui.grid']);
 
 app.controller('flowListCtrl', function($scope, $http) {
+    'use strict';
     $http.get('/json/rawFlowsForLast/5/minutes')
         .success(function(data, status, headers, config) {
 
