@@ -1,3 +1,8 @@
+/* globals browser,element, by */
+'use strict';
+
+var fs = require('fs');
+
 // conf.js
 exports.config = {
 
@@ -15,5 +20,11 @@ exports.config = {
     capabilities: {
         browserName: 'chrome'
     },
-    specs: ['*.e2e.js']
+
+    onComplete: function() {
+        browser.driver.executeScript("return __coverage__flowTrack2__").
+        then(function(coverage) {
+            fs.writeFileSync('coverage/coverage-www.json', JSON.stringify(coverage));
+        });
+    }
 };
