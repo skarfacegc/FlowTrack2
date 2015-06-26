@@ -1,7 +1,8 @@
 {
     "Application": {
         "web_port": 3000, // Port for web services
-        "netflow_port": 2055 // port to netflow
+        "netflow_port": 2055, // port to netflow
+        "js_path": "www/js" // location of the browser javascript files
     },
     "ElasticSearchConfig": {
         "elasticsearch_host": "localhost:9200", // host definition for the elastic search connection
