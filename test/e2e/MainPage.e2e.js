@@ -3,8 +3,10 @@
 
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
-
 var UiGridTest = require('./UiGridTest');
+var config = require('config');
+
+var web_port = config.get('Application.web_port');
 
 chai.use(chaiAsPromised);
 var expect = chai.expect;
@@ -15,7 +17,7 @@ describe('Main Page', function() {
     var headers = grid.getColumnHeaders('mainGrid');
 
     it('should have a title', function() {
-        browser.get('http://localhost:3000');
+        browser.get('http://localhost:' + web_port);
 
         expect(browser.getTitle()).to.eventually.equal('FlowTrack');
     });
