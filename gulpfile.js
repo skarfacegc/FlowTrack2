@@ -79,7 +79,7 @@ gulp.task('jshint', function() {
 
 // Run the test suite, show details
 gulp.task('unit_test', function(cb) {
-    process.env.NODE_ENV = 'test';
+    process.env.NODE_ENV = process.env.NODE_ENV || 'test';
     gulp.src(UNIT_TESTS)
         .pipe(mocha({
             reporter: 'spec'
@@ -89,7 +89,7 @@ gulp.task('unit_test', function(cb) {
 // Run the test suite with code coverage
 // Shows minimal test details
 gulp.task('unit_coverage', function(cb) {
-    process.env.NODE_ENV = 'test';
+    process.env.NODE_ENV = process.env.NODE_ENV || 'test';
     gulp.src(SOURCE_FILES)
         .pipe(plumber())
         .pipe(istanbul({
@@ -120,7 +120,7 @@ gulp.task('unit_coverage', function(cb) {
 
 
 gulp.task('e2e_coverage', function(cb) {
-    process.env.NODE_ENV = 'test';
+    process.env.NODE_ENV = process.env.NODE_ENV || 'test';
     gulp.src(E2E_TESTS)
         .pipe(protractor({
             configFile: "test/e2e/e2e.conf.js"
@@ -167,7 +167,7 @@ gulp.task('bower', function() {
 
 // Rerun coverage on change
 gulp.task('watch', function() {
-    process.env.NODE_ENV = 'test';
+    process.env.NODE_ENV = process.env.NODE_ENV || 'test';
     gulp.watch(SOURCE_AND_TESTS, ['coverage']);
 });
 
