@@ -17,6 +17,10 @@ var jshintStylish = require('jshint-stylish');
 
 
 
+//
+// File sets
+// 
+
 // Project source files
 var SOURCE_FILES = ['lib/**/*.js', 'bin/*'];
 var WWW_SOURCE_FILES = ['www/js/**/*.js'];
@@ -33,6 +37,11 @@ var UNIT_COMBINED = [].concat(SOURCE_FILES, UNIT_TESTS);
 var SOURCE_AND_TESTS = [].concat(E2E_COMBINED, UNIT_COMBINED);
 
 var COVERAGE_FILES = ['coverage/**/coverage*.json'];
+
+
+//
+// Main tasks
+// 
 
 // combined tasks
 gulp.task('test', ['jshint', 'unit_test']);
@@ -52,6 +61,12 @@ gulp.task('full', function(callback) {
         'coverage_report')(callback);
 });
 
+gulp.task('clean', ['clean_coverage', 'clean_modules', 'clean_bower']);
+
+
+//
+// Tests
+// 
 
 // Run jshint across everything in SOURCE_FILES
 // this is a pre-req for test, coverage, watch
@@ -133,6 +148,11 @@ gulp.task('coverage_report', function(cb) {
 });
 
 
+//
+// Support
+// 
+
+
 // Install bower components
 // installs to www/bower_components and 
 // cleans up ./bower_components
@@ -151,11 +171,24 @@ gulp.task('watch', function() {
     gulp.watch(SOURCE_AND_TESTS, ['coverage']);
 });
 
+
+// 
+// Clean
+// 
 gulp.task('clean_coverage', function(cb) {
     del('coverage');
     cb();
 });
 
+gulp.task('clean_modules', function(cb) {
+    del('node_modules');
+    cb();
+});
+
+gulp.task('clean_bower', function(cb) {
+    del('www/bower_components');
+    cb();
+});
 
 // Start the flowTrack application
 // restart on change
