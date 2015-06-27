@@ -1,12 +1,34 @@
+"language": node_js
+"env":
+  "global":
+    - "secure": gEMu2jM/4HBaqWxTW/5LNQ7oG1NTgmN4AkTkMXRJdvyj3fh6qVNu1SX8qQl2VUj5wvyMVpo6JLg12e+R/VJ7ewcpL/1oMsJRAvIkCjJGt4pt8veLWuPbLuffvrh9pO+W5QFC3vbfeHg+oyUco5hARmO/fMstOs9ZCHu5UtWmVHz7Dwqg8vQu71zU/EuhCBaTC/2Xzu0qTPX2PJIzPs6jg/JDABlF/sUFPXMYCLiWTgvk8sQFznQGCIl1YF/Q40ydRrPIOwVoMn+M+G8Tsx34z35XdLL5uJ1tsEUHWJU4JjrJO5X18iaLS83tBi/T39FP/p2lSgyxTIku71E6Qr5N12APBaw+tmNP71cmL8ySjigISp+VLxDp38Bjvh/ud3RbYtQpsEcuOxjilz3FefX7y/aZmcOLxeRqFx8AsT3SPEkcZ2SQ+9yt0CO1AwC1Fol2lNVrFMwz5OO1w/82WWGJcamgxk7+yvXj4FdkfmNasF0ewIfpWW27F9q3KXVIDq6gN+ILQ78NLNxPwMlwXL2rAU09gwlFb98MLmtrbMUy6h/dCoiCdj/dl7TDj72c2Tlrcvot/7zJilt7ZM79m4PgmJFhRYoZP0/HzA6M2j32kJv0nuVXSAYQKCGL+hQy0IiatI7dFhIo9PF57WuTdQoEDS1xL51QsO4E4QKNKoxHy3Q=
+    - "secure": R4DrC/Rx4IxCiOXQ2XON3G/ZQ3V9SDavWIZBle6+KCH5PubqcjHTo6JI00T3EPMYCdLaEmO85HZB6+o1vljgggFTa+xqC9lqYDrQPpdZiW2c2EjgQYdPzWHFjX9k5M5sqdi7OpLGA6myG+H7SdWVHuyGIYvYCq1ksAqq5hxbxjKCoz7BKCzbmw2DPuYa4azIyHzcc3zwpErJWIpSQLeT2nkoktBymtCnq6yHNo5JLp7n8UOgTnKdhj7vqbhMTFxY9e+hQX6QkYk0NIXUH1oq+I0jpenbhWvjexDx9s2WvVwyXFR2aKKJoauYFTY8yceUTxoG0HMgbkq4hK7ixOHq/ACt/l7OXPh9rNtIc539r50kjNiPWstYif0Y7mU3YLBi3dXPXeLhVMTHcKGH793y+IKr91TaYlaLxAnRme/VmqtsPoMA5++aLpn+AsS/7MqUURVEhKMVzcEXIU5KA+qfcLfh87BMcPP/j2TECPDS+oyLuItaZ62RAt4Sb/75gb0J+zCfvs0c/aGHdlGo00mSCS0RZPy4f7Vlv6jHr3qCvk9m3EPd9dNnDEAw16nZJjTxI8fdRPqV4GiHsuVxSIuZhD42FLPvAbdIrttmGddZKVELCqVRyw3BxEtds83P77vgrAxoGbI4OGAhUQP3xEcZdtNve6jaWDAGRTyNsuBTMkg=
+
+"addons":
+  "sauce_connect": true
+
+"services":
+  - elasticsearch    
+
+
+
+
 "before_install":
   - npm install -g gulp
   - npm install -g codeclimate-test-reporter
+  - sleep 10
 
-"language": node_js
+"before_script":
+  - node test/startTestServer.js &
 
-"script": "gulp coverage"
+
+"script": "gulp full"
 
 
 "after_script":
   - codeclimate < coverage/lcov.info
+
+
+
+
 
