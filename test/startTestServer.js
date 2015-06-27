@@ -30,8 +30,10 @@ function main() {
     var nfStore = new NetFlowStorage(es, logger, config);
     var app = new FlowTrack2App(expressLogger, config, es);
 
-    nfStore.createIndex();
-    loadData(nfStore);
+    nfStore.createIndex(function() {
+        loadData(nfStore);
+    });
+
 
     http.createServer(app).listen(config.get('Application.web_port'));
 }
