@@ -10,6 +10,9 @@
 "services":
   - elasticsearch    
 
+"env":
+  - NODE_ENV=travis-test
+
 
 
 
