@@ -28,7 +28,7 @@ function main() {
     var expressLogger = new GetLogger('test', 'FlowTrack2App');
 
     var nfStore = new NetFlowStorage(es, logger, config);
-    var app = new FlowTrack2App(expressLogger, config, es);
+    var app = new FlowTrack2App(es, expressLogger, config);
 
     nfStore.createIndex(function() {
         loadData(nfStore);
