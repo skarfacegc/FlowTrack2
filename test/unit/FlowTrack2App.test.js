@@ -11,7 +11,7 @@ describe('FlowTrack2App', function() {
     describe('Routes', function() {
         it('/ route should return html', function(done) {
 
-            var app = new FlowTrack2App(new GetLogger('test', 'TestLogger'), config, es);
+            var app = new FlowTrack2App(es, new GetLogger('test', 'TestLogger'), config);
 
             request(app)
                 .get('/')
@@ -24,7 +24,7 @@ describe('FlowTrack2App', function() {
         // the /bower route works
         it('/bower_components/angular/angular.js should return javascript', function(done) {
 
-            var app = new FlowTrack2App(new GetLogger('test', 'TestLogger'), config, es);
+            var app = new FlowTrack2App(es, new GetLogger('test', 'TestLogger'), config);
 
             request(app)
                 .get('/bower_components/angular/angular.js')
