@@ -161,7 +161,7 @@ describe('NetFlowStorage', function() {
             nfStore.storeFlow(sample_flow);
 
             var store_compare = {
-                index: 'flow_track2',
+                index: config.get('Application.index_name'),
                 type: 'raw_flow',
                 body: sample_flow
             };
