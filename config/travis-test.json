@@ -1,0 +1,7 @@
+{
+    "Application": {
+        "web_port": 3001, // Port for web services
+        "js_path": "coverage/www/test_files", // location of the browser javascript files
+        "index_name": "test_flow_track2" // name of the primay ES index
+    }
+}
