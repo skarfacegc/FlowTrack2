@@ -1,8 +1,8 @@
 "language": node_js
 "env":
   "global":
-    - "secure": gEMu2jM/4HBaqWxTW/5LNQ7oG1NTgmN4AkTkMXRJdvyj3fh6qVNu1SX8qQl2VUj5wvyMVpo6JLg12e+R/VJ7ewcpL/1oMsJRAvIkCjJGt4pt8veLWuPbLuffvrh9pO+W5QFC3vbfeHg+oyUco5hARmO/fMstOs9ZCHu5UtWmVHz7Dwqg8vQu71zU/EuhCBaTC/2Xzu0qTPX2PJIzPs6jg/JDABlF/sUFPXMYCLiWTgvk8sQFznQGCIl1YF/Q40ydRrPIOwVoMn+M+G8Tsx34z35XdLL5uJ1tsEUHWJU4JjrJO5X18iaLS83tBi/T39FP/p2lSgyxTIku71E6Qr5N12APBaw+tmNP71cmL8ySjigISp+VLxDp38Bjvh/ud3RbYtQpsEcuOxjilz3FefX7y/aZmcOLxeRqFx8AsT3SPEkcZ2SQ+9yt0CO1AwC1Fol2lNVrFMwz5OO1w/82WWGJcamgxk7+yvXj4FdkfmNasF0ewIfpWW27F9q3KXVIDq6gN+ILQ78NLNxPwMlwXL2rAU09gwlFb98MLmtrbMUy6h/dCoiCdj/dl7TDj72c2Tlrcvot/7zJilt7ZM79m4PgmJFhRYoZP0/HzA6M2j32kJv0nuVXSAYQKCGL+hQy0IiatI7dFhIo9PF57WuTdQoEDS1xL51QsO4E4QKNKoxHy3Q=
-    - "secure": R4DrC/Rx4IxCiOXQ2XON3G/ZQ3V9SDavWIZBle6+KCH5PubqcjHTo6JI00T3EPMYCdLaEmO85HZB6+o1vljgggFTa+xqC9lqYDrQPpdZiW2c2EjgQYdPzWHFjX9k5M5sqdi7OpLGA6myG+H7SdWVHuyGIYvYCq1ksAqq5hxbxjKCoz7BKCzbmw2DPuYa4azIyHzcc3zwpErJWIpSQLeT2nkoktBymtCnq6yHNo5JLp7n8UOgTnKdhj7vqbhMTFxY9e+hQX6QkYk0NIXUH1oq+I0jpenbhWvjexDx9s2WvVwyXFR2aKKJoauYFTY8yceUTxoG0HMgbkq4hK7ixOHq/ACt/l7OXPh9rNtIc539r50kjNiPWstYif0Y7mU3YLBi3dXPXeLhVMTHcKGH793y+IKr91TaYlaLxAnRme/VmqtsPoMA5++aLpn+AsS/7MqUURVEhKMVzcEXIU5KA+qfcLfh87BMcPP/j2TECPDS+oyLuItaZ62RAt4Sb/75gb0J+zCfvs0c/aGHdlGo00mSCS0RZPy4f7Vlv6jHr3qCvk9m3EPd9dNnDEAw16nZJjTxI8fdRPqV4GiHsuVxSIuZhD42FLPvAbdIrttmGddZKVELCqVRyw3BxEtds83P77vgrAxoGbI4OGAhUQP3xEcZdtNve6jaWDAGRTyNsuBTMkg=
+    - secure: FKCz+rOWqy1Xqi/4IUzV0Or94zHsatfR1i/bmqrPCwrU+Mu8H8xZmAj0Wq8Wlf29/BeZTYX4AHnGOXsi1P4CItC09du2rUray+xcScUZOfamu/NthM/E06IZ8r/sHrvg97WYVgLGBA+ARr2qZhPKNqWeqyvExMDjebTRhBPZwzYe124cwGjaK6IzCzXxm+SXbpyIbduZqACIkG2CJ/ZhbLM6O7gYBdwD5xPu78gdKG1+YTz+MeTlICcWtm7bEqMYUiL7dd46WqJaoLanEmUL8iyChjQXICxZfXcKfoQdzNv97S1Abnk+dDvv8VzepoLte+g8r3rP5YRme++TCEUnwYVBm/WplxfCvADKfDoGQTe8vl8NcVwDQsXZM1G86Ubuf++omTGnRxPmHlAM22IB7f4JgTHMEctJMcbAlBimZrynDur/YRrNRL+c0CCmwmuli5SHt22utNmAFucARwWQcoRVq0cWOsIEedx7uYgjmgPLjqw54ncsL/zvX5rmxhF80blYVXFMNfzEfn43n76+pXI/kS13z9Sp7xfwSVjcBZeHKj4XRKu5h3iLOV1mkJEJYDaaAhXfNQ+2MCZJLtbEK6hiuCTVjPUNoG7JrfHEO5WPz5CJ9HtwF2CKgFgGd1bmCOHr/78b+Gdw5KdZD8Yg0Dqu7Vnj/jSog6e8UiNFjM4=
+    - secure: jDjfqE/dVKKrDFgvGOYij2g6J12XVtMfTdiwvhpvBDVjWEahilsj67RFeh+p3GbZ4L0woP7/h64cDRAh/BOfkx9XDrQxQlkTRV6amAJRovLjpNNBv9CDNLU2oQKNxON5OoVxkv09ilbxTXMIXcMqBVqxWfw/BsQLEnxeVn37F5PZ4nwztzTwIqmf0SWS38zmKqbmIgbHsIV+wDsYFlYWVdi+4CaqBaZgvJrfcIh0xX/bJDAUKBDx+ktpgroku4p5lgankUdlETp3aUIspg5+peajV6N+oK5JEFJBTAZYYlLyO4ue2+sPH3JYzUpv/5RoGpSg8NhmBRlMXfV6DhneY002jMu333ckiIfzwRSuYpnRrRvPfQln8w9RobvdsxP92TsqM3qd8CFTeXgnZg3dOhP/7uIROtlu5Q1T0g41kZ9P+JSVSt3/ovPlN3Fm5zBg81Xwh2ugZWFN+htZC4N1WqiqP9xGRs2uyweqpI2ZtJfkYVOFZcDVjWtwv+vrFJTlx4BxNYi9g0cMPSVLghtpiwIEbumgDoG90gO3aI5wWhLBXUGlvyR/eyQXRM2E84EjSep6IZAedBckMLVFBcgiiYUqZRJFTc+rw1hE1JNvSoJ1OsBpfE3hJa/0fXdigU0n243duQNxDPhT+H1DPWfLTMEIeDZAIzptAeWFfeyN6WU=
   "matrix":
     - NODE_ENV=travis-test
 
@@ -13,19 +13,13 @@
 "services":
   - elasticsearch    
 
-"env":
-  - NODE_ENV=travis-test
-
-
-
-
 "before_install":
   - npm install -g gulp
   - npm install -g codeclimate-test-reporter
-  - sleep 10
 
 "before_script":
   - node test/startTestServer.js &
+  - sleep 10
 
 
 "script": "gulp full"
