@@ -17,13 +17,23 @@ exports.config = {
     },
 
 
-    capabilities: {
+    multiCapabilities: [{
         browserName: 'chrome',
         'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
         build: process.env.TRAVIS_BUILD_NUMBER,
         name: 'FlowTrack2 Build'
 
-    },
+    }, {
+        browserName: 'firefox',
+        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+        build: process.env.TRAVIS_BUILD_NUMBER,
+        name: 'FlowTrack2 Build'
+    }, {
+        browserName: 'internet explorer',
+        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+        build: process.env.TRAVIS_BUILD_NUMBER,
+        name: 'FlowTrack2 Build'
+    }],
 
     onComplete: function() {
         browser.driver.executeScript("return __coverage__flowTrack2__").
