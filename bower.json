@@ -1,11 +1,15 @@
 {
-  "name": "www",
-  "version": "0.0.0",
-  "homepage": "https://github.com/skarfacegc/FlowTrack2",
+  "name": "FlowTrack2",
+  "description": "NetFlow grappher and logger",
+  "main": "bin/flowTrack.js",
   "authors": [
-    "Andrew Williams <andrew@manor.org>"
+    "https://github.com/skarfacegc/"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/skarfacegc/FlowTrack2",
+  "moduleType": [
+    "node"
+  ],
   "ignore": [
     "**/.*",
     "node_modules",
@@ -13,13 +17,14 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "angular": "~1.4.0",
-    "angular-ui-grid": "3.0.0-rc.21",
-    "moment": "~2.10.3",
-    "angular-animate": "~1.4.0"
-  },
   "resolutions": {
-    "angular": "~1.4.0"
+    "angular": "^1.5.0",
+    "angular-ui-grid": "^3.1.0"
+  },
+  "dependencies": {
+    "angular-ui-grid": "^3.1.0",
+    "angular": "^1.5.0",
+    "angular-animate": "^1.5.0",
+    "moment": "^2.11.2"
   }
 }
