@@ -1,4 +1,5 @@
 "language": node_js
+"node_js": 4.1
 "env":
   "global":
     - secure: FKCz+rOWqy1Xqi/4IUzV0Or94zHsatfR1i/bmqrPCwrU+Mu8H8xZmAj0Wq8Wlf29/BeZTYX4AHnGOXsi1P4CItC09du2rUray+xcScUZOfamu/NthM/E06IZ8r/sHrvg97WYVgLGBA+ARr2qZhPKNqWeqyvExMDjebTRhBPZwzYe124cwGjaK6IzCzXxm+SXbpyIbduZqACIkG2CJ/ZhbLM6O7gYBdwD5xPu78gdKG1+YTz+MeTlICcWtm7bEqMYUiL7dd46WqJaoLanEmUL8iyChjQXICxZfXcKfoQdzNv97S1Abnk+dDvv8VzepoLte+g8r3rP5YRme++TCEUnwYVBm/WplxfCvADKfDoGQTe8vl8NcVwDQsXZM1G86Ubuf++omTGnRxPmHlAM22IB7f4JgTHMEctJMcbAlBimZrynDur/YRrNRL+c0CCmwmuli5SHt22utNmAFucARwWQcoRVq0cWOsIEedx7uYgjmgPLjqw54ncsL/zvX5rmxhF80blYVXFMNfzEfn43n76+pXI/kS13z9Sp7xfwSVjcBZeHKj4XRKu5h3iLOV1mkJEJYDaaAhXfNQ+2MCZJLtbEK6hiuCTVjPUNoG7JrfHEO5WPz5CJ9HtwF2CKgFgGd1bmCOHr/78b+Gdw5KdZD8Yg0Dqu7Vnj/jSog6e8UiNFjM4=
@@ -11,7 +12,7 @@
   "sauce_connect": true
 
 "services":
-  - elasticsearch    
+  - elasticsearch
 
 "before_install":
   - npm install -g gulp
@@ -27,8 +28,3 @@
 
 "after_script":
   - codeclimate < coverage/lcov.info
-
-
-
-
-
