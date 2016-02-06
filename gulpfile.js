@@ -74,13 +74,15 @@ gulp.task('clean', ['clean_coverage', 'clean_modules', 'clean_bower']);
 // Run jshint across everything in SOURCE_FILES
 // this is a pre-req for test, coverage, watch
 gulp.task('lint', function () {
-    return gulp.src(SOURCE_FILES)
+    return gulp.src(SOURCE_AND_TESTS)
         .pipe(jshint())
         .pipe(jscs())
         .pipe(jscsStylish.combineWithHintResults())
         .pipe(jshint.reporter(jshintStylish))
         .pipe(jshint.reporter('fail'));
 });
+
+
 
 // Run the test suite, show details
 gulp.task('unit_test', function (cb) {
