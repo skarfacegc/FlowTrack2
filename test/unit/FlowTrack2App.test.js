@@ -7,9 +7,9 @@ var es = require('elasticsearch');
 
 var request = require('supertest');
 
-describe('FlowTrack2App', function() {
-    describe('Routes', function() {
-        it('/ route should return html', function(done) {
+describe('FlowTrack2App', function () {
+    describe('Routes', function () {
+        it('/ route should return html', function (done) {
 
             var app = new FlowTrack2App(es, new GetLogger('test', 'TestLogger'), config);
 
@@ -22,7 +22,7 @@ describe('FlowTrack2App', function() {
 
         // Just use angular as a sample, not actually testing angular, just making sure
         // the /bower route works
-        it('/bower_components/angular/angular.js should return javascript', function(done) {
+        it('/bower_components/angular/angular.js should return javascript', function (done) {
 
             var app = new FlowTrack2App(es, new GetLogger('test', 'TestLogger'), config);
 

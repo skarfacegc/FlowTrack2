@@ -3,7 +3,7 @@
 function ftUtils() {}
 
 // turn an integer into dotted quad!
-ftUtils.inet_ntoa = function(ipInt) {
+ftUtils.inet_ntoa = function (ipInt) {
 
     var buffer = new ArrayBuffer(4);
     var uint8View = new Uint8Array(buffer);

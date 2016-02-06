@@ -16,43 +16,43 @@ chai.use(sinonChai);
 
 
 
-describe('NetFlowStorage', function() {
+describe('NetFlowStorage', function () {
 
     var sandbox;
 
-    beforeEach(function() {
+    beforeEach(function () {
         sandbox = sinon.sandbox.create();
     });
 
-    afterEach(function() {
+    afterEach(function () {
         sandbox.restore();
     });
 
 
-    describe('constructor', function() {
+    describe('constructor', function () {
 
-        it('should be an instance of NetFlowStorage', function() {
+        it('should be an instance of NetFlowStorage', function () {
 
             var nfStore = new NetFlowStorage(es, logger, config);
 
             expect(nfStore).to.be.instanceof(NetFlowStorage);
         });
 
-        it('should have a host', function() {
+        it('should have a host', function () {
 
             var nfStore = new NetFlowStorage(es, logger, config);
 
             expect(nfStore).to.have.property('host');
         });
 
-        it('should have shards', function() {
+        it('should have shards', function () {
 
             var nfStore = new NetFlowStorage(es, logger, config);
 
             expect(nfStore).to.have.property('shards');
         });
 
-        it('should have a replica', function() {
+        it('should have a replica', function () {
 
             var nfStore = new NetFlowStorage(es, logger, config);
 
@@ -60,7 +60,7 @@ describe('NetFlowStorage', function() {
 
         });
 
-        it('should have an index name', function() {
+        it('should have an index name', function () {
 
             var nfStore = new NetFlowStorage(es, logger, config);
 
@@ -71,8 +71,8 @@ describe('NetFlowStorage', function() {
 
     });
 
-    describe('createIndex', function() {
-        it('creates an index if one does not exist', function() {
+    describe('createIndex', function () {
+        it('creates an index if one does not exist', function () {
 
 
             var nfStore = new NetFlowStorage(es, logger, config);
@@ -81,7 +81,7 @@ describe('NetFlowStorage', function() {
 
             nfStore.client = {
                 indices: {
-                    exists: function(index_name, cb) {
+                    exists: function (index_name, cb) {
                         cb(null, false);
                     },
                     create: myCreateSpy
@@ -93,7 +93,7 @@ describe('NetFlowStorage', function() {
             expect(myCreateSpy).to.be.calledOnce;
         });
 
-        it('does not create an index if one exists', function() {
+        it('does not create an index if one exists', function () {
 
 
             var nfStore = new NetFlowStorage(es, logger, config);
@@ -101,7 +101,7 @@ describe('NetFlowStorage', function() {
 
             nfStore.client = {
                 indices: {
-                    exists: function(index_name, cb) {
+                    exists: function (index_name, cb) {
                         cb(null, true);
                     },
                     create: myCreateSpy
@@ -114,8 +114,8 @@ describe('NetFlowStorage', function() {
         });
     });
 
-    describe('storeFlow', function() {
-        it('should correctly store the flow', function() {
+    describe('storeFlow', function () {
+        it('should correctly store the flow', function () {
 
 
             var nfStore = new NetFlowStorage(es, logger, config);
@@ -152,9 +152,9 @@ describe('NetFlowStorage', function() {
 
 
             // Setup our mock
-            var stub = sandbox.stub(es, 'Client', function() {});
+            var stub = sandbox.stub(es, 'Client', function () {});
             nfStore.client = new es.Client();
-            nfStore.client.index = function() {};
+            nfStore.client.index = function () {};
             var myIndexSpy = sandbox.spy(nfStore.client, 'index');
 
 

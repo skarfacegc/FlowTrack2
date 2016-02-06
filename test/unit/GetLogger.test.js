@@ -9,41 +9,41 @@ var expect = chai.expect;
 var GetLogger = require('../../lib/GetLogger');
 
 
-describe('GetLogger', function() {
+describe('GetLogger', function () {
 
-    it('should return a bunyan object', function() {
+    it('should return a bunyan object', function () {
         var logger = new GetLogger();
 
         expect(logger).to.be.instanceof(bunyan);
 
     });
 
-    it('should be configured to only log fatals under test', function() {
+    it('should be configured to only log fatals under test', function () {
         var logger = new GetLogger('test');
 
         expect(logger).to.have.property('_level').that.equals(60);
     });
 
-    it('should be configured to only log debug under dev', function() {
+    it('should be configured to only log debug under dev', function () {
         var logger = new GetLogger('dev');
 
         expect(logger).to.have.property('_level').that.equals(20);
     });
 
-    it('should be configured to only log info by default', function() {
+    it('should be configured to only log info by default', function () {
         var logger = new GetLogger();
 
         expect(logger).to.have.property('_level').that.equals(30);
     });
 
-    it('should set a default name', function() {
+    it('should set a default name', function () {
         var logger = new GetLogger();
 
         expect(logger).to.have.property('fields').to.have.property('name').that.equals('FlowTrack2');
 
     });
 
-    it('should allow passing a name', function() {
+    it('should allow passing a name', function () {
         var logger = new GetLogger('test', 'TestName');
 
         expect(logger).to.have.property('fields').to.have.property('name').that.equals('TestName');

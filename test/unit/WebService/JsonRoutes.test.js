@@ -18,10 +18,10 @@ var expect = chai.expect;
 
 
 
-describe('JsonRoutes', function() {
-    describe('/json/rawFlowsForlast/:duration/:scale', function() {
+describe('JsonRoutes', function () {
+    describe('/json/rawFlowsForlast/:duration/:scale', function () {
 
-        it('should call getFlowsForLast and execute the callback', function(done) {
+        it('should call getFlowsForLast and execute the callback', function (done) {
 
             var logger = new GetLogger('test', 'TestLogger');
             var app = express();
@@ -35,13 +35,13 @@ describe('JsonRoutes', function() {
             jsonHandler.getFlowsForLast = getFlowsForLastStub.yields('', 'test', '');
 
 
-            // Load 
+            // Load
             require('../../../lib/WebService/JsonRoutes')(app, config, jsonHandler);
 
             request(app)
                 .get('/json/rawFlowsForLast/1/second')
                 .expect('"test"')
-                .end(function(err, res) {
+                .end(function (err, res) {
                     expect(err).to.be.null;
                     expect(getFlowsForLastStub).to.be.calledOnce;
                     done();

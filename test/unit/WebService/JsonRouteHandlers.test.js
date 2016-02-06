@@ -18,16 +18,16 @@ chai.use(sinonChai);
 
 
 
-describe('JsonRouteHandlers', function() {
-    describe('Constructor', function() {
-        it('should be an instance of JsonRouteHandlers', function() {
+describe('JsonRouteHandlers', function () {
+    describe('Constructor', function () {
+        it('should be an instance of JsonRouteHandlers', function () {
             var jsonHandler = new JsonRouteHandlers(es, logger, config);
 
             expect(jsonHandler).to.be.an.instanceOf(JsonRouteHandlers);
 
         });
 
-        it('should have a defined nfRetrieval property', function() {
+        it('should have a defined nfRetrieval property', function () {
 
             var jsonHandler = new JsonRouteHandlers(es, logger, config);
 
@@ -35,21 +35,21 @@ describe('JsonRouteHandlers', function() {
         });
     });
 
-    describe('getFlowsForLast', function() {
+    describe('getFlowsForLast', function () {
 
         var sandbox;
 
-        beforeEach(function() {
+        beforeEach(function () {
             sandbox = sinon.sandbox.create();
         });
 
-        afterEach(function() {
+        afterEach(function () {
             sandbox.restore();
         });
 
 
 
-        it('should call NetFlowRetrieval.getRawFlows', function() {
+        it('should call NetFlowRetrieval.getRawFlows', function () {
 
             var jsonHandler = new JsonRouteHandlers(es, logger, config);
 
@@ -62,7 +62,7 @@ describe('JsonRouteHandlers', function() {
         });
 
 
-        it('should handle the days duration correctly', function() {
+        it('should handle the days duration correctly', function () {
 
             var jsonHandler = new JsonRouteHandlers(es, logger, config);
 
@@ -78,7 +78,7 @@ describe('JsonRouteHandlers', function() {
             clock.restore();
         });
 
-        it('should handle the hours duration correctly', function() {
+        it('should handle the hours duration correctly', function () {
 
             var jsonHandler = new JsonRouteHandlers(es, logger, config);
 
@@ -94,7 +94,7 @@ describe('JsonRouteHandlers', function() {
             clock.restore();
         });
 
-        it('should handle the minutes duration correctly', function() {
+        it('should handle the minutes duration correctly', function () {
 
             var jsonHandler = new JsonRouteHandlers(es, logger, config);
 
@@ -110,7 +110,7 @@ describe('JsonRouteHandlers', function() {
             clock.restore();
         });
 
-        it('should handle the seconds duration correctly', function() {
+        it('should handle the seconds duration correctly', function () {
 
             var jsonHandler = new JsonRouteHandlers(es, logger, config);
 
@@ -127,7 +127,7 @@ describe('JsonRouteHandlers', function() {
         });
 
 
-        it('handle the callback correctly', function() {
+        it('handle the callback correctly', function () {
 
             var jsonHandler = new JsonRouteHandlers(es, logger, config);
             var cbSpy = sandbox.spy();

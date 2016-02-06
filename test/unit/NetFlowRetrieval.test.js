@@ -17,21 +17,21 @@ var sinonChai = require('sinon-chai');
 var expect = chai.expect;
 chai.use(sinonChai);
 
-describe('FlowRetrieval', function() {
+describe('FlowRetrieval', function () {
 
     var sandbox;
 
-    beforeEach(function() {
+    beforeEach(function () {
         sandbox = sinon.sandbox.create();
     });
 
-    afterEach(function() {
+    afterEach(function () {
         sandbox.restore();
     });
 
 
-    describe('Constructor', function() {
-        it('should have a defined client property', function() {
+    describe('Constructor', function () {
+        it('should have a defined client property', function () {
 
             var nfRetrieval = new NetFlowRetrieval(es, logger, config);
 
@@ -40,9 +40,9 @@ describe('FlowRetrieval', function() {
 
     });
 
-    describe('getRawFlows', function() {
+    describe('getRawFlows', function () {
 
-        it('should be called with correct args', function() {
+        it('should be called with correct args', function () {
 
             var nfRetrieval = new NetFlowRetrieval(es, logger, config);
             var searchSpy = sandbox.spy();
@@ -71,7 +71,7 @@ describe('FlowRetrieval', function() {
             });
         });
 
-        it('should correctly handle the callback', function() {
+        it('should correctly handle the callback', function () {
             var nfRetrieval = new NetFlowRetrieval(es, logger, config);
 
             var searchStub = sandbox.stub(nfRetrieval.client, 'search').yields('err', 'response', 'status');

@@ -16,15 +16,16 @@ var FlowTrack2App = require('../lib/FlowTrack2App');
 
 main();
 function main() {
-        
+
     var numCPUs = require('os').cpus().length;
 
     // Setup our logger instances
-    var logger = new GetLogger(process.env.NODE_ENV,'FlowTrack2'); 
-    var expressLogger = new GetLogger(process.env.NODE_ENV, 'FlowTrack2App'); 
+    var logger = new GetLogger(process.env.NODE_ENV,'FlowTrack2');
+    var expressLogger = new GetLogger(process.env.NODE_ENV, 'FlowTrack2App');
 
     var nfStore = new NetFlowStorage(es, logger, config);
-    var app = new FlowTrack2App(es, expressLogger, config);    
+    var app = new FlowTrack2App(es, expressLogger, config);
+
 
     if (cluster.isMaster) {
 
@@ -36,13 +37,13 @@ function main() {
         }
 
 
-         // Now start the webservice
-         startWebServer(config.get('Application.web_port'),app);
+        // Now start the webservice
+        startWebServer(config.get('Application.web_port'), app);
 
 
     } else {
         // Setup the worker
-        netflow(function(flow) {
+        netflow(function (flow) {
 
             logger.info('%s\t flows', flow.flows.length);
             for (var i = 0; i < flow.flows.length; i++) {
@@ -54,8 +55,7 @@ function main() {
 
 
 
-function startWebServer(port, app)
-{
+function startWebServer(port, app) {
     var logger = new GetLogger(process.env.NODE_ENV);
     http.createServer(app).listen(port);
     logger.info('Listening on: ' + port);
