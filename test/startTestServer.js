@@ -5,9 +5,9 @@
 //
 // Populate the ES database with some dummy data
 // Start the webserver for e2e tests
-// 
+//
 // don't need the netflow collector
-// 
+//
 
 require('config');
 var http = require('http');
@@ -30,7 +30,7 @@ function main() {
     var nfStore = new NetFlowStorage(es, logger, config);
     var app = new FlowTrack2App(es, expressLogger, config);
 
-    nfStore.createIndex(function() {
+    nfStore.createIndex(function () {
         loadData(nfStore);
     });
 

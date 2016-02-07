@@ -30,7 +30,7 @@ var WWW_SOURCE_FILES = ['www/js/**/*.js'];
 
 // Test files
 var UNIT_TESTS = ['test/unit/**/*.test.js'];
-var E2E_TESTS = ['test/e2e/**/*.e2e.js'];
+var E2E_TESTS = ['test/e2e/**/*.e2e.js','test/e2e/**/*.js'];
 
 // Unit and E2E combined
 var E2E_COMBINED = [].concat(WWW_SOURCE_FILES, E2E_TESTS);
