@@ -4,7 +4,6 @@ var gulp = require('gulp');
 var istanbul = require('gulp-istanbul');
 var istanbulReport = require('gulp-istanbul-report');
 var mocha = require('gulp-mocha');
-var gutil = require('gulp-util');
 var gulpSequence = require('gulp-sequence');
 var watch = require('gulp-watch');
 var plumber = require('gulp-plumber');
@@ -16,6 +15,12 @@ var nodemon = require('gulp-nodemon');
 var jshintStylish = require('jshint-stylish');
 var jscs = require('gulp-jscs');
 var jscsStylish = require('gulp-jscs-stylish');
+var gls = require('gulp-live-server');
+
+
+
+
+process.env.NODE_ENV = process.env.NODE_ENV || 'test';
 
 
 
@@ -44,31 +49,31 @@ var COVERAGE_FILES = ['coverage/**/coverage*.json'];
 
 //
 // Main tasks
-
+//
 
 // combined tasks
 gulp.task('test', ['lint', 'unit_test']);
-
-gulp.task('e2e', function (callback) {
-    gulpSequence('clean_coverage', 'lint', 'e2e_instrument',
-        'e2e_coverage', 'coverage_report')(callback);
-});
 
 gulp.task('coverage', function (callback) {
     gulpSequence('clean_coverage', 'lint',
         'unit_coverage', 'coverage_report')(callback);
 });
 
+gulp.task('e2e', function (callback) {
+    gulpSequence('clean_coverage', 'lint', 'e2e_instrument',
+        'start_server', 'e2e_coverage', 'coverage_report', 'stop_server')(callback);
+});
+
 gulp.task('full', function (callback) {
-    gulpSequence('clean_coverage', 'lint', 'e2e_instrument', ['unit_coverage', 'e2e_coverage'],
-        'coverage_report')(callback);
+    gulpSequence('clean_coverage', 'lint', 'e2e_instrument', ['unit_coverage', 'start_server',
+      'e2e_coverage'], 'coverage_report', 'stop_server')(callback);
 });
 
 gulp.task('clean', ['clean_coverage', 'clean_modules', 'clean_bower']);
 
 
 //
-// Tests
+// lint
 //
 
 // Run jshint across everything in SOURCE_FILES
@@ -83,10 +88,12 @@ gulp.task('lint', function () {
 });
 
 
+//
+// Unit Test
+//
 
 // Run the test suite, show details
 gulp.task('unit_test', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'test';
     gulp.src(UNIT_TESTS)
         .pipe(mocha({
             reporter: 'spec'
@@ -96,7 +103,6 @@ gulp.task('unit_test', function (cb) {
 // Run the test suite with code coverage
 // Shows minimal test details
 gulp.task('unit_coverage', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'test';
     gulp.src(SOURCE_FILES)
         .pipe(plumber())
         .pipe(istanbul({
@@ -125,15 +131,14 @@ gulp.task('unit_coverage', function (cb) {
 
 });
 
-
-gulp.task('e2e_coverage', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'test';
-    gulp.src(E2E_TESTS)
-        .pipe(protractor({
-            configFile: "test/e2e/e2e.conf.js"
-        }))
-        .on('end', cb);
+// Rerun coverage on change
+gulp.task('watch', function () {
+    gulp.watch(SOURCE_AND_TESTS, ['coverage']);
 });
+
+//
+// End to End (integration tests)
+//
 
 // instrument the browser javascript
 gulp.task('e2e_instrument', function (cb) {
@@ -145,20 +150,32 @@ gulp.task('e2e_instrument', function (cb) {
         .on('end', cb);
 });
 
-// Generate the istanbul reports
-gulp.task('coverage_report', function (cb) {
-    gulp.src(COVERAGE_FILES)
-        .pipe(istanbulReport({
-            reporters: ['lcov', 'text']
+// Run the tests
+gulp.task('e2e_coverage', function (cb) {
+    gulp.src(E2E_TESTS)
+        .pipe(protractor({
+            configFile: "test/e2e/e2e.conf.js"
         }))
         .on('end', cb);
+});
+
+
+// Start and stop the application server
+var server = gls('bin/flowTrack', { env: {NODE_ENV: 'test'} }, false);
+gulp.task('start_server', function (cb) {
+    server.start();
+    cb();
+});
+
+gulp.task('stop_server', function (cb) {
+    server.stop();
+    cb();
 });
 
 
 //
 // Support
 //
-
 
 // Install bower components
 // installs to www/bower_components and
@@ -171,11 +188,13 @@ gulp.task('bower', function () {
         });
 });
 
-
-// Rerun coverage on change
-gulp.task('watch', function () {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'test';
-    gulp.watch(SOURCE_AND_TESTS, ['coverage']);
+// Generate the istanbul reports
+gulp.task('coverage_report', function (cb) {
+    gulp.src(COVERAGE_FILES)
+        .pipe(istanbulReport({
+            reporters: ['lcov', 'text']
+        }))
+        .on('end', cb);
 });
 
 

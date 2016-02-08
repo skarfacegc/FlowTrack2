@@ -33,6 +33,7 @@
     "gulp-jscs": "^3.0.2",
     "gulp-jscs-stylish": "^1.3.0",
     "gulp-jshint": "^2.0.0",
+    "gulp-live-server": "0.0.29",
     "gulp-mocha": "^2.1.1",
     "gulp-nodemon": "^2.0.3",
     "gulp-plumber": "^1.0.1",
