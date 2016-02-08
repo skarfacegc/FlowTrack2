@@ -1,13 +1,13 @@
 {
     "Application": {
-        "web_port": 3000, // Port for web services
-        "netflow_port": 2055, // port to netflow
-        "js_path": "www/js", // location of the browser javascript files
-        "index_name": "flow_track2" // name of the primay ES index
+        "web_port": 3000,
+        "netflow_port": 2055,
+        "js_path": "www/js",
+        "index_name": "flow_track2"
     },
     "ElasticSearchConfig": {
-        "elasticsearch_host": "localhost:9200", // host definition for the elastic search connection
-        "elasticsearch_shards": 4, // Number of shards for the new index
-        "elasticsearch_replicas": 0 // Number of replicas for the new index
+        "elasticsearch_host": "localhost:9200",
+        "elasticsearch_shards": 4,
+        "elasticsearch_replicas": 0 
     }
 }

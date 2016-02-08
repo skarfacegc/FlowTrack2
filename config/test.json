@@ -1,5 +1,6 @@
 {
     "Application": {
-        "js_path": "coverage/www/test_files" // location of the browser javascript files
+        "web_port": 3001,
+        "js_path": "coverage/www/test_files" 
     }
 }
