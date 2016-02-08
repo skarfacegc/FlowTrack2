@@ -35,9 +35,9 @@ exports.config = {
         name: 'FlowTrack2 Build'
     }],
 
-    onComplete: function() {
+    onComplete: function () {
         browser.driver.executeScript("return __coverage__flowTrack2__").
-        then(function(coverage) {
+        then(function (coverage) {
             fs.writeFileSync('coverage/coverage-www.json', JSON.stringify(coverage));
         });
     }
