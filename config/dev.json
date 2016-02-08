@@ -1,5 +1,4 @@
 {
     "Application": {
-        "js_path": "coverage/www/test_files" // location of the browser javascript files
     }
 }
