@@ -16,6 +16,8 @@ var jshintStylish = require('jshint-stylish');
 var jscs = require('gulp-jscs');
 var jscsStylish = require('gulp-jscs-stylish');
 var gls = require('gulp-live-server');
+var bunyan = require('bunyan');
+var spawn = require('child_process').spawn;
 
 
 
@@ -226,8 +228,20 @@ gulp.task('run', ['lint'], function () {
     nodemon({
         script: 'bin/flowTrack',
         ext: 'html js',
-        ignore: ['coverage', 'node_modules', 'bower_components']
+        ignore: ['coverage', 'node_modules', 'bower_components'],
+        stdout: false,
+        readable: false
     }).on('restart', function () {
         console.log('\nRESTART\n');
+    }).on('readable', function () {
+        bunyan = spawn('./node_modules/bunyan/bin/bunyan', [
+          '--output','short',
+          '--color'
+        ]);
+
+        bunyan.stdout.pipe(process.stdout);
+        bunyan.stderr.pipe(process.stderr);
+        this.stdout.pipe(bunyan.stdin);
+        this.stderr.pipe(bunyan.stdin);
     });
 });
