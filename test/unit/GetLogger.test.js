@@ -18,9 +18,13 @@ describe('GetLogger', function () {
 
     });
 
-    it('should be configured to only log fatals under test', function () {
-        var logger = new GetLogger('test');
+    it('should be configured to only log fatals under uTest', function () {
+        var logger = new GetLogger('uTest');
+        expect(logger).to.have.property('_level').that.equals(60);
+    });
 
+    it('should be configured to only log fatals under e2eTest', function () {
+        var logger = new GetLogger('e2eTest');
         expect(logger).to.have.property('_level').that.equals(60);
     });
 

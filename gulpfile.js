@@ -19,12 +19,6 @@ var gls = require('gulp-live-server');
 
 
 
-
-process.env.NODE_ENV = process.env.NODE_ENV || 'test';
-
-
-
-
 //
 // File sets
 //
@@ -52,19 +46,25 @@ var COVERAGE_FILES = ['coverage/**/coverage*.json'];
 //
 
 // combined tasks
-gulp.task('test', ['lint', 'unit_test']);
+gulp.task('test', function (callback) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
+    gulpSequence('lint', 'unit_test');
+});
 
 gulp.task('coverage', function (callback) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
     gulpSequence('clean_coverage', 'lint',
         'unit_coverage', 'coverage_report')(callback);
 });
 
 gulp.task('e2e', function (callback) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
     gulpSequence('clean_coverage', 'lint', 'e2e_instrument',
         'start_server', 'e2e_coverage', 'coverage_report', 'stop_server')(callback);
 });
 
 gulp.task('full', function (callback) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
     gulpSequence('clean_coverage', 'lint', 'e2e_instrument', ['unit_coverage', 'start_server',
       'e2e_coverage'], 'coverage_report', 'stop_server')(callback);
 });
@@ -133,7 +133,9 @@ gulp.task('unit_coverage', function (cb) {
 
 // Rerun coverage on change
 gulp.task('watch', function () {
-    gulp.watch(SOURCE_AND_TESTS, ['coverage']);
+    gulp.watch(E2E_COMBINED, ['full']);
+    gulp.watch(UNIT_COMBINED, ['coverage']);
+
 });
 
 //
@@ -161,7 +163,7 @@ gulp.task('e2e_coverage', function (cb) {
 
 
 // Start and stop the application server
-var server = gls('bin/flowTrack', { env: {NODE_ENV: 'test'} }, false);
+var server = gls('bin/flowTrack', { env: {NODE_ENV: 'e2eTest'} }, false);
 gulp.task('start_server', function (cb) {
     server.start();
     cb();
@@ -220,6 +222,7 @@ gulp.task('clean_bower', function (cb) {
 // restart on change
 // logfiles are emitted in bunyan format
 gulp.task('run', ['lint'], function () {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
     nodemon({
         script: 'bin/flowTrack',
         ext: 'html js',

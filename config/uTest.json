@@ -1,0 +1,6 @@
+{
+    "Application": {
+        "web_port": 3001,
+        "js_path": "coverage/www/test_files" 
+    }
+}
