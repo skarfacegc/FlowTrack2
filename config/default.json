@@ -3,11 +3,12 @@
         "web_port": 3000,
         "netflow_port": 2055,
         "js_path": "www/js",
-        "index_name": "flow_track2"
+        "index_name": "flow_track2",
+        "disable_collector": 0
     },
     "ElasticSearchConfig": {
         "elasticsearch_host": "localhost:9200",
         "elasticsearch_shards": 4,
-        "elasticsearch_replicas": 0 
+        "elasticsearch_replicas": 0
     }
 }

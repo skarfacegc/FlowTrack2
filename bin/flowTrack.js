@@ -26,7 +26,6 @@ function main() {
     var nfStore = new NetFlowStorage(es, logger, config);
     var app = new FlowTrack2App(es, expressLogger, config);
 
-
     if (cluster.isMaster) {
 
         // Setup, then fork the flow collection workers
@@ -36,20 +35,20 @@ function main() {
             cluster.fork();
         }
 
-
         // Now start the webservice
         startWebServer(config.get('Application.web_port'), app);
 
-
     } else {
-        // Setup the worker
-        netflow(function (flow) {
+        if (config.get('Application.disable_collector') === 0) {
+            // Setup the worker
+            netflow(function (flow) {
 
-            logger.info('%s\t flows', flow.flows.length);
-            for (var i = 0; i < flow.flows.length; i++) {
-                nfStore.storeFlow(flow.flows[i]);
-            }
-        }).listen(config.get('Application.netflow_port'));
+                logger.info('%s\t flows', flow.flows.length);
+                for (var i = 0; i < flow.flows.length; i++) {
+                    nfStore.storeFlow(flow.flows[i]);
+                }
+            }).listen(config.get('Application.netflow_port'));
+        }
     }
 }
 
