@@ -1,4 +1,14 @@
 Ongoing devlog. Will cover research stuff, notes, and progress
+2016.Feb.13
+-----------
+Turns out the repeater for the grid headers changed a little bit.  All fixed.
+
+2016.Feb.10
+-----------
+Getting back into the code after a long break.  Cleaned up the e2e tests a bit,
+updated dependencies, made config selection a little more sane.  All in prep
+to actually get e2e working on the data grid.
+
 
 2015.Jun.13
 -----------
@@ -51,11 +61,3 @@ The main collector stuff works.  Grab flows, put them in ES.  Tried throwing a h
 I'm not thrilled with the overall structure of the code.  I'm brand new to any significant javascript so I'm not comfortable with the idioms and "proper" way to do things.  First thing up is figuring out the package and object system.
 
 Think I want to package my libs as local npm modules and I think grunt is the makefile to get everything working.
-
-
-
-
-
-
-
-

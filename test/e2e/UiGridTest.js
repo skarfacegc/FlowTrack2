@@ -23,7 +23,7 @@ function UiGridTest(gridId) {
 UiGridTest.prototype.getColumnHeaders = function () {
     var headerCols = this.grid
         .element(by.css('.ui-grid-header-cell-row'))
-        .all(by.repeater('col in colContainer.renderedColumns track by col.colDef.name'));
+        .all(by.repeater('col in colContainer.renderedColumns track by col.uid'));
 
     return headerCols;
 };
