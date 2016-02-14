@@ -18,6 +18,7 @@ var jscsStylish = require('gulp-jscs-stylish');
 var gls = require('gulp-live-server');
 var bunyan = require('bunyan');
 var spawn = require('child_process').spawn;
+var exec = require('child_process').exec;
 
 
 
@@ -61,14 +62,16 @@ gulp.task('coverage', function (callback) {
 
 gulp.task('e2e', function (callback) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
-    gulpSequence('clean_coverage', 'lint', 'e2e_instrument',
-        'start_server', 'e2e_coverage', 'coverage_report', 'stop_server')(callback);
+    gulpSequence('load_data', 'clean_coverage', 'lint', 'e2e_instrument',
+        'start_server', 'e2e_coverage', 'stop_server', 'coverage_report',
+        'delete_dat')(callback);
 });
 
 gulp.task('full', function (callback) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
-    gulpSequence('clean_coverage', 'lint', 'e2e_instrument', ['unit_coverage', 'start_server',
-      'e2e_coverage'], 'coverage_report', 'stop_server')(callback);
+    gulpSequence('load_data', 'clean_coverage', 'lint', 'e2e_instrument',
+      ['unit_coverage', 'start_server','e2e_coverage'], 'stop_server',
+      'coverage_report', 'delete_data')(callback);
 });
 
 gulp.task('clean', ['clean_coverage', 'clean_modules', 'clean_bower']);
@@ -199,6 +202,22 @@ gulp.task('coverage_report', function (cb) {
             reporters: ['lcov', 'text']
         }))
         .on('end', cb);
+});
+
+// load test data
+gulp.task('load_data', function () {
+    exec('./test/bin/loadTestData.js', function (err,stdout,stderr) {
+      console.log(stdout);
+      console.log(stderr);
+  });
+});
+
+// delete test data
+gulp.task('delete_data', function () {
+    exec('curl --silent -XDELETE "http://localhost:9200/test_flow_track2"', function (err,stdout,stderr) {
+      // console.log(stdout);
+      // console.log(stderr);
+  });
 });
 
 
