@@ -242,7 +242,7 @@ gulp.task('clean_bower', function (cb) {
 // Start the flowTrack application
 // restart on change
 // logfiles are emitted in bunyan format
-gulp.task('run', ['lint'], function () {
+gulp.task('run', function () {
     process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
     nodemon({
         script: 'bin/flowTrack',
