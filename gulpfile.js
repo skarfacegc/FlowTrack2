@@ -188,6 +188,8 @@ gulp.task('stop_server', function (cb) {
 // installs to www/bower_components and
 // cleans up ./bower_components
 gulp.task('bower', function () {
+
+    //FIXME:20 issue:29 Add something to automatically add dependencies to index.html
     return bower()
         .pipe(gulp.dest('www/bower_components'))
         .on('end', function () {
