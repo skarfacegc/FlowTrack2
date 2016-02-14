@@ -27,7 +27,7 @@ var exec = require('child_process').exec;
 //
 
 // Project source files
-var SOURCE_FILES = ['lib/**/*.js', 'bin/*'];
+var SOURCE_FILES = ['lib/**/*.js'];
 var WWW_SOURCE_FILES = ['www/js/**/*.js'];
 
 // Test files
