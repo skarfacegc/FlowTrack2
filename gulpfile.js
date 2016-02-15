@@ -19,6 +19,7 @@ var gls = require('gulp-live-server');
 var bunyan = require('bunyan');
 var spawn = require('child_process').spawn;
 var exec = require('child_process').exec;
+var wiredep = require('wiredep').stream;
 
 
 
@@ -72,6 +73,10 @@ gulp.task('full', function (callback) {
     gulpSequence('load_data', 'clean_coverage', 'lint', 'e2e_instrument',
       ['unit_coverage', 'start_server','e2e_coverage'], 'stop_server',
       'coverage_report', 'delete_data')(callback);
+});
+
+gulp.task('bower', function (callback) {
+    gulpSequence('bower_install', 'bower_inject')(callback);
 });
 
 gulp.task('clean', ['clean_coverage', 'clean_modules', 'clean_bower']);
@@ -187,14 +192,21 @@ gulp.task('stop_server', function (cb) {
 // Install bower components
 // installs to www/bower_components and
 // cleans up ./bower_components
-gulp.task('bower', function () {
-
-    //FIXME:20 issue:29 Add something to automatically add dependencies to index.html
+gulp.task('bower_install', function () {
     return bower()
         .pipe(gulp.dest('www/bower_components'))
         .on('end', function () {
             del('bower_components');
         });
+});
+
+// inject bower dependencies
+gulp.task('bower_inject', function () {
+    gulp.src('./www/html/index.html')
+    .pipe(wiredep({
+        directory: 'www/bower_components'
+    }))
+    .pipe(gulp.dest('./www/html'));
 });
 
 // Generate the istanbul reports
