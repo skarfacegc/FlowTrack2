@@ -1,3 +1,5 @@
+// Turn off the redifinition error for mocha
+/*jshint -W079 */
 'use strict';
 
 var gulp = require('gulp');
