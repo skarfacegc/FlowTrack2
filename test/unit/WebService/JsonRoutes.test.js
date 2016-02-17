@@ -23,29 +23,16 @@ describe('JsonRoutes', function () {
 
         it('should call getFlowsForLast and execute the callback', function (done) {
 
-            var logger = new GetLogger('test', 'TestLogger');
-            var app = express();
-
-            // var jsonHandler = new JsonRouteHandlers(es, logger, config);
-
-            var getFlowsForLastStub = sinon.stub();
-
-            var jsonHandler = {};
-
-            jsonHandler.getFlowsForLast = getFlowsForLastStub.yields('', 'test', '');
-
-
-            // Load
-            require('../../../lib/WebService/JsonRoutes')(app, config, jsonHandler);
+            var logger = new GetLogger(process.env.NODE_ENV, 'FlowTrack2App');
+            var app = new FlowTrack2App(es, logger, config);
 
             request(app)
                 .get('/json/rawFlowsForLast/1/second')
-                .expect('"test"')
-                .end(function (err, res) {
-                    expect(err).to.be.null;
-                    expect(getFlowsForLastStub).to.be.calledOnce;
-                    done();
-                });
+                .expect(function (res) {
+                    var responseBody = JSON.parse(res.text);
+                    expect(responseBody).to.have.property('took');
+                })
+                .end(done);
         });
     });
 });

@@ -127,7 +127,7 @@ describe('JsonRouteHandlers', function () {
         });
 
 
-        it('handle the callback correctly', function () {
+        it('should handle the callback correctly', function () {
 
             var jsonHandler = new JsonRouteHandlers(es, logger, config);
             var cbSpy = sandbox.spy();
