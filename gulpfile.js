@@ -35,7 +35,10 @@ var WWW_SOURCE_FILES = ['www/js/**/*.js'];
 
 // Test files
 var UNIT_TESTS = ['test/unit/**/*.test.js'];
-var E2E_TESTS = ['test/e2e/**/*.e2e.js','test/e2e/**/*.js'];
+
+var E2E_NON_PROTRACTOR = ['test/e2e/**/*.e2e.js','!test/e2e/**/*.protractor.e2e.js'];
+var E2E_PROTRACTOR = ['test/e2e/**/*.protractor.e2e.js'];
+var E2E_TESTS = [].concat(E2E_PROTRACTOR, E2E_NON_PROTRACTOR);
 
 // Unit and E2E combined
 var E2E_COMBINED = [].concat(WWW_SOURCE_FILES, E2E_TESTS);
@@ -67,7 +70,7 @@ gulp.task('e2e', function (callback) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
     gulpSequence('load_data', 'clean_coverage', 'lint', 'e2e_instrument',
         'start_server', 'e2e_coverage', 'stop_server', 'coverage_report',
-        'delete_dat')(callback);
+        'delete_data')(callback);
 });
 
 gulp.task('full', function (callback) {
@@ -127,18 +130,18 @@ gulp.task('unit_coverage', function (cb) {
                 .pipe(mocha({
                     reporter: 'spec'
                 }))
-            // Just write the json report. the reporter will
-            // use it to do the actual report
-            .pipe(istanbul.writeReports({
-                reporters: ['json'],
-                reportOpts: {
+                // Just write the json report. the reporter will
+                // use it to do the actual report
+                .pipe(istanbul.writeReports({
+                    reporters: ['json'],
+                    reportOpts: {
                     json: {
                         dir: 'coverage',
                         file: 'coverage-unit.json'
                     }
                 }
-            }))
-                .on('end', cb);
+                }))
+                    .on('end', cb);
         });
 
 });
@@ -164,9 +167,22 @@ gulp.task('e2e_instrument', function (cb) {
         .on('end', cb);
 });
 
+
+gulp.task('e2e_coverage', ['e2e_non_protractor_tests','e2e_protractor_tests']);
+
+gulp.task('e2e_non_protractor_tests', function (cb) {
+    gulp.src(E2E_NON_PROTRACTOR)
+    .pipe(mocha({
+        reporter: 'spec'
+    }))
+    .on('end', cb);
+});
+
+
+
 // Run the tests
-gulp.task('e2e_coverage', function (cb) {
-    gulp.src(E2E_TESTS)
+gulp.task('e2e_protractor_tests', function (cb) {
+    gulp.src(E2E_PROTRACTOR)
         .pipe(protractor({
             configFile: "test/e2e/e2e.conf.js"
         }))
