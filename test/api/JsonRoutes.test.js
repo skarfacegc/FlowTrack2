@@ -1,9 +1,9 @@
 /* jshint expr: true */
 'use strict';
 
-var JsonRouteHandlers = require('../../../lib/WebService/JsonRouteHandlers');
-var FlowTrack2App = require('../../../lib/FlowTrack2App');
-var GetLogger = require('../../../lib/GetLogger');
+var JsonRouteHandlers = require('../../lib/WebService/JsonRouteHandlers');
+var FlowTrack2App = require('../../lib/FlowTrack2App');
+var GetLogger = require('../../lib/GetLogger');
 
 
 var es = require('elasticsearch');

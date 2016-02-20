@@ -34,7 +34,7 @@ var SOURCE_FILES = ['lib/**/*.js'];
 var WWW_SOURCE_FILES = ['www/js/**/*.js'];
 
 // Test files
-var UNIT_TESTS = ['test/unit/**/*.test.js'];
+var UNIT_TESTS = ['test/unit/**/*.test.js','test/api/**/*.test.js'];
 
 var E2E_NON_PROTRACTOR = ['test/e2e/**/*.e2e.js','!test/e2e/**/*.protractor.e2e.js'];
 var E2E_PROTRACTOR = ['test/e2e/**/*.protractor.e2e.js'];

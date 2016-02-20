@@ -3,7 +3,7 @@
 
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
-var UiGridTest = require('./UiGridTest');
+var UiGridTest = require('../lib/UiGridTest');
 var config = require('config');
 
 var web_port = config.get('Application.web_port');
