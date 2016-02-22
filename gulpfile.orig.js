@@ -1,0 +1,298 @@
+// Turn off the redifinition error for mocha
+/*jshint -W079 */
+'use strict';
+
+var gulp = require('gulp');
+var istanbul = require('gulp-istanbul');
+var istanbulReport = require('gulp-istanbul-report');
+var mocha = require('gulp-mocha');
+var gulpSequence = require('gulp-sequence');
+var watch = require('gulp-watch');
+var plumber = require('gulp-plumber');
+var protractor = require('gulp-protractor').protractor;
+var bower = require('gulp-bower');
+var jshint = require('gulp-jshint');
+var del = require('del');
+var nodemon = require('gulp-nodemon');
+var jshintStylish = require('jshint-stylish');
+var jscs = require('gulp-jscs');
+var jscsStylish = require('gulp-jscs-stylish');
+var gls = require('gulp-live-server');
+var bunyan = require('bunyan');
+var spawn = require('child_process').spawn;
+var exec = require('child_process').exec;
+var wiredep = require('wiredep').stream;
+
+
+
+//
+// File sets
+//
+
+// Project source files
+var SOURCE_FILES = ['lib/**/*.js'];
+var WWW_SOURCE_FILES = ['www/js/**/*.js'];
+
+// Test files
+var UNIT_TESTS = ['test/unit/**/*.test.js','test/api/**/*.test.js'];
+
+var E2E_NON_PROTRACTOR = ['test/e2e/**/*.e2e.js','!test/e2e/**/*.protractor.e2e.js'];
+var E2E_PROTRACTOR = ['test/e2e/**/*.protractor.e2e.js'];
+var E2E_TESTS = [].concat(E2E_PROTRACTOR, E2E_NON_PROTRACTOR);
+
+// Unit and E2E combined
+var E2E_COMBINED = [].concat(WWW_SOURCE_FILES, E2E_TESTS);
+var UNIT_COMBINED = [].concat(SOURCE_FILES, UNIT_TESTS);
+
+// All Combined test & source
+var SOURCE_AND_TESTS = [].concat(E2E_COMBINED, UNIT_COMBINED);
+
+var COVERAGE_FILES = ['coverage/**/coverage*.json'];
+
+
+//
+// Main tasks
+//
+
+// combined tasks
+gulp.task('test', function (callback) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
+    gulpSequence('lint', 'unit_test');
+});
+
+gulp.task('coverage', function (callback) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
+    gulpSequence('clean_coverage', 'lint',
+        'unit_coverage', 'coverage_report')(callback);
+});
+
+gulp.task('e2e', function (callback) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
+    gulpSequence('load_data', 'clean_coverage', 'lint', 'e2e_instrument',
+        'start_server', 'e2e_coverage', 'stop_server', 'coverage_report',
+        'delete_data')(callback);
+});
+
+gulp.task('full', function (callback) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
+    gulpSequence('load_data', 'clean_coverage', 'lint', 'e2e_instrument',
+      ['unit_coverage', 'start_server','e2e_coverage'], 'stop_server',
+      'coverage_report', 'delete_data')(callback);
+});
+
+gulp.task('bower', function (callback) {
+    gulpSequence('bower_install', 'bower_inject')(callback);
+});
+
+gulp.task('clean', ['clean_coverage', 'clean_modules', 'clean_bower']);
+
+
+//
+// lint
+//
+
+// Run jshint across everything in SOURCE_FILES
+// this is a pre-req for test, coverage, watch
+gulp.task('lint', function () {
+    return gulp.src(SOURCE_AND_TESTS)
+        .pipe(jshint())
+        .pipe(jscs())
+        .pipe(jscsStylish.combineWithHintResults())
+        .pipe(jshint.reporter(jshintStylish))
+        .pipe(jshint.reporter('fail'));
+});
+
+
+//
+// Unit Test
+//
+
+// Run the test suite, show details
+gulp.task('unit_test', function (cb) {
+    gulp.src(UNIT_TESTS)
+        .pipe(mocha({
+            reporter: 'spec'
+        }).on('end', cb));
+});
+
+// Run the test suite with code coverage
+// Shows minimal test details
+gulp.task('unit_coverage', function (cb) {
+    gulp.src(SOURCE_FILES)
+        .pipe(plumber())
+        .pipe(istanbul({
+            includeUntested: true
+        }))
+        .pipe(istanbul.hookRequire())
+        .on('finish', function () {
+            gulp.src(UNIT_TESTS)
+                .pipe(plumber())
+                .pipe(mocha({
+                    reporter: 'spec'
+                }))
+                // Just write the json report. the reporter will
+                // use it to do the actual report
+                .pipe(istanbul.writeReports({
+                    reporters: ['json'],
+                    reportOpts: {
+                    json: {
+                        dir: 'coverage',
+                        file: 'coverage-unit.json'
+                    }
+                }
+                }))
+                    .on('end', cb);
+        });
+
+});
+
+// Rerun coverage on change
+gulp.task('watch', function () {
+    gulp.watch(E2E_COMBINED, ['full']);
+    gulp.watch(UNIT_COMBINED, ['coverage']);
+
+});
+
+//
+// End to End (integration tests)
+//
+
+// instrument the browser javascript
+gulp.task('e2e_instrument', function (cb) {
+    gulp.src(WWW_SOURCE_FILES)
+        .pipe(istanbul({
+            coverageVariable: '__coverage__flowTrack2__'
+        }))
+        .pipe(gulp.dest('coverage/www/test_files'))
+        .on('end', cb);
+});
+
+
+gulp.task('e2e_coverage', ['e2e_non_protractor_tests','e2e_protractor_tests']);
+
+gulp.task('e2e_non_protractor_tests', function (cb) {
+    gulp.src(E2E_NON_PROTRACTOR)
+    .pipe(mocha({
+        reporter: 'spec'
+    }))
+    .on('end', cb);
+});
+
+
+
+// Run the tests
+gulp.task('e2e_protractor_tests', function (cb) {
+    gulp.src(E2E_PROTRACTOR)
+        .pipe(protractor({
+            configFile: "test/e2e/e2e.conf.js"
+        }))
+        .on('end', cb);
+});
+
+
+// Start and stop the application server
+var server = gls('bin/flowTrack', { env: {NODE_ENV: 'e2eTest'} }, false);
+gulp.task('start_server', function (cb) {
+    server.start();
+    cb();
+});
+
+gulp.task('stop_server', function (cb) {
+    server.stop();
+    cb();
+});
+
+
+//
+// Support
+//
+
+// Install bower components
+// installs to www/bower_components and
+// cleans up ./bower_components
+gulp.task('bower_install', function () {
+    return bower()
+        .pipe(gulp.dest('www/bower_components'))
+        .on('end', function () {
+            del('bower_components');
+        });
+});
+
+// inject bower dependencies
+gulp.task('bower_inject', function () {
+    gulp.src('./www/html/index.html')
+    .pipe(wiredep({
+        directory: 'www/bower_components'
+    }))
+    .pipe(gulp.dest('./www/html'));
+});
+
+// Generate the istanbul reports
+gulp.task('coverage_report', function (cb) {
+    gulp.src(COVERAGE_FILES)
+        .pipe(istanbulReport({
+            reporters: ['lcov', 'text']
+        }))
+        .on('end', cb);
+});
+
+// load test data
+gulp.task('load_data', function () {
+    exec('./test/bin/loadTestData.js', function (err,stdout,stderr) {
+      console.log(stdout);
+      console.log(stderr);
+  });
+});
+
+// delete test data
+gulp.task('delete_data', function () {
+    exec('curl --silent -XDELETE "http://localhost:9200/test_flow_track2"', function (err,stdout,stderr) {
+      // console.log(stdout);
+      // console.log(stderr);
+  });
+});
+
+
+//
+// Clean
+//
+gulp.task('clean_coverage', function (cb) {
+    del('coverage');
+    cb();
+});
+
+gulp.task('clean_modules', function (cb) {
+    del('node_modules');
+    cb();
+});
+
+gulp.task('clean_bower', function (cb) {
+    del('www/bower_components');
+    cb();
+});
+
+// Start the flowTrack application
+// restart on change
+// logfiles are emitted in bunyan format
+gulp.task('run', function () {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
+    nodemon({
+        script: 'bin/flowTrack',
+        ext: 'html js',
+        ignore: ['coverage', 'node_modules', 'bower_components'],
+        stdout: false,
+        readable: false
+    }).on('restart', function () {
+        console.log('\nRESTART\n');
+    }).on('readable', function () {
+        bunyan = spawn('./node_modules/bunyan/bin/bunyan', [
+          '--output','short',
+          '--color'
+        ]);
+
+        bunyan.stdout.pipe(process.stdout);
+        bunyan.stderr.pipe(process.stderr);
+        this.stdout.pipe(bunyan.stdin);
+        this.stderr.pipe(bunyan.stdin);
+    });
+});

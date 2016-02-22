@@ -3,7 +3,7 @@
 
 var NetFlowStorage = require('../../lib/NetFlowStorage');
 var GetLogger = require('../../lib/GetLogger');
-var logger = new GetLogger(process.env.NODE_ENV);
+var logger = new GetLogger('quiet');
 var config = require('config');
 
 var es = require('elasticsearch');
