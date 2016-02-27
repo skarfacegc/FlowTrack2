@@ -2,9 +2,11 @@
 
 //
 // Main Tasks:
-//  coverage - run all local unit tests and generate coverage report
+//  test - run all local unit tests and generate coverage report
 //  clean - clean coverage, node_modules, and bower
-//  bower - install bower components
+//  bower - install bower components\
+//  e2e - run browser based end to end tests
+//  full - run unit, api, e2e tests
 //
 // Helper Tasks:
 //  bower_install - install all the bower packages
@@ -17,21 +19,35 @@
 //  clean_modules - clean node_modules
 //
 
+// NODE_ENV matters for these (espeically the e2e tests)
+// config files are selected based on the env, and we need
+// to point to a different location for the web js files
+
 
 var gulp = require('gulp');
 var lazypipe = require('lazypipe');
 var del = require('del');
 var wiredep = require('wiredep').stream;
-var plugins = require('gulp-load-plugins')({DEBUG: false});
+var exec = require('child_process').exec;
+
+// Load all of the gulp-* modules listed in package.json into
+// plugins.*
+var plugins = require('gulp-load-plugins')({DEBUG: true});
+
+// Holds the testServer object from gulp-live-server
+var testServer = {};
 
 
 
 var files = {
     lib_files:  ['lib/**/*.js', '!lib/FlowTrack2App.js','!lib/WebService/**'],
     api_files: ['lib/FlowTrack2App.js','lib/WebService/**/*.js'],
+    client_files: ['www/js/**/*.js'],
     unit_test_files: ['test/unit/**/*.js'],
     api_test_files: ['test/api/**/*.js'],
-    coverage_files : ['coverage/**/coverage*.json']
+    e2e_test_files: ['test/e2e/**/*.js'],
+    coverage_files : ['coverage/**/coverage*.json'],
+    instrumented_files: 'coverage/www/test_files'
 };
 
 var config = {
@@ -40,6 +56,10 @@ var config = {
     },
     istanbul: {
         includeUntested: true
+    },
+    istanbulInstrument: {
+        includeUntested: true,
+        coverageVariable: '__coverage__flowTrack2__'
     },
     istanbulReport: {
         reporters: ['lcov','text']
@@ -61,8 +81,17 @@ var config = {
                 file: 'coverage-api.json'
             }
         }
+    },
+    protractor: {
+        configFile: 'test/e2e/e2e.conf.js'
+    },
+    testServer: {
+        env: {
+            NODE_ENV: 'e2eTest'
+        }
     }
 };
+
 
 
 // Main tasks
@@ -89,9 +118,10 @@ gulp.task('clean', ['clean_bower','clean_modules','clean_coverage']);
 // Support tasks
 gulp.task('coverage_report', function () {
     return gulp.src(files.coverage_files).pipe(istanbulWriteReport());
-
 });
 
+
+// run unit tests and collect coverage data
 gulp.task('unit_test', function (cb) {
     gulp.src(files.lib_files)
       .pipe(istanbulPre())
@@ -103,6 +133,8 @@ gulp.task('unit_test', function (cb) {
       });
 });
 
+
+// test the server functions and collect coverage data
 gulp.task('api_test', function (cb) {
     gulp.src(files.api_files)
       .pipe(istanbulPre())
@@ -114,7 +146,7 @@ gulp.task('api_test', function (cb) {
       });
 });
 
-
+// install the bower packages
 gulp.task('bower_install', function () {
     return plugins.bower()
         .pipe(gulp.dest('www/bower_components'))
@@ -123,14 +155,28 @@ gulp.task('bower_install', function () {
         });
 });
 
-
+// add bower installed packages to the html
 gulp.task('bower_inject', function () {
     gulp.src('./www/html/index.html')
         .pipe(wiredep({
             directory: 'www/bower_components'
         }))
-        .pipe(plugins.debug())
         .pipe(gulp.dest('./www/html'));
+});
+
+
+// instrument the files for e2e testing
+gulp.task('e2e_instrument', function (cb) {
+    gulp.src(files.client_files)
+      .pipe(istanbulInstrument())
+      .pipe(gulp.dest(files.instrumented_files))
+      .on('end', cb);
+});
+
+gulp.task('e2e_test', function (cb) {
+    gulp.src(files.e2e_test_files)
+      .pipe(plugins.protractor.protractor(config.protractor))
+      .on('end', cb);
 });
 
 //
@@ -151,6 +197,26 @@ gulp.task('clean_bower', function (cb) {
     cb();
 });
 
+gulp.task('test_server', function (cb) {
+    testServer = plugins.liveServer('bin/flowTrack', config.testServer, false);
+    testServer.start();
+    cb();
+});
+
+gulp.task('stop_test_server', function (cb) {
+    testServer.stop();
+    cb();
+});
+
+
+// load test data
+gulp.task('load_data', function () {
+    exec('./test/bin/loadTestData.js', function (err,stdout,stderr) {
+      console.log(stdout);
+      console.log(stderr);
+  });
+});
+
 //
 // testing and reporting "drivers"
 //
@@ -169,3 +235,9 @@ var istanbulAPI = lazypipe()
 
 var istanbulWriteReport = lazypipe()
   .pipe(plugins.istanbulReport, config.istanbulReport);
+
+var istanbulInstrument = lazypipe()
+  .pipe(plugins.istanbul, config.istanbulInstrument);
+
+var protractorTest = lazypipe()
+  .pipe(plugins.protractor.protractor, config.protractor);

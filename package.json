@@ -8,7 +8,7 @@
   "license": "MIT",
   "main": "bin/flowTrack.js",
   "scripts": {
-    "test": "grunt mochaTest",
+    "test": "gulp test",
     "postinstall": "gulp bower"
   },
   "dependencies": {
