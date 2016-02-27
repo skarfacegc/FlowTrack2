@@ -66,14 +66,24 @@ var config = {
 
 
 // Main tasks
-gulp.task('coverage',
-  plugins.sequence('clean_coverage', 'api_test', 'unit_test', 'coverage_report'));
+gulp.task('default', ['test']);
+gulp.task('test', function (cb) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
+    plugins.sequence('clean_coverage', 'api_test', 'unit_test', 'coverage_report')(cb);
+});
+
+gulp.task('bower', function () {
+    plugins.sequence('bower_install', 'bower_inject');
+});
+
+gulp.task('e2e', function (cb) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
+    plugins.sequence('load_data', 'test_server', 'clean_coverage', ['e2e_instrument',
+                     'e2e_test'], 'stop_test_server')(cb);
+});
+
 
 gulp.task('clean', ['clean_bower','clean_modules','clean_coverage']);
-
-gulp.task('bower',
-  plugins.sequence('bower_install', 'bower_inject'));
-
 
 
 // Support tasks
