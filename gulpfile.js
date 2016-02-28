@@ -7,6 +7,7 @@
 //  bower - install bower components\
 //  e2e - run browser based end to end tests
 //  full - run unit, api, e2e tests
+//  travis - currently an alias to full
 //
 // Helper Tasks:
 //  bower_install - install all the bower packages
@@ -32,7 +33,7 @@ var exec = require('child_process').exec;
 
 // Load all of the gulp-* modules listed in package.json into
 // plugins.*
-var plugins = require('gulp-load-plugins')({DEBUG: true});
+var plugins = require('gulp-load-plugins')({DEBUG: false});
 
 // Holds the testServer object from gulp-live-server
 var testServer = {};
@@ -111,9 +112,16 @@ gulp.task('e2e', function (cb) {
                      'e2e_test'], 'stop_test_server')(cb);
 });
 
+gulp.task('full', function (cb) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
+    plugins.sequence('load_data', 'test_server', 'clean_coverage',
+                     'api_test', 'unit_test', ['e2e_instrument',
+                     'e2e_test'], 'stop_test_server', 'coverage_report')(cb);
+});
 
 gulp.task('clean', ['clean_bower','clean_modules','clean_coverage']);
 
+gulp.task('travis', ['full']);
 
 // Support tasks
 gulp.task('coverage_report', function () {

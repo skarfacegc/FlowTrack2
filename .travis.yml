@@ -24,7 +24,7 @@
 #   - sleep 10
 #
 
-"script": "gulp full"
+"script": "gulp travis"
 
 
 "after_script":
