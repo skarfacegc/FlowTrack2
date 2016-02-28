@@ -59,4 +59,5 @@ function startWebServer(port, app) {
     var logger = new GetLogger(process.env.NODE_ENV);
     http.createServer(app).listen(port);
     logger.info('Listening on: ' + port);
+    logger.info('environment: ' + process.env.NODE_ENV);
 }

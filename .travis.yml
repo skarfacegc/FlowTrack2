@@ -19,12 +19,11 @@
   - npm install -g gulp
   - npm install -g codeclimate-test-reporter
 
-# "before_script":
-#   - node test/startTestServer.js &
-#   - sleep 10
-#
+"before_script":
+   - sleep 10
 
-"script": "gulp full"
+
+"script": "gulp travis"
 
 
 "after_script":
