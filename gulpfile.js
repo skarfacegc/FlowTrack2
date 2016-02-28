@@ -125,7 +125,12 @@ gulp.task('travis', ['full']);
 
 // Support tasks
 gulp.task('coverage_report', function () {
-    return gulp.src(files.coverage_files).pipe(istanbulWriteReport());
+    gulp.src(files.coverage_files)
+      .pipe(istanbulWriteReport())
+      .on('error', function (error) {
+          plugins.util.log(error.message);
+          process.exit(0);
+      });
 });
 
 
