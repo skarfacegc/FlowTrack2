@@ -102,8 +102,8 @@ gulp.task('test', function (cb) {
     plugins.sequence('clean_coverage', 'api_test', 'unit_test', 'coverage_report')(cb);
 });
 
-gulp.task('bower', function () {
-    plugins.sequence('bower_install', 'bower_inject');
+gulp.task('bower', function (cb) {
+    plugins.sequence('bower_install', 'bower_inject')(cb);
 });
 
 gulp.task('e2e', function (cb) {
@@ -155,11 +155,12 @@ gulp.task('api_test', function (cb) {
 });
 
 // install the bower packages
-gulp.task('bower_install', function () {
-    return plugins.bower()
+gulp.task('bower_install', function (cb) {
+    plugins.bower()
         .pipe(gulp.dest('www/bower_components'))
         .on('end', function () {
             del('bower_components');
+            cb();
         });
 });
 
