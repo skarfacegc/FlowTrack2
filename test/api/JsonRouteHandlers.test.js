@@ -133,7 +133,7 @@ describe('JsonRouteHandlers', function () {
             var cbSpy = sandbox.spy();
             var yieldValue = {
                 hits: {
-                  hits: 'test'
+                    hits: 'test'
                 }
             };
 
