@@ -1,12 +1,16 @@
 'use strict';
 
+// Day to day tasks are under main tasks (test and full being the main ones)
+// You shouldn't need to manually run the helper tasks.
+//
+// Most of the config is in files. and config.
 //
 // Main Tasks:
-//  test - run all local unit tests and generate coverage report
-//  clean - clean coverage, node_modules, and bower
-//  bower - install bower components\
+//  test - run unit, api tests with coverage report
+//  full - run unit, api, e2e tests with coverage report
 //  e2e - run browser based end to end tests
-//  full - run unit, api, e2e tests
+//  clean - clean coverage, node_modules, and bower
+//  bower - install bower components
 //  travis - currently an alias to full
 //  lint - run linters (jshint and jscs)
 //
@@ -19,6 +23,11 @@
 //  clean_coverage - clean all the coverage files
 //  clean_bower - clean out the bower files
 //  clean_modules - clean node_modules
+//  e2e_instrument - compile instrumented versions of the client files
+//  e2e_test - run the e2e tests
+//  test_server - start the test server
+//  stop_test_server - stop the test server
+//  load_data - load test data into the DB
 //
 
 // NODE_ENV matters for these (espeically the e2e tests)
@@ -35,14 +44,15 @@ var jshintStylish = require('jshint-stylish');
 
 
 // Load all of the gulp-* modules listed in package.json into
-// plugins.*
+// plugins.*  I nomrally don't like this type of obfuscation
+// but the plugin list was getting out of control
 var plugins = require('gulp-load-plugins')({DEBUG: false});
 
 // Holds the testServer object from gulp-live-server
 var testServer = {};
 
 
-
+// various file sets used below
 var files = {
     lib_files:  ['lib/**/*.js', '!lib/FlowTrack2App.js','!lib/WebService/**'],
     api_files: ['lib/FlowTrack2App.js','lib/WebService/**/*.js'],
@@ -55,6 +65,7 @@ var files = {
     instrumented_files: 'coverage/www/test_files'
 };
 
+// Configuration settings for various tasks / processes
 var config = {
     mocha: {
         reporter: 'spec'
@@ -106,14 +117,10 @@ gulp.task('test', function (cb) {
     plugins.sequence('clean_coverage', 'api_test', 'unit_test', 'lint', 'coverage_report')(cb);
 });
 
-gulp.task('bower', function (cb) {
-    plugins.sequence('bower_install', 'bower_inject')(cb);
-});
-
 gulp.task('e2e', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
     plugins.sequence('load_data', 'test_server', 'clean_coverage', ['e2e_instrument',
-                     'e2e_test'], 'stop_test_server')(cb);
+                     'e2e_test'], 'stop_test_server', 'coverage_report')(cb);
 });
 
 gulp.task('full', function (cb) {
@@ -123,11 +130,16 @@ gulp.task('full', function (cb) {
                      'e2e_test'], 'stop_test_server', 'lint', 'coverage_report')(cb);
 });
 
+
+gulp.task('bower', function (cb) {
+    plugins.sequence('bower_install', 'bower_inject')(cb);
+});
+
 gulp.task('clean', ['clean_bower','clean_modules','clean_coverage']);
 
 gulp.task('travis', ['full']);
 
-
+// Run linters across all src files
 gulp.task('lint', function () {
     return gulp.src(files.all_src)
         .pipe(plugins.jshint())
@@ -136,8 +148,18 @@ gulp.task('lint', function () {
         .pipe(plugins.jshint.reporter(jshintStylish));
 });
 
+gulp.task('watch', function (cb) {
+    gulp.watch(files.api_files, ['test']);
+    gulp.watch(files.lib_files, ['test']);
+    gulp.watch(files.client_files, ['e2e']);
+    cb();
+});
 
+//
 // Support tasks
+//
+
+// Generate a merged coverage report on any reports available
 gulp.task('coverage_report', function () {
     gulp.src(files.coverage_files)
       .pipe(istanbulWriteReport())
@@ -201,6 +223,7 @@ gulp.task('e2e_instrument', function (cb) {
       .on('end', cb);
 });
 
+// run the actual e2e test
 gulp.task('e2e_test', function (cb) {
     gulp.src(files.e2e_test_files)
       .pipe(plugins.protractor.protractor(config.protractor))
