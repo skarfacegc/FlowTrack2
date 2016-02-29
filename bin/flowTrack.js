@@ -26,7 +26,7 @@ function main() {
     var nfStore = new NetFlowStorage(es, logger, config);
     var app = new FlowTrack2App(es, expressLogger, config);
 
-    //FIXME: issue:45
+    //FIXME: issue:45  should log pid here
     if (cluster.isMaster) {
 
         // Setup, then fork the flow collection workers

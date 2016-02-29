@@ -130,6 +130,7 @@ gulp.task('full', function (cb) {
                      'e2e_test'], 'stop_test_server', 'lint', 'coverage_report')(cb);
 });
 
+//FIXME: issue:47 add api test with coverage
 
 gulp.task('bower', function (cb) {
     plugins.sequence('bower_install', 'bower_inject')(cb);
