@@ -9,8 +9,7 @@ app.controller('flowListCtrl', function ($scope, $http) {
         .success(function (data, status, headers, config) {
             var retList = [];
 
-            // FIXME:10 issue:43 flatten data.hits.hits into something simpler
-            data.hits.hits.forEach(function (element, index, array) {
+            data.forEach(function (element, index, array) {
                 var flowRecord = {
                     Src_Address: ftUtils.inet_ntoa(element._source.ipv4_src_addr),
                     Dst_Address: ftUtils.inet_ntoa(element._source.ipv4_dst_addr),

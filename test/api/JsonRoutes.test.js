@@ -30,7 +30,7 @@ describe('JsonRoutes', function () {
                 .get('/json/rawFlowsForLast/1/second')
                 .expect(function (res) {
                     var responseBody = JSON.parse(res.text);
-                    expect(responseBody).to.have.property('took');
+                    expect(responseBody).to.be.an('array');
                 })
                 .end(done);
         });

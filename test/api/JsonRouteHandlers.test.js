@@ -131,8 +131,14 @@ describe('JsonRouteHandlers', function () {
 
             var jsonHandler = new JsonRouteHandlers(es, logger, config);
             var cbSpy = sandbox.spy();
+            var yieldValue = {
+                hits: {
+                  hits: 'test'
+                }
+            };
 
-            var getRawFlowsStub = sandbox.stub(jsonHandler.nfRetrieval, 'getRawFlows').yields('', 'test', '');
+            var getRawFlowsStub = sandbox.stub(jsonHandler.nfRetrieval, 'getRawFlows')
+              .yields('', yieldValue, '');
 
             jsonHandler.getFlowsForLast(1, 'seconds', cbSpy);
 
