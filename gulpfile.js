@@ -8,6 +8,7 @@
 //  e2e - run browser based end to end tests
 //  full - run unit, api, e2e tests
 //  travis - currently an alias to full
+//  lint - run linters (jshint and jscs)
 //
 // Helper Tasks:
 //  bower_install - install all the bower packages
@@ -30,6 +31,8 @@ var lazypipe = require('lazypipe');
 var del = require('del');
 var wiredep = require('wiredep').stream;
 var exec = require('child_process').exec;
+var jshintStylish = require('jshint-stylish');
+
 
 // Load all of the gulp-* modules listed in package.json into
 // plugins.*
@@ -44,6 +47,7 @@ var files = {
     lib_files:  ['lib/**/*.js', '!lib/FlowTrack2App.js','!lib/WebService/**'],
     api_files: ['lib/FlowTrack2App.js','lib/WebService/**/*.js'],
     client_files: ['www/js/**/*.js'],
+    all_src: ['www/js/**/*.js','lib/**/*.js','bin/flowTrack.js','test/**/*.js','gulpfile.js'],
     unit_test_files: ['test/unit/**/*.js'],
     api_test_files: ['test/api/**/*.js'],
     e2e_test_files: ['test/e2e/**/*.js'],
@@ -99,7 +103,7 @@ var config = {
 gulp.task('default', ['test']);
 gulp.task('test', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
-    plugins.sequence('clean_coverage', 'api_test', 'unit_test', 'coverage_report')(cb);
+    plugins.sequence('clean_coverage', 'api_test', 'unit_test', 'lint', 'coverage_report')(cb);
 });
 
 gulp.task('bower', function (cb) {
@@ -116,12 +120,22 @@ gulp.task('full', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
     plugins.sequence('load_data', 'test_server', 'clean_coverage',
                      'api_test', 'unit_test', ['e2e_instrument',
-                     'e2e_test'], 'stop_test_server', 'coverage_report')(cb);
+                     'e2e_test'], 'stop_test_server', 'lint', 'coverage_report')(cb);
 });
 
 gulp.task('clean', ['clean_bower','clean_modules','clean_coverage']);
 
 gulp.task('travis', ['full']);
+
+
+gulp.task('lint', function () {
+    return gulp.src(files.all_src)
+        .pipe(plugins.jshint())
+        .pipe(plugins.jscs())
+        .pipe(plugins.jscsStylish.combineWithHintResults())
+        .pipe(plugins.jshint.reporter(jshintStylish));
+});
+
 
 // Support tasks
 gulp.task('coverage_report', function () {

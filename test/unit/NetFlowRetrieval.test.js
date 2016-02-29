@@ -76,7 +76,7 @@ describe('FlowRetrieval', function () {
 
             var searchStub = sandbox.stub(nfRetrieval.client, 'search')
                                     .yields('err', 'response', 'status');
-                                    
+
             var callbackSpy = sandbox.spy();
 
             nfRetrieval.getRawFlows(0, 1, callbackSpy);
