@@ -11,7 +11,8 @@ describe('FlowTrack2App', function () {
     describe('Routes', function () {
         it('/ route should return html', function (done) {
 
-            var app = new FlowTrack2App(es, new GetLogger('test', 'TestLogger'), config);
+            var logger = new GetLogger('quiet', 'TestLogger');
+            var app = new FlowTrack2App(es, logger, config);
 
             request(app)
                 .get('/')

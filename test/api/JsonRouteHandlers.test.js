@@ -2,8 +2,8 @@
 'use strict';
 
 
-var JsonRouteHandlers = require('../../../lib/WebService/JsonRouteHandlers');
-var GetLogger = require('../../../lib/GetLogger');
+var JsonRouteHandlers = require('../../lib/WebService/JsonRouteHandlers');
+var GetLogger = require('../../lib/GetLogger');
 var logger = new GetLogger(process.env.NODE_ENV);
 
 
@@ -127,7 +127,7 @@ describe('JsonRouteHandlers', function () {
         });
 
 
-        it('handle the callback correctly', function () {
+        it('should handle the callback correctly', function () {
 
             var jsonHandler = new JsonRouteHandlers(es, logger, config);
             var cbSpy = sandbox.spy();
