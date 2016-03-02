@@ -9,6 +9,8 @@
 //  test - run unit, api tests with coverage report
 //  full - run unit, api, e2e tests with coverage report
 //  e2e - run browser based end to end tests
+//  api - run api tests with coverage
+//  unit - run unit tests with coverage
 //  clean - clean coverage, node_modules, and bower
 //  bower - install bower components
 //  travis - currently an alias to full
@@ -109,20 +111,18 @@ var config = {
 };
 
 
-
+//
 // Main tasks
+//
+
 gulp.task('default', ['test']);
+// run all but the e2e tests
 gulp.task('test', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
     plugins.sequence('clean_coverage', 'api_test', 'unit_test', 'lint', 'coverage_report')(cb);
 });
 
-gulp.task('e2e', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
-    plugins.sequence('load_data', 'test_server', 'clean_coverage', ['e2e_instrument',
-                     'e2e_test'], 'stop_test_server', 'coverage_report')(cb);
-});
-
+// Run all tests
 gulp.task('full', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
     plugins.sequence('load_data', 'test_server', 'clean_coverage',
@@ -130,14 +130,36 @@ gulp.task('full', function (cb) {
                      'e2e_test'], 'stop_test_server', 'lint', 'coverage_report')(cb);
 });
 
-//FIXME: issue:47 add api test with coverage
+// Run the e2e tests.  These interact with a browser
+gulp.task('e2e', function (cb) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
+    plugins.sequence('load_data', 'test_server', 'clean_coverage', ['e2e_instrument',
+                     'e2e_test'], 'stop_test_server', 'coverage_report')(cb);
+});
 
+// API tests deal with testing the JSON api. In general these use
+// supertest to spin up the application and make requests.  Not full
+// e2e
+gulp.task('api', function (cb) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
+    plugins.sequence('clean_coverage', 'load_data', 'api_test', 'coverage_report')(cb);
+});
+
+// Run the unit tests
+gulp.task('unit', function (cb) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
+    plugins.sequence('clean_coverage', 'load_data', 'unit_test', 'coverage_report')(cb);
+});
+
+// Download, install, and inject bower components
 gulp.task('bower', function (cb) {
     plugins.sequence('bower_install', 'bower_inject')(cb);
 });
 
+// Delete data files and modules
 gulp.task('clean', ['clean_bower','clean_modules','clean_coverage']);
 
+// This task gets run by travis-ci
 gulp.task('travis', ['full']);
 
 // Run linters across all src files
@@ -264,9 +286,11 @@ gulp.task('stop_test_server', function (cb) {
 // load test data
 gulp.task('load_data', function (cb) {
     exec('./test/bin/loadTestData.js', function (err,stdout,stderr) {
-      console.log(err);
-      console.log(stdout);
-      console.log(stderr);
+      if (err) {
+          console.log(err);
+          console.log(stdout);
+          console.log(stderr);
+      }
       cb();
   });
 });
