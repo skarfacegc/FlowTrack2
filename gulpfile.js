@@ -172,8 +172,8 @@ gulp.task('lint', function () {
 });
 
 gulp.task('watch', function (cb) {
-    gulp.watch(files.api_files, ['test']);
-    gulp.watch(files.lib_files, ['test']);
+    gulp.watch(files.api_files, ['api']);
+    gulp.watch(files.lib_files, ['unit']);
     gulp.watch(files.client_files, ['e2e']);
     cb();
 });
