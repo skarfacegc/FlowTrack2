@@ -21,16 +21,39 @@ var expect = chai.expect;
 describe('JsonRoutes', function () {
     describe('/json/rawFlowsForlast/:duration/:scale', function () {
 
-        it('should call getFlowsForLast and execute the callback', function (done) {
+        it('should return a valid flow record', function (done) {
 
             var logger = new GetLogger('quiet', 'FlowTrack2App');
             var app = new FlowTrack2App(es, logger, config);
 
             request(app)
-                .get('/json/rawFlowsForLast/1/second')
+                .get('/json/rawFlowsForLast/5/hours')
                 .expect(function (res) {
                     var responseBody = JSON.parse(res.text);
-                    expect(responseBody).to.be.an('array');
+
+                    // reset timestamp to 0 so we can test everthing else
+                    responseBody[0]._source.timestamp = 0;
+                    expect(responseBody[0]._source).to.deep.equal({
+                        "ipv4_src_addr": 3232235777,
+                        "ipv4_dst_addr": 3232235778,
+                        "ipv4_next_hop": null,
+                        "input_snmp": 1,
+                        "output_snmp": 0,
+                        "in_pkts": 2,
+                        "in_bytes": 402,
+                        "first_switched": 4294967295,
+                        "last_switched": 4294967295,
+                        "ipv4_src_port": 60521,
+                        "ipv4_dst_port": 1900,
+                        "tcp_flags": 0,
+                        "protocol": 17,
+                        "src_tos": 0,
+                        "in_as": 0,
+                        "out_as": 0,
+                        "src_mask": 0,
+                        "dst_mask": 0,
+                        "timestamp": 0
+                    })
                 })
                 .end(done);
         });
