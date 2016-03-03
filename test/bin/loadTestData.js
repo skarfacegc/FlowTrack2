@@ -5,6 +5,7 @@ var es = require('elasticsearch');
 var config = require('config');
 var NetFlowStorage = require('../../lib/NetFlowStorage');
 var GetLogger = require('../../lib/GetLogger');
+var EsConnect = require('../../lib/EsConnect');
 
 
 var SAMPLE_FLOW_COUNT = 100;
@@ -15,10 +16,24 @@ function main() {
     var logger = new GetLogger(process.env.NODE_ENV, 'FlowTrack2 - DataLoader');
     var nfStore = new NetFlowStorage(es, logger, config);
 
+    var EsC = new EsConnect(es, logger, config);
+    var client = EsC.connect();
+
+    client.indices.delete({index: config.Application.index_name});
+
     nfStore.createIndex();
     loadData(nfStore);
 
+    client.indices.refresh({
+        index: config.Application.index_name,
+        force: true
+    }, function (err, response, status) {
+        if (err) {
+            console.log(err + response + status);
+        }
+    });
 
+    setTimeout(process.exit(0), 5000);
 }
 
 
