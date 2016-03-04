@@ -33,7 +33,7 @@ function main() {
         }
     });
 
-    setTimeout(process.exit(0), 5000);
+    setTimeout(process.exit, 2000);
 }
 
 

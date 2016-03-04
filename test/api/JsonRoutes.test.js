@@ -53,7 +53,7 @@ describe('JsonRoutes', function () {
                         "src_mask": 0,
                         "dst_mask": 0,
                         "timestamp": 0
-                    })
+                    });
                 })
                 .end(done);
         });
