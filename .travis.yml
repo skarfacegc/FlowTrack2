@@ -1,35 +1,43 @@
-"dist": trusty
-"language": node_js
-"node_js": 4.1
+dist: trusty
+language: node_js
+node_js: 4.1
 
 cache:
    directories:
    - node_modules
 
-"env":
-  "global":
+env:
+  global:
     - secure: FKCz+rOWqy1Xqi/4IUzV0Or94zHsatfR1i/bmqrPCwrU+Mu8H8xZmAj0Wq8Wlf29/BeZTYX4AHnGOXsi1P4CItC09du2rUray+xcScUZOfamu/NthM/E06IZ8r/sHrvg97WYVgLGBA+ARr2qZhPKNqWeqyvExMDjebTRhBPZwzYe124cwGjaK6IzCzXxm+SXbpyIbduZqACIkG2CJ/ZhbLM6O7gYBdwD5xPu78gdKG1+YTz+MeTlICcWtm7bEqMYUiL7dd46WqJaoLanEmUL8iyChjQXICxZfXcKfoQdzNv97S1Abnk+dDvv8VzepoLte+g8r3rP5YRme++TCEUnwYVBm/WplxfCvADKfDoGQTe8vl8NcVwDQsXZM1G86Ubuf++omTGnRxPmHlAM22IB7f4JgTHMEctJMcbAlBimZrynDur/YRrNRL+c0CCmwmuli5SHt22utNmAFucARwWQcoRVq0cWOsIEedx7uYgjmgPLjqw54ncsL/zvX5rmxhF80blYVXFMNfzEfn43n76+pXI/kS13z9Sp7xfwSVjcBZeHKj4XRKu5h3iLOV1mkJEJYDaaAhXfNQ+2MCZJLtbEK6hiuCTVjPUNoG7JrfHEO5WPz5CJ9HtwF2CKgFgGd1bmCOHr/78b+Gdw5KdZD8Yg0Dqu7Vnj/jSog6e8UiNFjM4=
     - secure: jDjfqE/dVKKrDFgvGOYij2g6J12XVtMfTdiwvhpvBDVjWEahilsj67RFeh+p3GbZ4L0woP7/h64cDRAh/BOfkx9XDrQxQlkTRV6amAJRovLjpNNBv9CDNLU2oQKNxON5OoVxkv09ilbxTXMIXcMqBVqxWfw/BsQLEnxeVn37F5PZ4nwztzTwIqmf0SWS38zmKqbmIgbHsIV+wDsYFlYWVdi+4CaqBaZgvJrfcIh0xX/bJDAUKBDx+ktpgroku4p5lgankUdlETp3aUIspg5+peajV6N+oK5JEFJBTAZYYlLyO4ue2+sPH3JYzUpv/5RoGpSg8NhmBRlMXfV6DhneY002jMu333ckiIfzwRSuYpnRrRvPfQln8w9RobvdsxP92TsqM3qd8CFTeXgnZg3dOhP/7uIROtlu5Q1T0g41kZ9P+JSVSt3/ovPlN3Fm5zBg81Xwh2ugZWFN+htZC4N1WqiqP9xGRs2uyweqpI2ZtJfkYVOFZcDVjWtwv+vrFJTlx4BxNYi9g0cMPSVLghtpiwIEbumgDoG90gO3aI5wWhLBXUGlvyR/eyQXRM2E84EjSep6IZAedBckMLVFBcgiiYUqZRJFTc+rw1hE1JNvSoJ1OsBpfE3hJa/0fXdigU0n243duQNxDPhT+H1DPWfLTMEIeDZAIzptAeWFfeyN6WU=
-  "matrix":
+    - CXX=g++-4.8
+  matrix:
     - NODE_ENV=travis-test
 
 
-"addons":
-  "sauce_connect": true
 
-"services":
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+  sauce_connect: true
+
+services:
   - elasticsearch
 
-"before_install":
+before_install:
   - npm install -g gulp
   - npm install -g codeclimate-test-reporter
 
-"before_script":
+before_script:
    - sleep 10
 
 
-"script": "gulp travis"
+script: 'gulp travis'
 
 
-"after_script":
+after_script:
   - codeclimate < coverage/lcov.info
