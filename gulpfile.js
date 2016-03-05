@@ -188,7 +188,6 @@ gulp.task('coverage_report', function () {
       .pipe(istanbulWriteReport())
       .on('error', function (error) {
           plugins.util.log(error.message);
-          process.exit(0);
       });
 });
 
