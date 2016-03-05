@@ -13,11 +13,13 @@ var NetFlowStorage = require('../lib/NetFlowStorage');
 var GetLogger = require('../lib/GetLogger');
 var FlowTrack2App = require('../lib/FlowTrack2App');
 
+var numCPUs = require('os').cpus().length;
+
 
 main();
 function main() {
 
-    var numCPUs = require('os').cpus().length;
+
 
     // Setup our logger instances
     var logger = new GetLogger(process.env.NODE_ENV,'FlowTrack2');
