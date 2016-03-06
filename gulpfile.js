@@ -62,7 +62,7 @@ var files = {
     all_src: ['www/js/**/*.js','lib/**/*.js','bin/flowTrack.js','test/**/*.js','gulpfile.js'],
     unit_test_files: ['test/model/**/*.js'],
     api_test_files: ['test/controller/**/*.js'],
-    e2e_test_files: ['test/e2e/**/*.js'],
+    e2e_test_files: ['test/view/**/*.js'],
     coverage_files : ['coverage/**/coverage*.json'],
     instrumented_files: 'coverage/www/test_files'
 };
@@ -101,7 +101,7 @@ var config = {
         }
     },
     protractor: {
-        configFile: 'test/e2e/e2e.conf.js'
+        configFile: 'test/view/e2e.conf.js'
     },
     testServer: {
         env: {
