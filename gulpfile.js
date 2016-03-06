@@ -61,7 +61,7 @@ var files = {
     client_files: ['www/js/**/*.js'],
     all_src: ['www/js/**/*.js','lib/**/*.js','bin/flowTrack.js','test/**/*.js','gulpfile.js'],
     unit_test_files: ['test/unit/**/*.js'],
-    api_test_files: ['test/api/**/*.js'],
+    api_test_files: ['test/controller/**/*.js'],
     e2e_test_files: ['test/e2e/**/*.js'],
     coverage_files : ['coverage/**/coverage*.json'],
     instrumented_files: 'coverage/www/test_files'
