@@ -6,7 +6,7 @@
 var bunyan = require('bunyan');
 var chai = require('chai');
 var expect = chai.expect;
-var GetLogger = require('../../lib/GetLogger');
+var GetLogger = require('../../lib/util/GetLogger');
 
 
 describe('GetLogger', function () {

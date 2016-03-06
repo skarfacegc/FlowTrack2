@@ -3,7 +3,7 @@
 
 var JsonRouteHandlers = require('../../lib/controller/JsonRouteHandlers');
 var FlowTrack2App = require('../../lib/controller/FlowTrack2App');
-var GetLogger = require('../../lib/GetLogger');
+var GetLogger = require('../../lib/util/GetLogger');
 
 
 var es = require('elasticsearch');

@@ -3,7 +3,7 @@
 
 
 
-var GetLogger = require('../../lib/GetLogger');
+var GetLogger = require('../../lib/util/GetLogger');
 var es = require('elasticsearch');
 var config = require('config');
 var EsConnect = require('../../lib/model/EsConnect');

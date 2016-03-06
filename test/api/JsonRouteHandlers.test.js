@@ -3,7 +3,7 @@
 
 
 var JsonRouteHandlers = require('../../lib/controller/JsonRouteHandlers');
-var GetLogger = require('../../lib/GetLogger');
+var GetLogger = require('../../lib/util/GetLogger');
 var logger = new GetLogger(process.env.NODE_ENV);
 
 

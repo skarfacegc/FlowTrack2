@@ -10,7 +10,7 @@ var http = require('http');
 var config = require('config');
 
 var NetFlowStorage = require('../lib/model/NetFlowStorage');
-var GetLogger = require('../lib/GetLogger');
+var GetLogger = require('../lib/util/GetLogger');
 var FlowTrack2App = require('../lib/controller/FlowTrack2App');
 
 var numCPUs = require('os').cpus().length;
