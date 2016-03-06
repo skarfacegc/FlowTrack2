@@ -4,7 +4,6 @@
 var es = require('elasticsearch');
 var config = require('config');
 
-// var EsConnect = require('../../lib/EsConnect');
 var GetLogger = require('../../lib/GetLogger');
 var NetFlowRetrieval = require('../../lib/NetFlowRetrieval');
 var config = require('config');
