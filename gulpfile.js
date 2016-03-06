@@ -111,7 +111,7 @@ var config = {
     },
     testServer: {
         env: {
-            NODE_ENV: 'e2eTest'
+            NODE_ENV: 'viewTest'
         }
     }
 };
@@ -124,13 +124,13 @@ var config = {
 gulp.task('default', ['test']);
 // run all but the view tests
 gulp.task('test', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
+    process.env.NODE_ENV = process.env.NODE_ENV || 'modelTest';
     plugins.sequence('clean_coverage', 'controller_test', 'model_test', 'lint', 'coverage_report')(cb);
 });
 
 // Run all tests
 gulp.task('full', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
+    process.env.NODE_ENV = process.env.NODE_ENV || 'viewTest';
     plugins.sequence('load_data', 'test_server', 'clean_coverage',
                      'controller_test', 'model_test', ['view_instrument',
                      'view_test'], 'stop_test_server', 'lint', 'coverage_report')(cb);
@@ -138,19 +138,19 @@ gulp.task('full', function (cb) {
 
 // Run the view tests.  These interact with a browser
 gulp.task('view', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
+    process.env.NODE_ENV = process.env.NODE_ENV || 'viewTest';
     plugins.sequence('load_data', 'test_server', 'clean_coverage', ['view_instrument',
                      'view_test'], 'stop_test_server', 'coverage_report')(cb);
 });
 
 gulp.task('controller', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
+    process.env.NODE_ENV = process.env.NODE_ENV || 'controllerTest';
     plugins.sequence('clean_coverage', 'load_data', 'controller_test', 'coverage_report')(cb);
 });
 
 // Run the model tests
 gulp.task('model', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
+    process.env.NODE_ENV = process.env.NODE_ENV || 'modelTest';
     plugins.sequence('clean_coverage', 'model_test', 'coverage_report')(cb);
 });
 
