@@ -3,8 +3,8 @@
 
 var es = require('elasticsearch');
 var config = require('config');
-var NetFlowStorage = require('../../lib/NetFlowStorage');
-var GetLogger = require('../../lib/GetLogger');
+var NetFlowStorage = require('../../lib/model/NetFlowStorage');
+var GetLogger = require('../../lib/util/GetLogger');
 
 
 var SAMPLE_FLOW_COUNT = 100;

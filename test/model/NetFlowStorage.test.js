@@ -1,8 +1,8 @@
 /* jshint unused: false, expr: true*/
 'use strict';
 
-var NetFlowStorage = require('../../lib/NetFlowStorage');
-var GetLogger = require('../../lib/GetLogger');
+var NetFlowStorage = require('../../lib/model/NetFlowStorage');
+var GetLogger = require('../../lib/util/GetLogger');
 var logger = new GetLogger('quiet');
 var config = require('config');
 

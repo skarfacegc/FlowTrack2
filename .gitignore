@@ -5,5 +5,5 @@ sandbox/*
 *sublime*
 coverage/*
 bower_components
-test/e2e/grid*
+test/view/grid*
 .imdone/

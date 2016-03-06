@@ -6,7 +6,7 @@
 var bunyan = require('bunyan');
 var chai = require('chai');
 var expect = chai.expect;
-var GetLogger = require('../../lib/GetLogger');
+var GetLogger = require('../../lib/util/GetLogger');
 
 
 describe('GetLogger', function () {
@@ -18,13 +18,13 @@ describe('GetLogger', function () {
 
     });
 
-    it('should be configured to only log fatals under uTest', function () {
-        var logger = new GetLogger('uTest');
+    it('should be configured to only log fatals under modelTest', function () {
+        var logger = new GetLogger('modelTest');
         expect(logger).to.have.property('_level').that.equals(60);
     });
 
-    it('should be configured to only log fatals under e2eTest', function () {
-        var logger = new GetLogger('e2eTest');
+    it('should be configured to only log fatals under viewTest', function () {
+        var logger = new GetLogger('viewTest');
         expect(logger).to.have.property('_level').that.equals(60);
     });
 

@@ -1,7 +1,7 @@
 'use strict';
 
-var FlowTrack2App = require('../../lib/FlowTrack2App');
-var GetLogger = require('../../lib/GetLogger');
+var FlowTrack2App = require('../../lib/controller/FlowTrack2App');
+var GetLogger = require('../../lib/util/GetLogger');
 var config = require('config');
 var es = require('elasticsearch');
 
