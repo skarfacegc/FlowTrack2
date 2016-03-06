@@ -2,7 +2,7 @@
 'use strict';
 
 
-var JsonRouteHandlers = require('../../lib/WebService/JsonRouteHandlers');
+var JsonRouteHandlers = require('../../lib/controller/JsonRouteHandlers');
 var GetLogger = require('../../lib/GetLogger');
 var logger = new GetLogger(process.env.NODE_ENV);
 

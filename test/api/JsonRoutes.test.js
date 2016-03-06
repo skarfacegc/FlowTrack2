@@ -1,7 +1,7 @@
 /* jshint expr: true */
 'use strict';
 
-var JsonRouteHandlers = require('../../lib/WebService/JsonRouteHandlers');
+var JsonRouteHandlers = require('../../lib/controller/JsonRouteHandlers');
 var FlowTrack2App = require('../../lib/FlowTrack2App');
 var GetLogger = require('../../lib/GetLogger');
 

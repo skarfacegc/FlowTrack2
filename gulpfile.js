@@ -56,8 +56,8 @@ var testServer = {};
 
 // various file sets used below
 var files = {
-    lib_files:  ['lib/**/*.js', '!lib/FlowTrack2App.js','!lib/WebService/**'],
-    api_files: ['lib/FlowTrack2App.js','lib/WebService/**/*.js'],
+    lib_files:  ['lib/**/*.js', '!lib/FlowTrack2App.js','!lib/controller/**'],
+    api_files: ['lib/FlowTrack2App.js','lib/controller/**/*.js'],
     client_files: ['www/js/**/*.js'],
     all_src: ['www/js/**/*.js','lib/**/*.js','bin/flowTrack.js','test/**/*.js','gulpfile.js'],
     unit_test_files: ['test/unit/**/*.js'],
