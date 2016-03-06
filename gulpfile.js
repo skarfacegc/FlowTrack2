@@ -6,11 +6,11 @@
 // Most of the config is in files. and config.
 //
 // Main Tasks:
-//  test - run unit, api tests with coverage report
-//  full - run unit, api, e2e tests with coverage report
-//  e2e - run browser based end to end tests
-//  api - run api tests with coverage
-//  unit - run unit tests with coverage
+//  test - run model, controller tests with coverage report
+//  full - run model, controller, view tests with coverage report
+//  view - run browser based end to end tests
+//  controller - run controller tests with coverage
+//  model - run model tests with coverage
 //  clean - clean coverage, node_modules, and bower
 //  bower - install bower components
 //  travis - currently an alias to full
@@ -20,19 +20,19 @@
 //  bower_install - install all the bower packages
 //  bower_inject - add bower dependencies to www/html/index.html
 //  coverage_report - generate a coverage report from the saved coverage files
-//  unit_test - run unit tests, capturing coverage data
-//  api_test - run api tests, copturing coverage data
+//  model_test - run model tests, capturing coverage data
+//  controller_test - run controller tests, copturing coverage data
 //  clean_coverage - clean all the coverage files
 //  clean_bower - clean out the bower files
 //  clean_modules - clean node_modules
-//  e2e_instrument - compile instrumented versions of the client files
-//  e2e_test - run the e2e tests
+//  view_instrument - compile instrumented versions of the view files
+//  view_test - run the view tests
 //  test_server - start the test server
 //  stop_test_server - stop the test server
 //  load_data - load test data into the DB
 //
 
-// NODE_ENV matters for these (espeically the e2e tests)
+// NODE_ENV matters for these (espeically the view tests)
 // config files are selected based on the env, and we need
 // to point to a different location for the web js files
 
@@ -56,13 +56,19 @@ var testServer = {};
 
 // various file sets used below
 var files = {
-    lib_files:  ['lib/**/*.js', '!lib/FlowTrack2App.js','!lib/WebService/**'],
-    api_files: ['lib/FlowTrack2App.js','lib/WebService/**/*.js'],
-    client_files: ['www/js/**/*.js'],
+    model_files:  ['lib/model/**/*.js'],
+    view_files: ['www/js/**/*.js'],
+    controller_files: ['lib/controller/**/*.js'],
+    util_files: ['lib/util/**/*.js'],
+
+    model_test_files: ['test/model/**/*.js'],
+    view_test_files: ['test/view/**/*.js'],
+    controller_test_files: ['test/controller/**/*.js'],
+
     all_src: ['www/js/**/*.js','lib/**/*.js','bin/flowTrack.js','test/**/*.js','gulpfile.js'],
-    unit_test_files: ['test/unit/**/*.js'],
-    api_test_files: ['test/api/**/*.js'],
-    e2e_test_files: ['test/e2e/**/*.js'],
+
+
+
     coverage_files : ['coverage/**/coverage*.json'],
     instrumented_files: 'coverage/www/test_files'
 };
@@ -82,30 +88,30 @@ var config = {
     istanbulReport: {
         reporters: ['lcov','text']
     },
-    unitCoverage: {
+    modelCoverage: {
         reporters: ['json'],
         reportOpts: {
             json: {
                 dir: 'coverage',
-                file: 'coverage-unit.json'
+                file: 'coverage-model.json'
             }
         }
     },
-    apiCoverage: {
+    controllerCoverage: {
         reporters: ['json'],
         reportOpts: {
             json: {
                 dir: 'coverage',
-                file: 'coverage-api.json'
+                file: 'coverage-controller.json'
             }
         }
     },
     protractor: {
-        configFile: 'test/e2e/e2e.conf.js'
+        configFile: 'test/view/protractor.conf.js'
     },
     testServer: {
         env: {
-            NODE_ENV: 'e2eTest'
+            NODE_ENV: 'viewTest'
         }
     }
 };
@@ -116,39 +122,36 @@ var config = {
 //
 
 gulp.task('default', ['test']);
-// run all but the e2e tests
+// run all but the view tests
 gulp.task('test', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
-    plugins.sequence('clean_coverage', 'api_test', 'unit_test', 'lint', 'coverage_report')(cb);
+    process.env.NODE_ENV = process.env.NODE_ENV || 'modelTest';
+    plugins.sequence('clean_coverage', 'controller_test', 'model_test', 'lint', 'coverage_report')(cb);
 });
 
 // Run all tests
 gulp.task('full', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
+    process.env.NODE_ENV = process.env.NODE_ENV || 'viewTest';
     plugins.sequence('load_data', 'test_server', 'clean_coverage',
-                     'api_test', 'unit_test', ['e2e_instrument',
-                     'e2e_test'], 'stop_test_server', 'lint', 'coverage_report')(cb);
+                     'controller_test', 'model_test', ['view_instrument',
+                     'view_test'], 'stop_test_server', 'lint', 'coverage_report')(cb);
 });
 
-// Run the e2e tests.  These interact with a browser
-gulp.task('e2e', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
-    plugins.sequence('load_data', 'test_server', 'clean_coverage', ['e2e_instrument',
-                     'e2e_test'], 'stop_test_server', 'coverage_report')(cb);
+// Run the view tests.  These interact with a browser
+gulp.task('view', function (cb) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'viewTest';
+    plugins.sequence('load_data', 'test_server', 'clean_coverage', ['view_instrument',
+                     'view_test'], 'stop_test_server', 'coverage_report')(cb);
 });
 
-// API tests deal with testing the JSON api. In general these use
-// supertest to spin up the application and make requests.  Not full
-// e2e
-gulp.task('api', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'e2eTest';
-    plugins.sequence('clean_coverage', 'load_data', 'api_test', 'coverage_report')(cb);
+gulp.task('controller', function (cb) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'controllerTest';
+    plugins.sequence('clean_coverage', 'load_data', 'controller_test', 'coverage_report')(cb);
 });
 
-// Run the unit tests
-gulp.task('unit', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
-    plugins.sequence('clean_coverage', 'load_data', 'unit_test', 'coverage_report')(cb);
+// Run the model tests
+gulp.task('model', function (cb) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'modelTest';
+    plugins.sequence('clean_coverage', 'model_test', 'coverage_report')(cb);
 });
 
 // Download, install, and inject bower components
@@ -172,9 +175,9 @@ gulp.task('lint', function () {
 });
 
 gulp.task('watch', function (cb) {
-    gulp.watch(files.api_files, ['api']);
-    gulp.watch(files.lib_files, ['unit']);
-    gulp.watch(files.client_files, ['e2e']);
+    gulp.watch(files.controller_files, ['controller']);
+    gulp.watch(files.model_files, ['model']);
+    gulp.watch(files.view_files, ['view']);
     cb();
 });
 
@@ -188,34 +191,21 @@ gulp.task('coverage_report', function () {
       .pipe(istanbulWriteReport())
       .on('error', function (error) {
           plugins.util.log(error.message);
-          process.exit(0);
       });
 });
 
 
-// run unit tests and collect coverage data
-gulp.task('unit_test', function (cb) {
-    gulp.src(files.lib_files)
-      .pipe(istanbulPre())
-      .on('end', function () {
-          gulp.src(files.unit_test_files)
-            .pipe(mochaTask())
-            .pipe(istanbulUnit())
-            .on('end', cb);
-      });
+// run model tests and collect coverage data
+gulp.task('model_test', function (cb) {
+    coverageTest(files.model_files, files.model_test_files,
+      config.modelCoverage, cb);
 });
 
 
 // test the server functions and collect coverage data
-gulp.task('api_test', function (cb) {
-    gulp.src(files.api_files)
-      .pipe(istanbulPre())
-      .on('end', function () {
-          gulp.src(files.api_test_files)
-            .pipe(mochaTask())
-            .pipe(istanbulAPI())
-            .on('end', cb);
-      });
+gulp.task('controller_test', function (cb) {
+    coverageTest(files.controller_files, files.controller_test_files,
+      config.controllerCoverage, cb);
 });
 
 // install the bower packages
@@ -238,17 +228,17 @@ gulp.task('bower_inject', function () {
 });
 
 
-// instrument the files for e2e testing
-gulp.task('e2e_instrument', function (cb) {
-    gulp.src(files.client_files)
+// instrument the files for view testing
+gulp.task('view_instrument', function (cb) {
+    gulp.src(files.view_files)
       .pipe(istanbulInstrument())
       .pipe(gulp.dest(files.instrumented_files))
       .on('end', cb);
 });
 
 // run the actual e2e test
-gulp.task('e2e_test', function (cb) {
-    gulp.src(files.e2e_test_files)
+gulp.task('view_test', function (cb) {
+    gulp.src(files.view_test_files)
       .pipe(plugins.protractor.protractor(config.protractor))
       .on('end', cb);
 });
@@ -298,18 +288,28 @@ gulp.task('load_data', function (cb) {
 //
 // testing and reporting "drivers"
 //
+
+function coverageTest(srcFiles, testFiles, coverageConfig, cb) {
+    var istanbul = lazypipe()
+      .pipe(plugins.istanbul.writeReports, coverageConfig);
+
+    gulp.src(srcFiles)
+      .pipe(istanbulPre())
+      .on('end', function () {
+          gulp.src(testFiles)
+            .pipe(mochaTask())
+            .pipe(istanbul())
+            .on('end', cb);
+      });
+}
+
+
 var mochaTask = lazypipe()
   .pipe(plugins.mocha, config.mocha);
 
 var istanbulPre = lazypipe()
   .pipe(plugins.istanbul, config.istanbul)
   .pipe(plugins.istanbul.hookRequire);
-
-var istanbulUnit = lazypipe()
-  .pipe(plugins.istanbul.writeReports, config.unitCoverage);
-
-var istanbulAPI = lazypipe()
-  .pipe(plugins.istanbul.writeReports, config.apiCoverage);
 
 var istanbulWriteReport = lazypipe()
   .pipe(plugins.istanbulReport, config.istanbulReport);
