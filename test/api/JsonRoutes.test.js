@@ -2,7 +2,7 @@
 'use strict';
 
 var JsonRouteHandlers = require('../../lib/controller/JsonRouteHandlers');
-var FlowTrack2App = require('../../lib/FlowTrack2App');
+var FlowTrack2App = require('../../lib/controller/FlowTrack2App');
 var GetLogger = require('../../lib/GetLogger');
 
 

@@ -15,7 +15,7 @@ var es = require('elasticsearch');
 var config = require('config');
 var NetFlowStorage = require('../lib/model/NetFlowStorage');
 var GetLogger = require('../lib/GetLogger');
-var FlowTrack2App = require('../lib/FlowTrack2App');
+var FlowTrack2App = require('../lib/controller/FlowTrack2App');
 
 var SAMPLE_FLOW_COUNT = 100;
 
