@@ -148,7 +148,7 @@ gulp.task('api', function (cb) {
 // Run the unit tests
 gulp.task('unit', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
-    plugins.sequence('clean_coverage', 'load_data', 'unit_test', 'coverage_report')(cb);
+    plugins.sequence('clean_coverage', 'unit_test', 'coverage_report')(cb);
 });
 
 // Download, install, and inject bower components
