@@ -5,7 +5,7 @@ var es = require('elasticsearch');
 var config = require('config');
 
 var GetLogger = require('../../lib/GetLogger');
-var NetFlowRetrieval = require('../../lib/NetFlowRetrieval');
+var NetFlowRetrieval = require('../../lib/model/NetFlowRetrieval');
 var config = require('config');
 var logger = new GetLogger(process.env.NODE_ENV);
 
