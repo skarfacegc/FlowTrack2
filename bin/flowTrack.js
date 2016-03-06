@@ -9,7 +9,7 @@ var es = require('elasticsearch');
 var http = require('http');
 var config = require('config');
 
-var NetFlowStorage = require('../lib/NetFlowStorage');
+var NetFlowStorage = require('../lib/model/NetFlowStorage');
 var GetLogger = require('../lib/GetLogger');
 var FlowTrack2App = require('../lib/FlowTrack2App');
 
