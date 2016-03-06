@@ -148,7 +148,7 @@ gulp.task('api', function (cb) {
 // Run the unit tests
 gulp.task('unit', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'uTest';
-    plugins.sequence('clean_coverage', 'load_data', 'unit_test', 'coverage_report')(cb);
+    plugins.sequence('clean_coverage', 'unit_test', 'coverage_report')(cb);
 });
 
 // Download, install, and inject bower components
@@ -194,27 +194,15 @@ gulp.task('coverage_report', function () {
 
 // run unit tests and collect coverage data
 gulp.task('unit_test', function (cb) {
-    gulp.src(files.lib_files)
-      .pipe(istanbulPre())
-      .on('end', function () {
-          gulp.src(files.unit_test_files)
-            .pipe(mochaTask())
-            .pipe(istanbulUnit())
-            .on('end', cb);
-      });
+    coverageTest(files.lib_files, files.unit_test_files,
+      config.unitCoverage, cb);
 });
 
 
 // test the server functions and collect coverage data
 gulp.task('api_test', function (cb) {
-    gulp.src(files.api_files)
-      .pipe(istanbulPre())
-      .on('end', function () {
-          gulp.src(files.api_test_files)
-            .pipe(mochaTask())
-            .pipe(istanbulAPI())
-            .on('end', cb);
-      });
+    coverageTest(files.api_files, files.api_test_files,
+      config.apiCoverage, cb);
 });
 
 // install the bower packages
@@ -297,6 +285,22 @@ gulp.task('load_data', function (cb) {
 //
 // testing and reporting "drivers"
 //
+
+function coverageTest(srcFiles, testFiles, coverageConfig, cb) {
+    var istanbul = lazypipe()
+      .pipe(plugins.istanbul.writeReports, coverageConfig);
+
+    gulp.src(srcFiles)
+      .pipe(istanbulPre())
+      .on('end', function () {
+          gulp.src(testFiles)
+            .pipe(mochaTask())
+            .pipe(istanbul())
+            .on('end', cb);
+      });
+}
+
+
 var mochaTask = lazypipe()
   .pipe(plugins.mocha, config.mocha);
 
