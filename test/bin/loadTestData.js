@@ -27,7 +27,7 @@ function loadData(nfStore) {
 
     for (var i = 0; i <= SAMPLE_FLOW_COUNT; i += 1) {
         var flow = getFlowRecord();
-        flow.timestamp = Date.now();
+        flow.timestamp = Date.now() - (i * 1000);
         nfStore.storeFlow(flow);
     }
 }

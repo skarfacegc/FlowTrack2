@@ -27,7 +27,7 @@ describe('JsonRoutes', function () {
             var app = new FlowTrack2App(es, logger, config);
 
             request(app)
-                .get('/json/rawFlowsForLast/5/hours')
+                .get('/json/rawFlowsForLast/10/minutes')
                 .expect(function (res) {
                     var responseBody = JSON.parse(res.text);
 
