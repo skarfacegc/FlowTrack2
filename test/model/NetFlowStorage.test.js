@@ -168,9 +168,6 @@ describe('NetFlowStorage', function () {
 
             // Set our timestamp and converted ip addresses
             store_compare.body.timestamp = test_time;
-            store_compare.body.ipv4_src_addr = 16843009;
-            store_compare.body.ipv4_dst_addr = 33686018;
-            store_compare.body.ipv4_next_hop = 50529027;
 
 
             expect(myIndexSpy).to.be.calledWith(store_compare);

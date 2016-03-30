@@ -34,9 +34,9 @@ describe('JsonRoutes', function () {
                     // reset timestamp to 0 so we can test everthing else
                     responseBody[0]._source.timestamp = 0;
                     expect(responseBody[0]._source).to.deep.equal({
-                        "ipv4_src_addr": 3232235777,
-                        "ipv4_dst_addr": 3232235778,
-                        "ipv4_next_hop": null,
+                        "ipv4_src_addr": '192.168.1.1',
+                        "ipv4_dst_addr": '192.168.1.2',
+                        "ipv4_next_hop": 0,
                         "input_snmp": 1,
                         "output_snmp": 0,
                         "in_pkts": 2,
