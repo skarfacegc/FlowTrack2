@@ -17,9 +17,21 @@ chai.use(sinonChai);
 
 
 
+
 describe('IndexTracking', function () {
-    describe('getIndexName', function () {
-      it('should generate the correct index name', function () {
+    describe('generateIndexName', function () {
+        it('should generate the correct index name', function () {
+
+            var indexTrack = new IndexTracking(es, logger, config);
+            var indexID = moment().format('MM-DD-YYYY');
+            var indexName = config.Application.index_name;
+
+            var fullIndexName = indexName + '.' + indexID;
+
+            expect(fullIndexName).to.equal(indexTrack.generateIndexName());
+        });
+    });
+
 
           var indexTrack = new IndexTracking(es, logger, config);
           var indexID = moment().format('MM-DD-YYYY');
