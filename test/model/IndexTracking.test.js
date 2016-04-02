@@ -34,16 +34,27 @@ describe('IndexTracking', function () {
 
     describe('getIndexList', function () {
         it('should return a list of indicies', function () {
-
             var indexTrack = new IndexTracking(es, logger, config);
 
-            indexTrack.getIndexList(function (response) {
-                expect(response).to.be.include(config.get('Application.index_name'));
-            });
+            var sandbox = sinon.sandbox.create();
+            var indicesStub = sandbox.stub(indexTrack.client.cat, 'indices')
+              .yields(null, 'xxx ' + indexTrack.index_name + ' xxx');
 
+            var callbackSpy = sinon.spy();
+            indexTrack.getIndexList(callbackSpy);
 
+            expect(callbackSpy).to.be.calledWith([indexTrack.index_name]);
 
+        });
+    });
 
+    describe('expireIndices', function () {
+        it('should delete the expired indices', function () {
+            // var indexTrack = new IndexTracking(es, logger, config);
+            // var sandbox = sinon.sandbox.create();
+            //
+            // sandbox.stub(indexTrack.client, )
+            return true;
         });
     });
 });
