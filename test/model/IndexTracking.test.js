@@ -13,6 +13,7 @@ var expect = chai.expect;
 
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
+var moment = require('moment');
 chai.use(sinonChai);
 
 
@@ -44,17 +45,36 @@ describe('IndexTracking', function () {
             indexTrack.getIndexList(callbackSpy);
 
             expect(callbackSpy).to.be.calledWith([indexTrack.index_name]);
-
+            sandbox.restore();
         });
     });
 
-    describe('expireIndices', function () {
-        it('should delete the expired indices', function () {
-            // var indexTrack = new IndexTracking(es, logger, config);
-            // var sandbox = sinon.sandbox.create();
-            //
-            // sandbox.stub(indexTrack.client, )
-            return true;
+    describe('getExpiredIndices', function () {
+        it('should return a list of expired indices', function () {
+            var indexTrack = new IndexTracking(es, logger, config);
+            var indexCount = config.Application.index_count;
+            var indexInterval = config.Application.index_interval;
+
+            var testData = [
+              indexTrack.index_name + '.' + moment().format('MM-DD-YYYY'),
+              indexTrack.index_name + '.' + moment()
+                .subtract(indexCount, indexInterval).format('MM-DD-YYYY'),
+              indexTrack.index_name + '.' + moment()
+                .subtract(2 * indexCount, indexInterval).format('MM-DD-YYYY')
+            ];
+
+            var sandbox = sinon.sandbox.create();
+            var indexStub = sandbox.stub(indexTrack, 'getIndexList').yields(testData);
+            var callbackSpy = sinon.spy();
+
+            indexTrack.getExpiredIndices(callbackSpy);
+
+            expect(callbackSpy).to.be.calledWith([
+              indexTrack.index_name + '.' + moment()
+              .subtract(2 * indexCount, indexInterval).format('MM-DD-YYYY')
+            ]);
+
+            sandbox.restore();
         });
     });
 });
