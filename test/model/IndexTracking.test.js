@@ -36,15 +36,15 @@ describe('IndexTracking', function () {
     describe('getIndexList', function () {
         it('should return a list of indicies', function () {
             var indexTrack = new IndexTracking(es, logger, config);
-
+            var indexTestName = indexTrack.generateIndexName();
             var sandbox = sinon.sandbox.create();
             var indicesStub = sandbox.stub(indexTrack.client.cat, 'indices')
-              .yields(null, 'xxx ' + indexTrack.index_name + ' xxx');
+              .yields(null, 'xxx ' + indexTestName + ' xxx');
 
             var callbackSpy = sinon.spy();
             indexTrack.getIndexList(callbackSpy);
 
-            expect(callbackSpy).to.be.calledWith([indexTrack.index_name]);
+            expect(callbackSpy).to.be.calledWith([indexTestName]);
             sandbox.restore();
         });
     });
