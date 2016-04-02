@@ -32,14 +32,18 @@ describe('IndexTracking', function () {
         });
     });
 
+    describe('getIndexList', function () {
+        it('should return a list of indicies', function () {
 
-          var indexTrack = new IndexTracking(es, logger, config);
-          var indexID = moment().format('MM-DD-YYYY');
-          var indexName = config.Application.index_name;
+            var indexTrack = new IndexTracking(es, logger, config);
 
-          var fullIndexName = indexName + '.' + indexID;
+            indexTrack.getIndexList(function (response) {
+                expect(response).to.be.include(config.get('Application.index_name'));
+            });
 
-          expect(fullIndexName).to.equal(indexTrack.getIndexName());
-      });
-  });
+
+
+
+        });
+    });
 });
