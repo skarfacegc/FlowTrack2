@@ -77,4 +77,23 @@ describe('IndexTracking', function () {
             sandbox.restore();
         });
     });
+
+
+    describe('deleteIndices', function () {
+        it('should call indicies.delete with the correct args', function () {
+            var sandbox = sinon.sandbox.create();
+
+            var indexTrack = new IndexTracking(es, logger, config);
+            var deleteStub = sandbox.stub(indexTrack.client.indices, 'delete')
+              .yields(null, 'test response');
+            var callbackSpy = sandbox.spy();
+
+            indexTrack.deleteIndices(['a','b','c'], callbackSpy);
+
+            expect(deleteStub).to.be.calledWith({index: 'a,b,c'});
+
+            sandbox.restore();
+
+        });
+    });
 });
