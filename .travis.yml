@@ -41,4 +41,4 @@ script: 'gulp travis'
 
 
 after_script:
-  - codeclimate < coverage/lcov.info
+  - codeclimate-test-reporter < coverage/lcov.info
