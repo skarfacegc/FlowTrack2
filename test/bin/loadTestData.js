@@ -15,7 +15,7 @@ function main() {
     var logger = new GetLogger(process.env.NODE_ENV, 'FlowTrack2 - DataLoader');
     var nfStore = new NetFlowStorage(es, logger, config);
 
-    nfStore.createIndex();
+    nfStore.createTemplate();
     loadData(nfStore);
 
 

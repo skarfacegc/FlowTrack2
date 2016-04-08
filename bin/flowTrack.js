@@ -32,7 +32,7 @@ function main() {
     if (cluster.isMaster) {
 
         // Setup, then fork the flow collection workers
-        nfStore.createIndex();
+        nfStore.createTemplate();
 
         for (var i = 0; i < numCPUs; i++) {
             cluster.fork();

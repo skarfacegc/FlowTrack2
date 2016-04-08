@@ -71,46 +71,30 @@ describe('NetFlowStorage', function () {
 
     });
 
-    describe('createIndex', function () {
-        it('creates an index if one does not exist', function () {
 
-
+    describe('createTemplate', function () {
+        it('should call putTemplate correctly', function () {
             var nfStore = new NetFlowStorage(es, logger, config);
+            var sandbox = sinon.sandbox.create();
+            var templateStub = sandbox.stub(nfStore.client.indices, 'putTemplate').yields();
+            var callbackSpy = sandbox.spy();
 
-            var myCreateSpy = sandbox.spy();
+            nfStore.createTemplate(callbackSpy);
 
-            nfStore.client = {
-                indices: {
-                    exists: function (index_name, cb) {
-                        cb(null, false);
-                    },
-                    create: myCreateSpy
-                }
-            };
+            expect(callbackSpy).to.be.calledOnce;
 
-            nfStore.createIndex();
-
-            expect(myCreateSpy).to.be.calledOnce;
+            sandbox.restore();
         });
 
-        it('does not create an index if one exists', function () {
-
-
+        it('should handle errors correctly', function () {
             var nfStore = new NetFlowStorage(es, logger, config);
-            var myCreateSpy = sandbox.spy();
+            var sandbox = sinon.sandbox.create();
+            var templateStub = sandbox.stub(nfStore.client.indices, 'putTemplate')
+              .yields('Test Error', 'response', 'status');
+            var callbackSpy = sandbox.spy();
 
-            nfStore.client = {
-                indices: {
-                    exists: function (index_name, cb) {
-                        cb(null, true);
-                    },
-                    create: myCreateSpy
-                }
-            };
-
-            nfStore.createIndex();
-
-            expect(myCreateSpy).to.not.be.called;
+            expect(nfStore.createTemplate.bind(callbackSpy)).to.throw(Error);
+            expect(callbackSpy).to.not.be.called;
         });
     });
 
