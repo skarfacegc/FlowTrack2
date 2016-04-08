@@ -2,6 +2,7 @@
 'use strict';
 
 var NetFlowStorage = require('../../lib/model/NetFlowStorage');
+var IndexTracking = require('../../lib/model/IndexTracking');
 var GetLogger = require('../../lib/util/GetLogger');
 var logger = new GetLogger('quiet');
 var config = require('config');
@@ -103,6 +104,7 @@ describe('NetFlowStorage', function () {
 
 
             var nfStore = new NetFlowStorage(es, logger, config);
+            var indexTracking = new IndexTracking(es,logger,config);
 
 
             // Set the date to a fixed value so we can check it in the save.
@@ -145,7 +147,7 @@ describe('NetFlowStorage', function () {
             nfStore.storeFlow(sample_flow);
 
             var store_compare = {
-                index: config.get('Application.index_name'),
+                index: indexTracking.generateIndexName(),
                 type: 'raw_flow',
                 body: sample_flow
             };

@@ -53,7 +53,7 @@ describe('FlowRetrieval', function () {
             nfRetrieval.getRawFlows(0, 1);
 
             expect(searchSpy).to.be.calledWith({
-                "index": config.get('Application.index_name'),
+                "index": config.get('Application.index_name') + '*',
                 "type": "raw_flow",
                 "body": {
                     "from": 0,
