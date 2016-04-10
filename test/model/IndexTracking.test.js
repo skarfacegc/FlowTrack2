@@ -52,15 +52,14 @@ describe('IndexTracking', function () {
     describe('getExpiredIndices', function () {
         it('should return a list of expired indices', function () {
             var indexTrack = new IndexTracking(es, logger, config);
-            var indexCount = config.Application.index_count;
-            var indexInterval = config.Application.index_interval;
+            var retentionDays = config.Application.retention_days;
 
             var testData = [
               indexTrack.index_name + '.' + moment().format('MM-DD-YYYY'),
               indexTrack.index_name + '.' + moment()
-                .subtract(indexCount, indexInterval).format('MM-DD-YYYY'),
+                .subtract(retentionDays, 'd').format('MM-DD-YYYY'),
               indexTrack.index_name + '.' + moment()
-                .subtract(2 * indexCount, indexInterval).format('MM-DD-YYYY')
+                .subtract(2 * retentionDays, 'd').format('MM-DD-YYYY')
             ];
 
             var sandbox = sinon.sandbox.create();
@@ -71,7 +70,7 @@ describe('IndexTracking', function () {
 
             expect(callbackSpy).to.be.calledWith([
               indexTrack.index_name + '.' + moment()
-              .subtract(2 * indexCount, indexInterval).format('MM-DD-YYYY')
+              .subtract(2 * retentionDays, 'd').format('MM-DD-YYYY')
             ]);
 
             sandbox.restore();

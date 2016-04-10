@@ -5,8 +5,7 @@
         "js_path": "www/js",
         "index_name": "flow_track2",
         "disable_collector": 0,
-        "index_interval": "days",
-        "index_count": 14
+        "retention_days": 2
     },
     "ElasticSearchConfig": {
         "elasticsearch_host": "localhost:9200",
