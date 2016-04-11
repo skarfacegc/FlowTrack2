@@ -11,6 +11,7 @@
 //  view - run browser based end to end tests
 //  controller - run controller tests with coverage
 //  model - run model tests with coverage
+//  integration - run integration tests (No Coverage)
 //  clean - clean coverage, node_modules, and bower
 //  bower - install bower components
 //  travis - currently an alias to full
@@ -22,6 +23,7 @@
 //  coverage_report - generate a coverage report from the saved coverage files
 //  model_test - run model tests, capturing coverage data
 //  controller_test - run controller tests, copturing coverage data
+//  integration_test - run integration tests (no coverage)
 //  clean_coverage - clean all the coverage files
 //  clean_bower - clean out the bower files
 //  clean_modules - clean node_modules
@@ -67,7 +69,7 @@ var files = {
 
     all_src: ['www/js/**/*.js','lib/**/*.js','bin/flowTrack.js','test/**/*.js','gulpfile.js'],
 
-
+    integration_test_files: ['test/integration/**/*.js'],
 
     coverage_files : ['coverage/**/coverage*.json'],
     instrumented_files: 'coverage/www/test_files'
@@ -124,16 +126,18 @@ var config = {
 gulp.task('default', ['test']);
 // run all but the view tests
 gulp.task('test', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'modelTest';
-    plugins.sequence('clean_coverage', 'controller_test', 'model_test', 'lint', 'coverage_report')(cb);
+    process.env.NODE_ENV = process.env.NODE_ENV || 'controllerTest';
+    plugins.sequence('load_data', 'clean_coverage', 'controller_test', 'model_test',
+        'integration_test', 'lint', 'coverage_report')(cb);
 });
 
 // Run all tests
 gulp.task('full', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'viewTest';
     plugins.sequence('load_data', 'test_server', 'clean_coverage',
-                     'controller_test', 'model_test', ['view_instrument',
-                     'view_test'], 'stop_test_server', 'lint', 'coverage_report')(cb);
+                     'controller_test', 'integration_test', 'model_test',
+                     ['view_instrument','view_test'], 'stop_test_server',
+                     'lint', 'coverage_report')(cb);
 });
 
 // Run the view tests.  These interact with a browser
@@ -152,6 +156,11 @@ gulp.task('controller', function (cb) {
 gulp.task('model', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'modelTest';
     plugins.sequence('clean_coverage', 'model_test', 'coverage_report')(cb);
+});
+
+gulp.task('integration', function (cb) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'integrationTest';
+    plugins.sequence('integration_test')(cb);
 });
 
 // Download, install, and inject bower components
@@ -206,6 +215,13 @@ gulp.task('model_test', function (cb) {
 gulp.task('controller_test', function (cb) {
     coverageTest(files.controller_files, files.controller_test_files,
       config.controllerCoverage, cb);
+});
+
+
+gulp.task('integration_test', function (cb) {
+    gulp.src(files.integration_test_files)
+      .pipe(mochaTask())
+      .on('end', cb);
 });
 
 // install the bower packages
