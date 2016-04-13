@@ -36,6 +36,7 @@ describe('Integration Tests', function () {
             // Build our values to test and check
             for (var i = 0 ; i < 3 ; i++) {
                 timestamps.push(moment(momentObj)
+                    .startOf('day')
                     .subtract(config.get('Application.retention_days') * i, 'd')
                     .valueOf());
 
