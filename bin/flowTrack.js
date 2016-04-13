@@ -8,11 +8,14 @@ var netflow = require('node-netflowv9');
 var es = require('elasticsearch');
 var http = require('http');
 var config = require('config');
+var moment = require('moment');
 
 var NetFlowStorage = require('../lib/model/NetFlowStorage');
 var GetLogger = require('../lib/util/GetLogger');
 var FlowTrack2App = require('../lib/controller/FlowTrack2App');
+var IndexTracking = require('../lib/model/IndexTracking');
 
+var logger = new GetLogger(process.env.NODE_ENV);
 var numCPUs = require('os').cpus().length;
 
 
@@ -27,6 +30,7 @@ function main() {
 
     var nfStore = new NetFlowStorage(es, logger, config);
     var app = new FlowTrack2App(es, expressLogger, config);
+    var indexTrack = new IndexTracking(es, logger, config);
 
     //FIXME: issue:45  should log pid here
     if (cluster.isMaster) {
@@ -37,6 +41,14 @@ function main() {
         for (var i = 0; i < numCPUs; i++) {
             cluster.fork();
         }
+
+        // Kick off the periodic job to check for expired indices
+        setInterval(function () {
+            logger.info('Checking for expired indices');
+            indexTrack.getExpiredIndices(function (indexList) {
+                indexTrack.deleteIndices(indexList);
+            });
+        }, moment.duration(5, 'minutes').valueOf());
 
         // Now start the webservice
         startWebServer(config.get('Application.web_port'), app);
@@ -58,7 +70,6 @@ function main() {
 
 
 function startWebServer(port, app) {
-    var logger = new GetLogger(process.env.NODE_ENV);
     http.createServer(app).listen(port);
     logger.info('Listening on: ' + port);
     logger.info('environment: ' + process.env.NODE_ENV);
