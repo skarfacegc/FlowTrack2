@@ -25,6 +25,9 @@ chai.use(sinonChai);
 describe('Integration Tests', function () {
     describe('IndexTracking', function () {
         it('should delete indicies', function (cb) {
+            this.timeout(5000);  // set a longer timeout for mocha
+
+
             var nfStore = new NetFlowStorage(es, logger, config);
             var indexTrack = new IndexTracking(es, logger, config);
             var momentObj = moment();
@@ -59,13 +62,15 @@ describe('Integration Tests', function () {
             setTimeout(function () {
                 indexTrack.getExpiredIndices(function (indexList) {
                     indexTrack.deleteIndices(indexList, function () {
-                        indexTrack.getIndexList(function (indexList) {
-                            expect(indexList.sort()).to.deep.equal(testList.sort());
-                            cb();
-                        });
+                        setTimeout(function (indexList) {
+                            indexTrack.getIndexList(function (indexList) {
+                                expect(indexList.sort()).to.deep.equal(testList.sort());
+                                cb();
+                            });
+                        }, 1500); // let the database calm down
                     });
                 });
-            }, 500); // 500ms pause
+            }, 1500); // let the database calm down
         });
     });
 });
