@@ -158,8 +158,11 @@ gulp.task('model', function (cb) {
     plugins.sequence('clean_coverage', 'model_test', 'coverage_report')(cb);
 });
 
+// Run the integration tests  needs to have ES running
 gulp.task('integration', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'integrationTest';
+    // NODE_ENV is set in integration_test because
+    // we need to ensure we have a seperate DB for the
+    // integration tests
     plugins.sequence('integration_test')(cb);
 });
 
@@ -219,6 +222,8 @@ gulp.task('controller_test', function (cb) {
 
 
 gulp.task('integration_test', function (cb) {
+    // integration test needs to be forced here
+    process.env.NODE_ENV = 'integrationTest';
     gulp.src(files.integration_test_files)
       .pipe(mochaTask())
       .on('end', cb);
