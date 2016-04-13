@@ -94,5 +94,10 @@ describe('IndexTracking', function () {
             sandbox.restore();
 
         });
+
+        it('should handle a blank to delete list gracefully', function () {
+            var indexTrack = new IndexTracking(es, logger, config);
+            expect(indexTrack.deleteIndices(null, function () {})).to.not.throw;
+        });
     });
 });
