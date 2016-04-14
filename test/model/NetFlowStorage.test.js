@@ -19,16 +19,6 @@ chai.use(sinonChai);
 
 describe('NetFlowStorage', function () {
 
-    var sandbox;
-
-    beforeEach(function () {
-        sandbox = sinon.sandbox.create();
-    });
-
-    afterEach(function () {
-        sandbox.restore();
-    });
-
 
     describe('constructor', function () {
 
@@ -96,6 +86,8 @@ describe('NetFlowStorage', function () {
 
             expect(nfStore.createTemplate.bind(callbackSpy)).to.throw(Error);
             expect(callbackSpy).to.not.be.called;
+
+            sandbox.restore();
         });
     });
 
@@ -105,7 +97,7 @@ describe('NetFlowStorage', function () {
 
             var nfStore = new NetFlowStorage(es, logger, config);
             var indexTracking = new IndexTracking(es,logger,config);
-
+            var sandbox = sinon.sandbox.create();
 
             // Set the date to a fixed value so we can check it in the save.
             var clock = sinon.useFakeTimers(Date.now() - 10000000);
@@ -158,6 +150,8 @@ describe('NetFlowStorage', function () {
 
             expect(myIndexSpy).to.be.calledWith(store_compare);
             clock.restore();
+
+            sandbox.restore();
         });
 
     });
