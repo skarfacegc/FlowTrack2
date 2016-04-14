@@ -19,16 +19,6 @@ chai.use(sinonChai);
 
 describe('EsConnect', function () {
 
-    var sandbox;
-
-    beforeEach(function () {
-        sandbox = sinon.sandbox.create();
-    });
-
-    afterEach(function () {
-        sandbox.restore();
-    });
-
     describe('constructor', function () {
 
         it('should be an instance of EsConnect', function () {
@@ -47,6 +37,7 @@ describe('EsConnect', function () {
     describe('connect', function () {
         it('should create a handle if one is not defined', function () {
 
+            var sandbox = sinon.sandbox.create();
             var esStub = sandbox.stub(es, "Client", function () {});
 
             var EsC = new EsConnect(es, logger, config);
@@ -54,11 +45,13 @@ describe('EsConnect', function () {
             EsC.connect();
 
             expect(esStub).to.be.calledOnce;
+            sandbox.restore();
 
         });
 
         it('should not create a handle if one exists', function () {
 
+            var sandbox = sinon.sandbox.create();
             var esStub = sandbox.stub(es, "Client", function () {});
 
             var EsC = new EsConnect(es, logger, config);
@@ -67,6 +60,7 @@ describe('EsConnect', function () {
             EsC.connect();
 
             expect(esStub).to.not.be.called;
+            sandbox.restore();
 
         });
     });
