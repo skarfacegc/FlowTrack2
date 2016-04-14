@@ -78,7 +78,8 @@ var files = {
 // Configuration settings for various tasks / processes
 var config = {
     mocha: {
-        reporter: 'spec'
+        reporter: 'spec',
+        ui: 'mocha-retry'
     },
     istanbul: {
         includeUntested: true

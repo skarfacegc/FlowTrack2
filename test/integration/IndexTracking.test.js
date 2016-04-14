@@ -24,9 +24,11 @@ chai.use(sinonChai);
 
 describe('Integration Tests', function () {
     describe('IndexTracking', function () {
-        it('should delete indicies', function (cb) {
+        // the 5 here is from mocha-retry  retry this test 2x before
+        // giving up.  Should smooth out some of the issues with travis
+        // dealing with timing on ES is painful:
+        it(5, 'should delete indicies', function (cb) {
             this.timeout(5000);  // set a longer timeout for mocha
-
 
             var nfStore = new NetFlowStorage(es, logger, config);
             var indexTrack = new IndexTracking(es, logger, config);
@@ -64,8 +66,12 @@ describe('Integration Tests', function () {
                     indexTrack.deleteIndices(indexList, function () {
                         setTimeout(function (indexList) {
                             indexTrack.getIndexList(function (indexList) {
-                                expect(indexList.sort()).to.deep.equal(testList.sort());
-                                cb();
+                                try {
+                                    expect(indexList.sort()).to.deep.equal(testList.sort());
+                                    cb();
+                                } catch (e) {
+                                    cb(e);
+                                }
                             });
                         }, 1500); // let the database calm down
                     });
