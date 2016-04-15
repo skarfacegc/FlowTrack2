@@ -128,35 +128,35 @@ gulp.task('default', ['test']);
 // run all but the view tests
 gulp.task('test', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'controllerTest';
-    plugins.sequence('load_data', 'clean_coverage', 'controller_test', 'model_test',
-        'integration_test', 'lint', 'coverage_report')(cb);
+    plugins.sequence('lint', 'load_data', 'clean_coverage', 'controller_test', 'model_test',
+        'integration_test',  'coverage_report')(cb);
 });
 
 // Run all tests
 gulp.task('full', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'viewTest';
-    plugins.sequence('load_data', 'test_server', 'clean_coverage',
+    plugins.sequence('lint', 'load_data', 'test_server', 'clean_coverage',
                      'controller_test', 'integration_test', 'model_test',
                      ['view_instrument','view_test'], 'stop_test_server',
-                     'lint', 'coverage_report')(cb);
+                      'coverage_report')(cb);
 });
 
 // Run the view tests.  These interact with a browser
 gulp.task('view', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'viewTest';
-    plugins.sequence('load_data', 'test_server', 'clean_coverage', ['view_instrument',
+    plugins.sequence('lint', 'load_data', 'test_server', 'clean_coverage', ['view_instrument',
                      'view_test'], 'stop_test_server', 'coverage_report')(cb);
 });
 
 gulp.task('controller', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'controllerTest';
-    plugins.sequence('clean_coverage', 'load_data', 'controller_test', 'coverage_report')(cb);
+    plugins.sequence('lint', 'clean_coverage', 'load_data', 'controller_test', 'coverage_report')(cb);
 });
 
 // Run the model tests
 gulp.task('model', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'modelTest';
-    plugins.sequence('clean_coverage', 'model_test', 'coverage_report')(cb);
+    plugins.sequence('lint', 'clean_coverage', 'model_test', 'coverage_report')(cb);
 });
 
 // Run the integration tests  needs to have ES running
@@ -164,7 +164,7 @@ gulp.task('integration', function (cb) {
     // NODE_ENV is set in integration_test because
     // we need to ensure we have a seperate DB for the
     // integration tests
-    plugins.sequence('integration_test')(cb);
+    plugins.sequence('lint', 'integration_test')(cb);
 });
 
 // Download, install, and inject bower components
