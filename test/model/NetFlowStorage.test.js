@@ -91,6 +91,21 @@ describe('NetFlowStorage', function () {
         });
     });
 
+    describe('refresh', function () {
+        it('should call client.refresh correctly', function () {
+            var nfStore = new NetFlowStorage(es, logger, config);
+            var indexName = config.get('Application.index_name') + '*';
+            var sandbox = sinon.sandbox.create();
+            var indicesStub = sandbox.stub(nfStore.client.indices, 'refresh');
+
+            nfStore.refreshIndices();
+
+            expect(indicesStub).to.be.calledWith({index: indexName});
+
+            sandbox.restore();
+        });
+    });
+
     describe('storeFlow', function () {
         it('should correctly store the flow', function () {
 
