@@ -20,7 +20,7 @@ describe('Main Page', function () {
     var testData = new TestData(es, logger, config);
 
     before(function (done) {
-        testData.simpleLoadData(1000, 0, null, done);
+        testData.simpleLoadData(100, 1000, null, done);
     });
 
     after(function () {
