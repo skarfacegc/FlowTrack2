@@ -4,6 +4,7 @@
 var JsonRouteHandlers = require('../../lib/controller/JsonRouteHandlers');
 var FlowTrack2App = require('../../lib/controller/FlowTrack2App');
 var GetLogger = require('../../lib/util/GetLogger');
+var TestData = require('../lib/TestData');
 
 
 var es = require('elasticsearch');
@@ -25,6 +26,9 @@ describe('JsonRoutes', function () {
 
             var logger = new GetLogger('quiet', 'FlowTrack2App');
             var app = new FlowTrack2App(es, logger, config);
+            var testData = new TestData(es, logger, config);
+
+            testData.simpleLoadData(100, 2000);
 
             request(app)
                 .get('/json/rawFlowsForLast/10/minutes')
@@ -55,7 +59,10 @@ describe('JsonRoutes', function () {
                         "timestamp": 0
                     });
                 })
-                .end(done);
+                .end(function () {
+                    testData.deleteTestData();
+                    done();
+                });
         });
     });
 });

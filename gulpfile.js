@@ -297,14 +297,15 @@ gulp.task('stop_test_server', function (cb) {
 
 // load test data
 gulp.task('load_data', function (cb) {
-    exec('./test/bin/loadTestData.js', function (err,stdout,stderr) {
-      if (err) {
-          console.log(err);
-          console.log(stdout);
-          console.log(stderr);
-      }
-      cb();
-  });
+    //   exec('./test/bin/loadTestData.js', function (err,stdout,stderr) {
+    //     if (err) {
+    //         console.log(err);
+    //         console.log(stdout);
+    //         console.log(stderr);
+    //     }
+    //     cb();
+    // });
+    cb();
 });
 
 //

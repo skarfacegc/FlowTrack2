@@ -3,6 +3,7 @@
 var EsConnect = require('../../lib/model/EsConnect');
 var NetFlowStorage = require('../../lib/model/NetFlowStorage');
 var IndexTrack = require('../../lib/model/IndexTracking');
+var async = require('async');
 
 function TestData(es, logger, config) {
     var esConn = new EsConnect(es, logger, config);
@@ -27,6 +28,8 @@ function TestData(es, logger, config) {
 // if flowRecord is an object we'll use that
 TestData.prototype.simpleLoadData = function (count, step, flowRecord) {
     var sampleFlow = {};
+    var flowsToInsert = [];
+    var testData = this;
 
     // if flowRecord isn't defined load from the default generator
     // if flowRecord is a function invoke the function and use that
@@ -43,10 +46,23 @@ TestData.prototype.simpleLoadData = function (count, step, flowRecord) {
         throw 'Invalid flow record';
     }
 
+
+
     for (var i = 0; i <= count; i++) {
         sampleFlow.timestamp = Date.now() - (i * step);
-        this.nfStore.storeFlow(sampleFlow);
+        flowsToInsert.push(sampleFlow);
     }
+
+    async.each(flowsToInsert, function (flow, callback) {
+        testData.nfStore.storeFlow(flow);
+        callback();
+    }, function (err) {
+        if (err) {
+            testData.logger.error('Failed to store flow');
+        } else {
+            testData.nfStore.refreshIndices();
+        }
+    });
 };
 
 // Sample flow

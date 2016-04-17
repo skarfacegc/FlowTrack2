@@ -12,6 +12,7 @@
     "postinstall": "gulp bower"
   },
   "dependencies": {
+    "async": "^2.0.0-rc.3",
     "bower": "^1.7.7",
     "bunyan": "^1.7.1",
     "config": "^1.19.0",
