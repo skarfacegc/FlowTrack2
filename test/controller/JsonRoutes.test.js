@@ -23,7 +23,7 @@ describe('JsonRoutes', function () {
     describe('/json/rawFlowsForlast/:duration/:scale', function () {
 
         it('should return a valid flow record', function (done) {
-            this.timeout(5000); // up the test timeout a bit
+            this.timeout(0); // up the test timeout a bit
             var logger = new GetLogger('quiet', 'FlowTrack2App');
             var app = new FlowTrack2App(es, logger, config);
             var testData = new TestData(es, logger, config);
