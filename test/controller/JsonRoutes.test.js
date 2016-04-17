@@ -28,9 +28,9 @@ describe('JsonRoutes', function () {
             var app = new FlowTrack2App(es, logger, config);
             var testData = new TestData(es, logger, config);
 
-            testData.simpleLoadData(100, 2000);
+            testData.simpleLoadData(100, 2000, null, function () {
 
-            request(app)
+                request(app)
                 .get('/json/rawFlowsForLast/10/minutes')
                 .expect(function (res) {
                     var responseBody = JSON.parse(res.text);
@@ -59,10 +59,11 @@ describe('JsonRoutes', function () {
                         "timestamp": 0
                     });
                 })
-                .end(function () {
+                .end(function (err) {
                     testData.deleteTestData();
-                    done();
+                    done(err);
                 });
+            });
         });
     });
 });

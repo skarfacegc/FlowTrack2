@@ -26,7 +26,7 @@ function TestData(es, logger, config) {
 // if flowRecord isn't defined we'll load data from this.getFlowRecord
 // if flowRecord is a function we'll load data from that
 // if flowRecord is an object we'll use that
-TestData.prototype.simpleLoadData = function (count, step, flowRecord) {
+TestData.prototype.simpleLoadData = function (count, step, flowRecord, callback) {
     var sampleFlow = {};
     var flowsToInsert = [];
     var testData = this;
@@ -53,14 +53,16 @@ TestData.prototype.simpleLoadData = function (count, step, flowRecord) {
         flowsToInsert.push(sampleFlow);
     }
 
-    async.each(flowsToInsert, function (flow, callback) {
+    async.each(flowsToInsert, function (flow, cb) {
         testData.nfStore.storeFlow(flow);
-        callback();
+        cb();
     }, function (err) {
         if (err) {
             testData.logger.error('Failed to store flow');
         } else {
-            testData.nfStore.refreshIndices();
+            testData.nfStore.waitForNewIndex(function () {
+                testData.nfStore.refreshIndices(callback);
+            });
         }
     });
 };
