@@ -137,13 +137,12 @@ gulp.task('full', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'viewTest';
     plugins.sequence('lint', 'load_data', 'test_server', 'clean_coverage',
                      'controller_test', 'integration_test', 'model_test',
-                     ['view_instrument','view_test'], 'stop_test_server',
+                     'view_instrument', 'view_test', 'stop_test_server',
                       'coverage_report')(cb);
 });
 
 // Run the view tests.  These interact with a browser
 gulp.task('view', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'viewTest';
     plugins.sequence('lint', 'load_data', 'test_server', 'clean_coverage', ['view_instrument',
                      'view_test'], 'stop_test_server', 'coverage_report')(cb);
 });
@@ -260,6 +259,7 @@ gulp.task('view_instrument', function (cb) {
 
 // run the actual e2e test
 gulp.task('view_test', function (cb) {
+    process.env.NODE_ENV = 'viewTest';
     gulp.src(files.view_test_files)
       .pipe(plugins.protractor.protractor(config.protractor))
       .on('end', cb);

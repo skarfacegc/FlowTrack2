@@ -2,7 +2,7 @@
     "Application": {
         "web_port": 3001,
         "js_path": "coverage/www/test_files",
-        "index_name": "test_flow_track2",
+        "index_name": "view_flow_track2",
         "disable_collector": 1
     }
 }
