@@ -148,13 +148,11 @@ gulp.task('view', function (cb) {
 });
 
 gulp.task('controller', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'controllerTest';
     plugins.sequence('lint', 'clean_coverage', 'load_data', 'controller_test', 'coverage_report')(cb);
 });
 
 // Run the model tests
 gulp.task('model', function (cb) {
-    process.env.NODE_ENV = process.env.NODE_ENV || 'modelTest';
     plugins.sequence('lint', 'clean_coverage', 'model_test', 'coverage_report')(cb);
 });
 
@@ -209,6 +207,7 @@ gulp.task('coverage_report', function () {
 
 // run model tests and collect coverage data
 gulp.task('model_test', function (cb) {
+    process.env.NODE_ENV = 'modelTest';
     coverageTest(files.model_files, files.model_test_files,
       config.modelCoverage, cb);
 });
@@ -216,6 +215,7 @@ gulp.task('model_test', function (cb) {
 
 // test the server functions and collect coverage data
 gulp.task('controller_test', function (cb) {
+    process.env.NODE_ENV = 'controllerTest';
     coverageTest(files.controller_files, files.controller_test_files,
       config.controllerCoverage, cb);
 });
