@@ -77,14 +77,26 @@ describe('NetFlowStorage', function () {
             sandbox.restore();
         });
 
-        it('should handle errors correctly', function () {
+        it('should throw on error', function () {
             var nfStore = new NetFlowStorage(es, logger, config);
             var sandbox = sinon.sandbox.create();
             var templateStub = sandbox.stub(nfStore.client.indices, 'putTemplate')
               .yields('Test Error', 'response', 'status');
+
+            expect(function () {
+                nfStore.createTemplate();
+            }).to.throw(Error);
+
+            sandbox.restore();
+        });
+
+        it('should not call the callback on error', function () {
+            var nfStore = new NetFlowStorage(es, logger, config);
+            var sandbox = sinon.sandbox.create();
+            var templateStub = sandbox.stub(nfStore.client.indices, 'putTemplate')
+              .yields('err', 'res', 'status');
             var callbackSpy = sandbox.spy();
 
-            expect(nfStore.createTemplate.bind(callbackSpy)).to.throw(Error);
             expect(callbackSpy).to.not.be.called;
 
             sandbox.restore();
@@ -101,6 +113,23 @@ describe('NetFlowStorage', function () {
             nfStore.refreshIndices();
 
             expect(indicesStub).to.be.calledWith({index: indexName});
+
+            sandbox.restore();
+        });
+
+        it('should call the callback correctly', function () {
+            var nfStore = new NetFlowStorage(es, logger, config);
+            var indexName = config.get('Application.index_name') + '*';
+            var sandbox = sinon.sandbox.create();
+
+            var indicesStub = sandbox.stub(nfStore.client.indices, 'refresh')
+            .yields('err', 'res', 'status');
+
+            var callbackSpy = sandbox.spy();
+
+            nfStore.refreshIndices(callbackSpy);
+
+            expect(callbackSpy).to.be.calledWith('err', 'res', 'status');
 
             sandbox.restore();
         });
@@ -180,8 +209,7 @@ describe('NetFlowStorage', function () {
 
 
             var clusterHealthStub =
-                sandbox.stub(nfStore.client.cluster, 'health')
-                .yields('err', 'res', 'status');
+                sandbox.stub(nfStore.client.cluster, 'health');
 
             nfStore.waitForNewIndex();
 
@@ -209,6 +237,6 @@ describe('NetFlowStorage', function () {
             expect(callbackSpy).to.be.calledWith('err', 'res', 'status');
 
             sandbox.restore();
-        })
+        });
     });
 });
