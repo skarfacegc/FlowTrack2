@@ -15,18 +15,14 @@ var web_port = config.get('Application.web_port');
 chai.use(chaiAsPromised);
 var expect = chai.expect;
 
+// Data loading / cleaup occurs in protractor.conf.js
+// This is due to the way protractor parallelizes the various browser
+// tests.  When delete was in here the data would get deleted
+// from ES prior to the tests all completing
+
 describe('Main Page', function () {
     var logger = new GetLogger(process.env.NODE_ENV, 'FlowTrack2 view test');
     var testData = new TestData(es, logger, config);
-
-    before(function (done) {
-        testData.simpleLoadData(100, 1000, null, done);
-    });
-
-    after(function () {
-        testData.deleteTestData();
-    });
-
 
     var grid = new UiGridTest(by.id('mainGrid'));
     var headers = grid.getColumnHeaders('mainGrid');

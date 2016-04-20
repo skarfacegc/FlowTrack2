@@ -2,6 +2,14 @@
 'use strict';
 
 var fs = require('fs');
+var GetLogger = require('../../lib/util/GetLogger');
+var es = require('elasticsearch');
+var config = require('config');
+var TestData = require('../lib/TestData');
+
+
+// cleaup test data
+
 
 // conf.js
 exports.config = {
@@ -15,7 +23,6 @@ exports.config = {
     mochaOpts: {
         timeout: 60000 // ms
     },
-
 
     multiCapabilities: [{
         browserName: 'chrome',
@@ -35,10 +42,31 @@ exports.config = {
         name: 'FlowTrack2 Build'
     }],
 
+    beforeLaunch: function () {
+        var logger = new GetLogger(process.env.NODE_ENV,'FlowTrack2 View Test');
+        var testData = new TestData(es, logger, config);
+        testData.simpleLoadData(100, 1000);
+    },
+
     onComplete: function () {
         browser.driver.executeScript("return __coverage__flowTrack2__").
         then(function (coverage) {
             fs.writeFileSync('coverage/coverage-www.json', JSON.stringify(coverage));
         });
+    },
+
+    afterLaunch: function () {
+        return new Promise(function (resolve, reject) {
+            var logger = new GetLogger(process.env.NODE_ENV,'FlowTrack2 View Test');
+            var testData = new TestData(es, logger, config);
+            testData.deleteTestData(function (err, res, status) {
+                if (err) {
+                    return reject(err);
+                } else {
+                    return resolve(res);
+                }
+            });
+        });
+
     }
 };

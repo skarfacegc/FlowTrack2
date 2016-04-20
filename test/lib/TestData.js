@@ -94,11 +94,13 @@ TestData.prototype.getFlowRecord = function () {
 };
 
 // Delete all indices
-TestData.prototype.deleteTestData = function () {
+TestData.prototype.deleteTestData = function (callback) {
     var indexTrack = this.indexTrack;
     indexTrack.getIndexList(function (indexList) {
-        indexTrack.deleteIndices(indexList, function () {
-            return;
+        indexTrack.deleteIndices(indexList, function (err, res, status) {
+            if (typeof (callback) === 'function') {
+                callback(err, res, status);
+            }
         });
     });
 };
