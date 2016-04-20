@@ -91,7 +91,7 @@ describe('NetFlowStorage', function () {
         });
     });
 
-    describe('refresh', function () {
+    describe('refreshIndices', function () {
         it('should call client.refresh correctly', function () {
             var nfStore = new NetFlowStorage(es, logger, config);
             var indexName = config.get('Application.index_name') + '*';
@@ -171,4 +171,44 @@ describe('NetFlowStorage', function () {
 
     });
 
+    describe('waitForNewIndex', function () {
+        it('should call cluster.health correctly', function () {
+            var nfStore = new NetFlowStorage(es, logger, config);
+            var sandbox = sinon.sandbox.create();
+
+            var indexNamePattern = config.get('Application.index_name') + '*';
+
+
+            var clusterHealthStub =
+                sandbox.stub(nfStore.client.cluster, 'health')
+                .yields('err', 'res', 'status');
+
+            nfStore.waitForNewIndex();
+
+            expect(clusterHealthStub).to.be.calledWith({
+                waitForStatus: 'green',
+                timeout: '30s',
+                index: indexNamePattern
+            });
+
+            sandbox.restore();
+        });
+
+        it('should call the callback correctly', function () {
+            var nfStore = new NetFlowStorage(es, logger, config);
+            var sandbox = sinon.sandbox.create();
+
+            var indexNamePattern = config.get('Application.index_name') + '*';
+            var callbackSpy = sandbox.spy();
+            var clusterHealthStub =
+                sandbox.stub(nfStore.client.cluster, 'health')
+                .yields('err', 'res', 'status');
+
+            nfStore.waitForNewIndex(callbackSpy);
+
+            expect(callbackSpy).to.be.calledWith('err', 'res', 'status');
+
+            sandbox.restore();
+        })
+    });
 });
