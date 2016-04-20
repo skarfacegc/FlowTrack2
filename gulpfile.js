@@ -31,7 +31,6 @@
 //  view_test - run the view tests
 //  test_server - start the test server
 //  stop_test_server - stop the test server
-//  load_data - load test data into the DB
 //
 
 // NODE_ENV matters for these (espeically the view tests)
@@ -128,14 +127,14 @@ gulp.task('default', ['test']);
 // run all but the view tests
 gulp.task('test', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'controllerTest';
-    plugins.sequence('lint', 'load_data', 'clean_coverage', 'controller_test', 'model_test',
-        'integration_test',  'coverage_report')(cb);
+    plugins.sequence('lint', 'clean_coverage', 'controller_test', 'model_test',
+        'integration_test', 'coverage_report')(cb);
 });
 
 // Run all tests
 gulp.task('full', function (cb) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'viewTest';
-    plugins.sequence('lint', 'load_data', 'test_server', 'clean_coverage',
+    plugins.sequence('lint', 'test_server', 'clean_coverage',
                      'controller_test', 'integration_test', 'model_test',
                      'view_instrument', 'view_test', 'stop_test_server',
                       'coverage_report')(cb);
@@ -143,12 +142,12 @@ gulp.task('full', function (cb) {
 
 // Run the view tests.  These interact with a browser
 gulp.task('view', function (cb) {
-    plugins.sequence('lint', 'load_data', 'test_server', 'clean_coverage', ['view_instrument',
+    plugins.sequence('lint', 'test_server', 'clean_coverage', ['view_instrument',
                      'view_test'], 'stop_test_server', 'coverage_report')(cb);
 });
 
 gulp.task('controller', function (cb) {
-    plugins.sequence('lint', 'clean_coverage', 'load_data', 'controller_test', 'coverage_report')(cb);
+    plugins.sequence('lint', 'clean_coverage', 'controller_test', 'coverage_report')(cb);
 });
 
 // Run the model tests
@@ -294,19 +293,6 @@ gulp.task('stop_test_server', function (cb) {
     cb();
 });
 
-
-// load test data
-gulp.task('load_data', function (cb) {
-    //   exec('./test/bin/loadTestData.js', function (err,stdout,stderr) {
-    //     if (err) {
-    //         console.log(err);
-    //         console.log(stdout);
-    //         console.log(stderr);
-    //     }
-    //     cb();
-    // });
-    cb();
-});
 
 //
 // testing and reporting "drivers"
