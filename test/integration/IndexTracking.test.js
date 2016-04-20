@@ -3,6 +3,7 @@
 var IndexTracking = require('../../lib/model/IndexTracking');
 var NetFlowStorage = require('../../lib/model/NetFlowStorage');
 var GetLogger = require('../../lib/util/GetLogger');
+var TestData = require('../lib/TestData');
 
 var logger = new GetLogger('quiet');
 var config = require('config');
@@ -32,6 +33,7 @@ describe('Integration Tests', function () {
 
             var nfStore = new NetFlowStorage(es, logger, config);
             var indexTrack = new IndexTracking(es, logger, config);
+            var testData = new TestData(es, logger, config);
             var momentObj = moment();
             var timestamps = [];
             var testList = [];
@@ -68,6 +70,7 @@ describe('Integration Tests', function () {
                             indexTrack.getIndexList(function (indexList) {
                                 try {
                                     expect(indexList.sort()).to.deep.equal(testList.sort());
+                                    testData.deleteTestData();
                                     done();
                                 } catch (e) {
                                     done(e);
