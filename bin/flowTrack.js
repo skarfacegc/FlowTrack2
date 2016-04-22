@@ -9,6 +9,7 @@ var es = require('elasticsearch');
 var http = require('http');
 var config = require('config');
 var moment = require('moment');
+var npid = require('npid');
 
 var NetFlowStorage = require('../lib/model/NetFlowStorage');
 var GetLogger = require('../lib/util/GetLogger');
@@ -34,6 +35,17 @@ function main() {
 
     //FIXME: issue:45  should log pid here
     if (cluster.isMaster) {
+
+        var pidFile = './logs/flowTrack' +
+            (process.env.NODE_ENV ? '-' + process.env.NODE_ENV : '') + '.pid';
+
+        // force overwrite if needed
+        var pid = npid.create(pidFile, true);
+
+        // Try to ensure that we cleanup when the server exits
+        pid.removeOnExit();
+        process.on('SIGINT', process.exit);
+        process.on('SIGTERM', process.exit);
 
         // Setup, then fork the flow collection workers
         nfStore.createTemplate();

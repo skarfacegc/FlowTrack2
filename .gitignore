@@ -7,3 +7,4 @@ coverage/*
 bower_components
 test/view/grid*
 .imdone/
+logs/*.pid
