@@ -21,6 +21,7 @@
     "inet": "0.0.3",
     "moment": "^2.12.0",
     "node-netflowv9": "^0.2.7",
+    "npid": "^0.4.0",
     "on-finished": "^2.3.0"
   },
   "devDependencies": {
