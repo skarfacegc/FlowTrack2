@@ -1,10 +1,10 @@
 {
     "Application": {
-        "web_port": 3001,
-        "index_name": "demo_flow_track2"
+        "webPort": 3001,
+        "indexName": "demo_flow_track2"
     },
     "ElasticSearchConfig": {
-        "elasticsearch_shards": 1,
-        "elasticsearch_replicas": 0
+        "elasticSearchShards": 1,
+        "elasticSearchReplicas": 0
     }
 }

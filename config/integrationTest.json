@@ -1,8 +1,8 @@
 {
     "Application": {
-        "web_port": 3001,
-        "js_path": "coverage/www/test_files",
-        "index_name": "integration_flow_track2",
-        "disable_collector": 1
+        "webPort": 3001,
+        "jsPath": "coverage/www/test_files",
+        "indexName": "integration_flow_track2",
+        "disableCollector": 1
     }
 }

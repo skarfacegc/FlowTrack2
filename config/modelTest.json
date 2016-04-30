@@ -1,7 +1,7 @@
 {
     "Application": {
-        "web_port": 3001,
-        "js_path": "coverage/www/test_files",
-        "index_name": "model_flow_track2"
+        "webPort": 3001,
+        "jsPath": "coverage/www/test_files",
+        "indexName": "model_flow_track2"
     }
 }
