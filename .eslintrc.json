@@ -1,0 +1,12 @@
+{
+  "extends": "google",
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true,
+    "protractor": true
+  },
+  "rules": {
+    "require-jsdoc": "off"
+  }
+}

@@ -1,15 +1,15 @@
 {
     "Application": {
-        "web_port": 3000,
-        "netflow_port": 2055,
-        "js_path": "www/js",
-        "index_name": "flow_track2",
-        "disable_collector": 0,
-        "retention_days": 2
+        "webPort": 3000,
+        "netflowPort": 2055,
+        "jsPath": "www/js",
+        "indexName": "flow_track2",
+        "disableCollector": 0,
+        "retentionDays": 2
     },
     "ElasticSearchConfig": {
-        "elasticsearch_host": "localhost:9200",
-        "elasticsearch_shards": 4,
-        "elasticsearch_replicas": 0
+        "elasticSearchHost": "localhost:9200",
+        "elasticSearchShards": 4,
+        "elasticSearchReplicas": 0
     }
 }

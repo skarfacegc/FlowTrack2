@@ -1,12 +1,12 @@
 {
     "Application": {
-        "web_port": 3001,
-        "js_path": "coverage/www/test_files",
-        "index_name": "view_flow_track2",
-        "disable_collector": 1
+        "webPort": 3001,
+        "jsPath": "coverage/www/test_files",
+        "indexName": "view_flow_track2",
+        "disableCollector": 1
     },
     "ElasticSearchConfig": {
-        "elasticsearch_shards": 1,
-        "elasticsearch_replicas": 0
+        "elasticSearchShards": 1,
+        "elasticSearchReplicas": 0
     }
 }
