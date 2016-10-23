@@ -6,12 +6,13 @@
 // Most of the config is in files. and config.
 //
 // Main Tasks:
-//  test - run model, controller tests with coverage report
-//  full - run model, controller, view tests with coverage report
+//  test - run model, controller, util tests with coverage report
+//  full - run model, controller, util, view tests with coverage report
 //  view - run browser based end to end tests
 //  controller - run controller tests with coverage
 //  model - run model tests with coverage
 //  integration - run integration tests (No Coverage)
+//  util - run util tests with coverage
 //  clean - clean coverage, node_modules, and bower
 //  bower - install bower components
 //  travis - currently an alias to full
@@ -29,6 +30,7 @@
 //  clean_modules - clean node_modules
 //  view_instrument - compile instrumented versions of the view files
 //  view_test - run the view tests
+//  util_test - run the util tests
 //  test_server - start the test server
 //  stop_test_server - stop the test server
 //
@@ -60,6 +62,7 @@ var files = {
   modelTestFiles: ['test/model/**/*.js'],
   viewTestFiles: ['test/view/**/*.js'],
   controllerTestFiles: ['test/controller/**/*.js'],
+  utilTestFiles: ['test/util/**/*.js'],
 
   allSrc: ['www/js/**/*.js', 'lib/**/*.js', 'bin/flowTrack.js', 'test/**/*.js',
     'gulpfile.js'],
@@ -87,6 +90,15 @@ var config = {
     reporters: ['lcov', 'text']
   },
   modelCoverage: {
+    reporters: ['json'],
+    reportOpts: {
+      json: {
+        dir: 'coverage',
+        file: 'coverage-model.json'
+      }
+    }
+  },
+  utilCoverage: {
     reporters: ['json'],
     reportOpts: {
       json: {
@@ -137,7 +149,7 @@ gulp.task('default', ['test']);
 gulp.task('test', function(cb) {
   process.env.NODE_ENV = process.env.NODE_ENV || 'controllerTest';
   plugins.sequence('lint', 'clean_coverage', 'controller_test', 'model_test',
-      'integration_test', 'coverage_report')(cb);
+                   'util_test', 'integration_test', 'coverage_report')(cb);
 });
 
 // Run all tests
@@ -145,8 +157,8 @@ gulp.task('full', function(cb) {
   process.env.NODE_ENV = process.env.NODE_ENV || 'viewTest';
   plugins.sequence('lint', 'test_server', 'clean_coverage',
                    'controller_test', 'integration_test', 'model_test',
-                   'view_instrument', 'view_test', 'stop_test_server',
-                    'coverage_report')(cb);
+                   'util_test', 'view_instrument', 'view_test',
+                   'stop_test_server', 'coverage_report')(cb);
 });
 
 // Run the view tests.  These interact with a browser
@@ -163,6 +175,12 @@ gulp.task('controller', function(cb) {
 // Run the model tests
 gulp.task('model', function(cb) {
   plugins.sequence('lint', 'clean_coverage', 'model_test',
+    'coverage_report')(cb);
+});
+
+// Run the util tests
+gulp.task('util', function(cb) {
+  plugins.sequence('lint', 'clean_coverage', 'util_test',
     'coverage_report')(cb);
 });
 
@@ -217,6 +235,13 @@ gulp.task('model_test', function(cb) {
   process.env.NODE_ENV = 'modelTest';
   coverageTest(files.modelFiles, files.modelTestFiles,
     config.modelCoverage, cb);
+});
+
+// run util tests and collect coverage data
+gulp.task('util_test', function(cb) {
+  process.env.NODE_ENV = 'utilTest';
+  coverageTest(files.utilFiles, files.utilTestFiles,
+    config.utilCoverage, cb);
 });
 
 // test the server functions and collect coverage data
